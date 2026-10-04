@@ -42,7 +42,7 @@ export function buildJsonSchemas(): Record<string, object> {
   for (const name of Object.keys(SCHEMAS)) {
     const schema = SCHEMAS[name]!;
     const json = z.toJSONSchema(schema, { target: 'draft-2020-12', io: INPUT_SHAPED.has(name) ? 'input' : 'output' }) as Record<string, unknown>;
-    json.$id = `https://github.com/AbhiramDwivedi/understudy/schema/${name}.json`;
+    json.$id = `https://github.com/AbhiramDwivedi/bank-backoffice-autopilot/schema/${name}.json`;
     json.title = TITLES[name];
     out[name] = json;
   }

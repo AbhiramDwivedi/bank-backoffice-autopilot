@@ -554,6 +554,6 @@
       ]
     }
   },
-  "$id": "https://github.com/AbhiramDwivedi/understudy/schema/replay-result.json",
+  "$id": "https://github.com/AbhiramDwivedi/bank-backoffice-autopilot/schema/replay-result.json",
   "title": "Replay Result"
 }

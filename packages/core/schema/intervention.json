@@ -201,6 +201,6 @@
       "additionalProperties": false
     }
   },
-  "$id": "https://github.com/AbhiramDwivedi/understudy/schema/intervention.json",
+  "$id": "https://github.com/AbhiramDwivedi/bank-backoffice-autopilot/schema/intervention.json",
   "title": "Intervention"
 }

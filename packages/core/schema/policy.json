@@ -238,6 +238,6 @@
       "additionalProperties": false
     }
   },
-  "$id": "https://github.com/AbhiramDwivedi/understudy/schema/policy.json",
+  "$id": "https://github.com/AbhiramDwivedi/bank-backoffice-autopilot/schema/policy.json",
   "title": "Policy"
 }

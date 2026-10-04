@@ -72,6 +72,6 @@
       "additionalProperties": false
     }
   },
-  "$id": "https://github.com/AbhiramDwivedi/understudy/schema/run-event.json",
+  "$id": "https://github.com/AbhiramDwivedi/bank-backoffice-autopilot/schema/run-event.json",
   "title": "Run Event"
 }
