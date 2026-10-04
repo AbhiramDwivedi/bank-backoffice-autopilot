@@ -1,0 +1,18 @@
+{
+  "name": "@cu/adapter-jev",
+  "version": "0.1.0",
+  "description": "Jev (System One) implementation of the @cu/core RiskJudge port",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@cu/core": "*",
+    "zod": "^4.6.5"
+  },
+  "scripts": {
+    "test": "vitest run --root ../.. --project adapter-jev",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "@cu/adapter-anthropic",
+  "version": "0.1.0",
+  "description": "Anthropic implementation of the @cu/core LlmClient port",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@cu/core": "*",
+    "@anthropic-ai/sdk": "^0.128.0"
+  },
+  "scripts": {
+    "test": "vitest run --root ../.. --project adapter-anthropic",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

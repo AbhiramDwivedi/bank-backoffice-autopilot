@@ -1,0 +1,17 @@
+node_modules/
+dist/
+runs/
+runs-*/
+.env
+*.pdf
+APPROACH.md
+test-results/
+playwright-report/
+artifacts/*.json
+!artifacts/examples/
+coverage/
+*.log
+.DS_Store
+
+# Claude Code agent worktrees
+.claude/

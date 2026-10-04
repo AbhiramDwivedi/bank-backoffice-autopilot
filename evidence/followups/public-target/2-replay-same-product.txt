@@ -1,0 +1,6 @@
+operator console: http://127.0.0.1:50435
+run dir: runs-live/ev/public-target/run_20261001_vi2migdz
+Capability read-product-price@1.0.0 succeeded in 6 steps (1.6s): price=29.99. Recoveries: none. Locator drift: 1 of 5 targets resolved by a fallback (text x1); review these locators.
+result: runs-live/ev/public-target/run_20261001_vi2migdz/result.json
+control: automation
+exit code: 0

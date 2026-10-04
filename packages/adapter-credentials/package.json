@@ -1,0 +1,17 @@
+{
+  "name": "@cu/adapter-credentials",
+  "version": "0.1.0",
+  "description": "file: and exec: implementations of the @cu/core CredentialProvider port",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@cu/core": "*"
+  },
+  "scripts": {
+    "test": "vitest run --root ../.. --project adapter-credentials",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

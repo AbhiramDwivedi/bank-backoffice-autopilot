@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Open Sub-Account</title>
+<style>
+.cw-dd { position: relative; width: 200px; }
+.cw-dd-toggle { border: 1px solid #ccc; background: #fff; padding: 4px 8px; cursor: pointer; }
+.cw-dd-menu { position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #ccc; margin: 0; padding: 0; list-style: none; }
+.cw-dd-menu li { padding: 4px 8px; cursor: pointer; }
+</style>
+<script>
+function ddToggle() {
+  var menu = document.getElementById('ddMenu');
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+function ddPick(li) {
+  var value = li.getAttribute('data-value');
+  document.getElementById('hidAcctType').value = value;
+  document.getElementById('ddText').textContent = li.textContent;
+  document.getElementById('ddMenu').style.display = 'none';
+}
+</script>
+</head>
+<body>
+<h2>Open New Sub-Account</h2>
+
+<div class="cw-dd" id="ddAcctType">
+  <div class="cw-dd-toggle" id="ddToggle" onclick="ddToggle()"><span id="ddText">-- Select --</span></div>
+  <ul class="cw-dd-menu" id="ddMenu" style="display:none">
+    <li data-value="SAV" onclick="ddPick(this)">Savings</li>
+    <li data-value="CHK" onclick="ddPick(this)">Checking</li>
+    <li data-value="MMK" onclick="ddPick(this)">Money Market</li>
+  </ul>
+  <input type="hidden" id="hidAcctType" name="accountType" value="" />
+</div>
+
+<p>Native equivalent:</p>
+<select id="nativeSelect" name="nativeAccountType">
+  <option value="">-- Select --</option>
+  <option value="SAV">Savings</option>
+  <option value="CHK">Checking</option>
+  <option value="MMK">Money Market</option>
+</select>
+</body>
+</html>

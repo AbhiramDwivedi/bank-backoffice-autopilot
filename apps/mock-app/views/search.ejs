@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<%- include('partials/cu-agent') %>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Member Search</title>
+<link rel="stylesheet" href="/static/css/legacy.css" type="text/css" />
+<style type="text/css">td.msg{color:#FF0000}</style>
+<script type="text/javascript">
+var $ = function(id){ return document.getElementById(id); };
+function $$go(url){ window.location.href = url; }
+function doSearch(){ document.forms['frmSearch'].submit(); }
+function doClear(){
+  $('txtMbrId').value = '';
+  $('txtLName').value = '';
+  $$go('/members/search');
+}
+</script>
+</head>
+<body>
+
+<h2><%= tenant.institution %> &mdash; Member Search</h2>
+
+<p>
+Quick find:
+<input type="text" name="ssn4" id="txtSsn4" placeholder="SSN last 4" size="6" />
+<img src="/static/img/ico_print.png" onclick="window.print()" style="cursor:pointer" />
+</p>
+
+<form name="frmSearch" method="get" action="/members/search">
+<table border="0" cellpadding="2" cellspacing="0">
+<tr>
+<td><%= tenant.memberIdLabel %></td>
+<td>
+<% var mbrIdStyle = invalidMemberId ? ' style="border:2px solid red;background:#FFE0E0"' : ''; %>
+<input type="text" name="memberId" id="txtMbrId" value="<%= memberId %>" onkeypress="if(event.keyCode==13){doSearch();return false;}"<%- mbrIdStyle %> />
+</td>
+</tr>
+<tr>
+<td>Last Name</td>
+<td><input type="text" name="lastName" id="txtLName" value="<%= lastName %>" onkeypress="if(event.keyCode==13){doSearch();return false;}" /></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>
+<div class="btn" onclick="doSearch()">Search</div>
+<div class="btn" onclick="doClear()">Clear</div>
+</td>
+</tr>
+</table>
+</form>
+
+<% if (searched) { %>
+<p><%= totalCount %> record(s) found</p>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr><td>
+<% if (totalCount === 0) { %>
+<table border="1" cellspacing="0" cellpadding="3">
+<tr><td class="msg">No records found.</td></tr>
+</table>
+<% } else { %>
+<table border="1" cellspacing="0" cellpadding="3" width="100%">
+<tr>
+<td class="hdr"><b><%= tenant.memberIdLabel %></b></td>
+<td class="hdr"><b>Name</b></td>
+<td class="hdr"><b>Joined</b></td>
+<td class="hdr"><b>Status</b></td>
+</tr>
+<% results.forEach(function(m, i) { %>
+<% var rowColor = (i % 2 === 0) ? '#FFFFFF' : '#EEEEEE'; %>
+<tr bgcolor="<%= rowColor %>" style="cursor:pointer" onclick="$$go('/members/<%= m.id %>')" onmouseover="this.bgColor='#FFFFCC'" onmouseout="this.bgColor='<%= rowColor %>'">
+<td><%= m.id %></td>
+<td><%= fullName(m) %></td>
+<td><%= m.joinDate %></td>
+<td>Active</td>
+</tr>
+<% }); %>
+</table>
+<% } %>
+</td></tr>
+</table>
+
+<% if (hasPrev || hasNext) { %>
+<p>
+<% if (hasPrev) { %><a href="/members/search?lastName=<%= encodeURIComponent(lastName) %>&memberId=<%= encodeURIComponent(memberId) %>&page=<%= page - 1 %>">&lt;&lt; Prev</a><% } %>
+<% if (hasPrev && hasNext) { %> | <% } %>
+<% if (hasNext) { %><a href="/members/search?lastName=<%= encodeURIComponent(lastName) %>&memberId=<%= encodeURIComponent(memberId) %>&page=<%= page + 1 %>">Next &gt;&gt;</a><% } %>
+</p>
+<% } %>
+<% } %>
+
+<%- include('partials/interstitial') %>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<% const selectedType = accountTypes.find(function (t) { return t.code === values.accountType; }); %>
+<!doctype html>
+<html>
+<head>
+<%- include('partials/cu-agent') %>
+<meta charset="utf-8">
+<title>Open Sub-Account</title>
+<link rel="stylesheet" href="/static/css/bs2.css">
+<style>
+  /* Widget-specific fallback styling: custom account-type dropdown (no <select> in this era). */
+  .cw-dd { position: relative; width: 240px; }
+  .cw-dd-toggle { border: 1px solid #ccc; background: #fff; padding: 4px 8px; cursor: pointer; }
+  .cw-dd-menu { position: absolute; top: 100%; left: 0; z-index: 1000; background: #fff; border: 1px solid #ccc;
+                margin: 0; padding: 0; list-style: none; min-width: 100%; }
+  .cw-dd-menu li { padding: 4px 8px; cursor: pointer; white-space: nowrap; }
+  .cw-dd-menu li:hover { background: #eeeeee; }
+  .cw-dd-menu li.selected { font-weight: bold; background: #e6e6e6; }
+  .cw-required { color: #c00000; }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="/workstation"><%= PRODUCT %></a>
+    <ul class="nav">
+      <li><a href="/members/search" onclick="return confirmLeave()">Member Search</a></li>
+      <li><a href="/members/<%= member.id %>" onclick="return confirmLeave()">Member Detail</a></li>
+      <li><a href="/members/<%= member.id %>?tab=accounts" onclick="return confirmLeave()">Accounts</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="container">
+  <h2>Open New Sub-Account</h2>
+  <p>Member: <%= fullName(member) %> (#<%= member.id %>)</p>
+
+  <% if (errors.length > 0) { %>
+    <ul class="errors">
+      <% errors.forEach(function (msg) { %>
+      <li><%= msg %></li>
+      <% }); %>
+    </ul>
+  <% } %>
+
+  <div class="well">
+    <form id="frmSub" class="form-horizontal" method="post" action="/members/<%= member.id %>/subaccounts" onsubmit="return false">
+
+      <div class="control-group">
+        <label class="control-label">Account Type</label>
+        <div class="controls">
+          <div class="cw-dd" id="ddAcctType">
+            <div class="cw-dd-toggle" onclick="ddToggle()"><span class="cw-dd-text"><%= selectedType ? selectedType.label : '-- Select --' %></span> <b class="caret"></b></div>
+            <ul class="cw-dd-menu dropdown-menu" style="display:none">
+              <% accountTypes.forEach(function (t) { %>
+              <li data-value="<%= t.code %>" class="<%= t.code === values.accountType ? 'selected' : '' %>" onclick="ddPick(this)"><%= t.label %></li>
+              <% }); %>
+            </ul>
+            <input type="hidden" name="accountType" id="hidAcctType" value="<%= values.accountType %>">
+          </div>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Nickname</label>
+        <div class="controls">
+          <input type="text" name="nickname" maxlength="40" value="<%= values.nickname %>" oninput="markDirty()" onchange="markDirty()">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Initial Deposit</label>
+        <div class="controls">
+          <div class="input-prepend">
+            <span class="add-on">$</span><input type="text" name="initialDeposit" id="initialDeposit" class="span2" value="<%= values.initialDeposit %>" oninput="markDirty()" onchange="markDirty()">
+          </div>
+        </div>
+      </div>
+
+      <% if (tenant.requireBranchCode) { %>
+      <div class="control-group">
+        <label class="control-label">Branch code <span class="cw-required">*</span></label>
+        <div class="controls">
+          <input type="text" name="branchCode" maxlength="3" value="<%= values.branchCode %>" oninput="markDirty()" onchange="markDirty()">
+          <span class="help-inline">3-digit branch code</span>
+        </div>
+      </div>
+      <% } %>
+
+      <div class="control-group">
+        <div class="controls">
+          <a href="javascript:void(0)" class="btn btn-primary" id="btnContinue" onclick="openConfirm()">Continue</a>
+          <a class="btn" href="/members/<%= member.id %>?tab=accounts" onclick="return confirmLeave()">Cancel</a>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="cfmBackdrop" style="display:none"></div>
+<div class="modal" id="cfmModal" style="display:none">
+  <div class="modal-header"><h3>Confirm New Sub-Account</h3></div>
+  <div class="modal-body">Open a <b id="cfmType"></b> sub-account for <%= fullName(member) %> with an initial deposit of <b id="cfmAmt"></b>?</div>
+  <div class="modal-footer">
+    <div class="btn" id="cfmCancel" onclick="closeConfirm()">Cancel</div>
+    <div class="btn btn-primary" id="cfmOk" onclick="doConfirm()">Confirm</div>
+  </div>
+</div>
+
+<script>
+  var dirty = <%- (errors.length > 0 && (values.accountType || values.nickname || values.initialDeposit || values.branchCode)) ? 'true' : 'false' %>;
+
+  function markDirty() { dirty = true; }
+
+  function ddToggle() {
+    var menu = document.querySelector('#ddAcctType .cw-dd-menu');
+    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+  }
+
+  function ddPick(li) {
+    var value = li.getAttribute('data-value');
+    document.getElementById('hidAcctType').value = value;
+    document.querySelector('#ddAcctType .cw-dd-text').textContent = li.textContent;
+    var sibs = li.parentNode.children;
+    for (var i = 0; i < sibs.length; i++) { sibs[i].className = ''; }
+    li.className = 'selected';
+    document.querySelector('#ddAcctType .cw-dd-menu').style.display = 'none';
+    dirty = true;
+  }
+
+  document.addEventListener('click', function (e) {
+    var dd = document.getElementById('ddAcctType');
+    if (dd && !dd.contains(e.target)) {
+      var menu = dd.querySelector('.cw-dd-menu');
+      if (menu) menu.style.display = 'none';
+    }
+  });
+
+  function confirmLeave() {
+    if (!dirty) return true;
+    return window.confirm("You have unsaved changes. Leave this page?");
+  }
+
+  function openConfirm() {
+    var typeText = document.querySelector('#ddAcctType .cw-dd-text').textContent;
+    var amt = document.getElementById('initialDeposit').value;
+    document.getElementById('cfmType').textContent = typeText;
+    document.getElementById('cfmAmt').textContent = '$' + amt;
+    document.getElementById('cfmBackdrop').style.display = 'block';
+    document.getElementById('cfmModal').style.display = 'block';
+  }
+
+  function closeConfirm() {
+    document.getElementById('cfmBackdrop').style.display = 'none';
+    document.getElementById('cfmModal').style.display = 'none';
+  }
+
+  function doConfirm() {
+    dirty = false;
+    document.getElementById('frmSub').submit();
+  }
+
+</script>
+
+<%- include('partials/interstitial') %>
+</body>
+</html>

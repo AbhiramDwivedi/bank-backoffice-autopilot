@@ -1,0 +1,6 @@
+operator console: http://127.0.0.1:61569
+run dir: runs-live/ev/discovery-desktop/run_20261001_osr4cfne
+Capability teller-lookup-savings-balance@1.0.0 FAILED at step s06 ("Search for the member record") with checkpoint_failed: step s06 postcondition not met. Expected: text "Savings" visible in frame top document. Observed: Teller Workstation - Member Lookup [MASKED] MEMBER LOOKUP Member ID: Find Sign Off No member found with ID 99999.. Evidence: shots/33.png, dom/33.html. Recoveries: none. Locator drift: none.
+result: runs-live/ev/discovery-desktop/run_20261001_osr4cfne/result.json
+control: automation
+exit code: 4

@@ -1,0 +1,10 @@
+  warning steps.3: [redundant_repeated_step] step "s04" repeats step "s03" exactly (the same idempotent write to the same target with the same value); it is redundant -- `cu optimize` collapses it
+  warning businessOutcomes.0.detector: [unbound_outcome_detector] business outcome "member_not_found" is detected after step "s07", which submits what step "s06" filled from input "memberId", but its detector binds no input: a page that lost that state (an expired session, an emptied form) matches it too, and the run would report "member_not_found" for an input it never submitted. Bind the detector to the input (for example a url_matches on {input.memberId}), or add an input-bound checkpoint between "s06" and "s07".
+optimize: analysis only: the capability is not declared read-only, so nothing was replayed or rewritten; to let the optimizer replay it, declare the capability read-only (`cu optimize --read-only`, `discover --read-only`) -- an assertion that replaying it, whole or with steps removed, changes nothing in the target app
+optimize: analysis only: the capability is not declared read-only, so nothing was replayed or rewritten; to let the optimizer replay it, declare the capability read-only (`cu optimize --read-only`, `discover --read-only`) -- an assertion that replaying it, whole or with steps removed, changes nothing in the target app
+  - would try collapsing s04 into s03 (exact repeat)
+  - would probe the checkpoints of s02, s04, s07, s08 for vacuity
+  - would try removing s01, s02, s03, s04, s05
+analysis only; nothing written
+report: runs-live/ev/optimizer/optimize-run_20261001_tjsq0obu/optimize.json
+exit code: 0

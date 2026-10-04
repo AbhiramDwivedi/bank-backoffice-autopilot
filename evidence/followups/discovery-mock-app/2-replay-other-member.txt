@@ -1,0 +1,6 @@
+operator console: http://127.0.0.1:57558
+run dir: runs-live/ev/discovery-mock-app/run_20261001_52tqt7ui
+Capability lookup-member-savings-balance@1.0.0 succeeded in 9 steps (2.2s): savingsBalance=12500, memberName="Denise M. Kowalczyk". Recoveries: dismiss_system_maintenance_notice. Locator drift: none.
+result: runs-live/ev/discovery-mock-app/run_20261001_52tqt7ui/result.json
+control: automation
+exit code: 0

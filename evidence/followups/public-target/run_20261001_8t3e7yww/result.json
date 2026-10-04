@@ -1,0 +1,40 @@
+{
+  "runId": "run_20261001_8t3e7yww",
+  "capabilityId": "read-product-price",
+  "capabilityVersion": "1.0.0",
+  "capabilityDigest": "sha256:b019e761bdfc40fbc399e844948868abea31c6233da28ab49d22aae6b903b4fd",
+  "stepsExecuted": 6,
+  "durationMs": 1673,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "role",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "role",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "text",
+      "fallbackDepth": 1
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [],
+  "kind": "success",
+  "outputs": {
+    "price": 9.99
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@cu/core",
+  "version": "0.1.0",
+  "description": "Capability discovery, replay, policy, session and evidence domain for computer-use automation",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./schema": "./src/schema/index.ts",
+    "./surface": "./src/surface/index.ts",
+    "./agent": "./src/agent/index.ts",
+    "./agent/test-helpers": "./src/agent/test-helpers.ts",
+    "./replay": "./src/replay/index.ts",
+    "./optimize": "./src/optimize/index.ts",
+    "./policy": "./src/policy/index.ts",
+    "./session": "./src/session/index.ts",
+    "./evidence": "./src/evidence/index.ts",
+    "./credentials": "./src/credentials/index.ts"
+  },
+  "dependencies": {
+    "nanoid": "^6.0.1",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@cu/mock-app": "*"
+  },
+  "scripts": {
+    "test": "vitest run --root ../.. --project core",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "schema:export": "tsx src/schema/export.ts"
+  }
+}

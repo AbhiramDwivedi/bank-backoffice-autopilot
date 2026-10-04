@@ -1,0 +1,923 @@
+{
+  "schemaVersion": "1.0",
+  "id": "lookup-member-savings-balance",
+  "version": "1.2.2",
+  "name": "Lookup Member Savings Balance",
+  "description": "Log in to the workstation, look up member {memberId} and read their current savings balance and member name.",
+  "app": {
+    "vendor": "Acme Core Systems",
+    "product": "CU Core Workstation",
+    "surface": "web",
+    "entryUrl": "{baseUrl}/login"
+  },
+  "status": "approved",
+  "riskLevel": "reversible",
+  "inputs": {
+    "memberId": {
+      "type": "string",
+      "description": "\"memberId\" (supplied on the command line)",
+      "required": true,
+      "sensitive": false,
+      "pattern": "^\\d+$"
+    }
+  },
+  "outputs": {
+    "savingsBalance": {
+      "type": "number",
+      "description": "\"savingsBalance\" (declared on the command line)"
+    },
+    "memberName": {
+      "type": "string",
+      "description": "\"memberName\" (declared on the command line)"
+    }
+  },
+  "steps": [
+    {
+      "id": "s01",
+      "name": "Open the entry page",
+      "action": {
+        "type": "navigate",
+        "url": "{baseUrl}/login"
+      },
+      "risk": "read"
+    },
+    {
+      "id": "s02",
+      "name": "Enter the operator user ID",
+      "action": {
+        "type": "type",
+        "target": {
+          "description": "textbox \"User ID\" (<input>)",
+          "frame": [],
+          "locators": [
+            {
+              "strategy": {
+                "kind": "label",
+                "label": "User ID",
+                "exact": true
+              },
+              "confidence": 0.8,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "relative",
+                "anchor": {
+                  "text": "User ID"
+                },
+                "relation": "right-of",
+                "role": "textbox",
+                "tag": "input"
+              },
+              "confidence": 0.5,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "css",
+                "selector": "input[type=\"text\"][name=\"userId\"]"
+              },
+              "confidence": 0.3,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "bbox",
+                "x": 0.44234619140625,
+                "y": 0.16125,
+                "w": 0.13828125,
+                "h": 0.02625
+              },
+              "confidence": 0.1,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": {
+            "tag": "input",
+            "role": "textbox",
+            "name": "User ID",
+            "text": ""
+          }
+        },
+        "value": {
+          "kind": "secret",
+          "env": "MOCK_USER"
+        },
+        "clear": true
+      },
+      "postcondition": {
+        "kind": "text_visible",
+        "text": "Password:",
+        "frame": []
+      },
+      "risk": "reversible"
+    },
+    {
+      "id": "s03",
+      "name": "Enter the operator password",
+      "action": {
+        "type": "type",
+        "target": {
+          "description": "textbox \"Password\" (<input>)",
+          "frame": [],
+          "locators": [
+            {
+              "strategy": {
+                "kind": "label",
+                "label": "Password",
+                "exact": true
+              },
+              "confidence": 0.8,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "relative",
+                "anchor": {
+                  "text": "Password"
+                },
+                "relation": "right-of",
+                "role": "textbox",
+                "tag": "input"
+              },
+              "confidence": 0.5,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "css",
+                "selector": "input[type=\"password\"][name=\"password\"]"
+              },
+              "confidence": 0.3,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "bbox",
+                "x": 0.44234619140625,
+                "y": 0.2175,
+                "w": 0.13828125,
+                "h": 0.02625
+              },
+              "confidence": 0.1,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": {
+            "tag": "input",
+            "role": "textbox",
+            "name": "Password",
+            "text": ""
+          }
+        },
+        "value": {
+          "kind": "secret",
+          "env": "MOCK_PASSWORD"
+        },
+        "clear": true
+      },
+      "risk": "reversible"
+    },
+    {
+      "id": "s04",
+      "name": "Enter the operator password",
+      "action": {
+        "type": "type",
+        "target": {
+          "description": "textbox \"Password\" (<input>)",
+          "frame": [],
+          "locators": [
+            {
+              "strategy": {
+                "kind": "label",
+                "label": "Password",
+                "exact": true
+              },
+              "confidence": 0.8,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "relative",
+                "anchor": {
+                  "text": "Password"
+                },
+                "relation": "right-of",
+                "role": "textbox",
+                "tag": "input"
+              },
+              "confidence": 0.5,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "css",
+                "selector": "input[type=\"password\"][name=\"password\"]"
+              },
+              "confidence": 0.3,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "bbox",
+                "x": 0.44234619140625,
+                "y": 0.2175,
+                "w": 0.13828125,
+                "h": 0.02625
+              },
+              "confidence": 0.1,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": {
+            "tag": "input",
+            "role": "textbox",
+            "name": "Password",
+            "text": ""
+          }
+        },
+        "value": {
+          "kind": "secret",
+          "env": "MOCK_PASSWORD"
+        },
+        "clear": true
+      },
+      "postcondition": {
+        "kind": "text_visible",
+        "text": "Password:",
+        "frame": []
+      },
+      "risk": "reversible"
+    },
+    {
+      "id": "s05",
+      "name": "Sign on to the workstation",
+      "action": {
+        "type": "click",
+        "target": {
+          "description": "button \"login\" (<input>)",
+          "frame": [],
+          "locators": [
+            {
+              "strategy": {
+                "kind": "css",
+                "selector": "input[type=\"image\"][name=\"login\"]"
+              },
+              "confidence": 0.3,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "bbox",
+                "x": 0.46484375,
+                "y": 0.26875,
+                "w": 0.0703125,
+                "h": 0.03
+              },
+              "confidence": 0.1,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": {
+            "tag": "input",
+            "role": "button",
+            "name": "login",
+            "text": ""
+          }
+        }
+      },
+      "risk": "reversible"
+    },
+    {
+      "id": "s06",
+      "name": "Enter the member ID to look up",
+      "action": {
+        "type": "type",
+        "target": {
+          "description": "textbox \"Member ID\" (<input>)",
+          "frame": [
+            {
+              "name": "main"
+            }
+          ],
+          "locators": [
+            {
+              "strategy": {
+                "kind": "label",
+                "label": "Member ID",
+                "exact": true
+              },
+              "confidence": 0.8,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "relative",
+                "anchor": {
+                  "text": "Member ID"
+                },
+                "relation": "right-of",
+                "role": "textbox",
+                "tag": "input"
+              },
+              "confidence": 0.5,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "css",
+                "selector": "input[type=\"text\"][name=\"memberId\"]"
+              },
+              "confidence": 0.3,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "bbox",
+                "x": 0.06157094594594595,
+                "y": 0.12243150684931507,
+                "w": 0.12522522522522522,
+                "h": 0.026027397260273973
+              },
+              "confidence": 0.1,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": {
+            "tag": "input",
+            "role": "textbox",
+            "name": "Member ID",
+            "text": ""
+          }
+        },
+        "value": {
+          "kind": "input",
+          "name": "memberId"
+        },
+        "clear": true
+      },
+      "risk": "reversible"
+    },
+    {
+      "id": "s07",
+      "name": "Search for the member by ID",
+      "action": {
+        "type": "click",
+        "target": {
+          "description": "clickable \"Search\" (<div>)",
+          "frame": [
+            {
+              "name": "main"
+            }
+          ],
+          "locators": [
+            {
+              "strategy": {
+                "kind": "text",
+                "text": "Search",
+                "exact": true,
+                "tag": "div"
+              },
+              "confidence": 0.7,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "relative",
+                "anchor": {
+                  "text": "Quick find:"
+                },
+                "relation": "below",
+                "tag": "div"
+              },
+              "confidence": 0.5,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "css",
+                "selector": "td:nth-of-type(2) > div:nth-of-type(1)"
+              },
+              "confidence": 0.3,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "bbox",
+                "x": 0.06157094594594595,
+                "y": 0.18544520547945206,
+                "w": 0.05301238738738739,
+                "h": 0.028767123287671233
+              },
+              "confidence": 0.1,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": {
+            "tag": "div",
+            "role": "clickable",
+            "name": "Search",
+            "text": "Search"
+          }
+        }
+      },
+      "postcondition": {
+        "kind": "all",
+        "of": [
+          {
+            "kind": "text_visible",
+            "text": "Member",
+            "frame": [
+              {
+                "name": "main"
+              }
+            ]
+          },
+          {
+            "kind": "url_matches",
+            "pattern": "[?&]memberId={input.memberId}(?![A-Za-z0-9])",
+            "frame": [
+              {
+                "name": "main"
+              }
+            ]
+          }
+        ]
+      },
+      "risk": "reversible"
+    },
+    {
+      "id": "s08",
+      "name": "Open the member record for the searched member",
+      "action": {
+        "type": "click",
+        "target": {
+          "description": "clickable \"{input.memberId}\" (<tr>)",
+          "frame": [
+            {
+              "name": "main"
+            }
+          ],
+          "locators": [
+            {
+              "strategy": {
+                "kind": "text",
+                "text": "{input.memberId}",
+                "exact": true
+              },
+              "confidence": 0.7,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "relative",
+                "anchor": {
+                  "text": "Member ID Name Joined Status"
+                },
+                "relation": "below",
+                "tag": "tr"
+              },
+              "confidence": 0.5,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "css",
+                "selector": "td > table > tbody > tr:nth-of-type(2)"
+              },
+              "confidence": 0.3,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "bbox",
+                "x": 0.008108108108108109,
+                "y": 0.29503424657534244,
+                "w": 0.9837837837837838,
+                "h": 0.028767123287671233
+              },
+              "confidence": 0.1,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": {
+            "tag": "tr",
+            "role": "clickable",
+            "name": "{input.memberId}",
+            "text": "{input.memberId}"
+          }
+        }
+      },
+      "postcondition": {
+        "kind": "all",
+        "of": [
+          {
+            "kind": "text_visible",
+            "text": "Savings",
+            "frame": [
+              {
+                "name": "main"
+              }
+            ]
+          },
+          {
+            "kind": "url_matches",
+            "pattern": "/members/{input.memberId}(?![A-Za-z0-9])",
+            "frame": [
+              {
+                "name": "main"
+              }
+            ]
+          }
+        ]
+      },
+      "risk": "reversible"
+    },
+    {
+      "id": "s09",
+      "name": "Read the member's current savings balance",
+      "action": {
+        "type": "extract",
+        "target": {
+          "description": "cell right of \"Savings Balance\" (<td>)",
+          "frame": [
+            {
+              "name": "main"
+            }
+          ],
+          "locators": [
+            {
+              "strategy": {
+                "kind": "relative",
+                "anchor": {
+                  "text": "Savings Balance"
+                },
+                "relation": "right-of",
+                "tag": "td"
+              },
+              "confidence": 0.5,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "css",
+                "selector": "tr:nth-of-type(6) > td:nth-of-type(2)"
+              },
+              "confidence": 0.3,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "bbox",
+                "x": 0.14954954954954955,
+                "y": 0.24366438356164383,
+                "w": 0.16670889639639638,
+                "h": 0.0273972602739726
+              },
+              "confidence": 0.1,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": {
+            "tag": "td",
+            "role": "cell"
+          }
+        },
+        "output": "savingsBalance",
+        "parse": "currency"
+      },
+      "risk": "read"
+    },
+    {
+      "id": "s10",
+      "name": "Read the member's name",
+      "action": {
+        "type": "extract",
+        "target": {
+          "description": "cell right of \"Member Name\" (<td>)",
+          "frame": [
+            {
+              "name": "main"
+            }
+          ],
+          "locators": [
+            {
+              "strategy": {
+                "kind": "relative",
+                "anchor": {
+                  "text": "Member Name"
+                },
+                "relation": "right-of",
+                "tag": "td"
+              },
+              "confidence": 0.5,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "css",
+                "selector": "div:nth-of-type(1) > table > tbody > tr:nth-of-type(1) > td:nth-of-type(2)"
+              },
+              "confidence": 0.3,
+              "source": "inferred"
+            },
+            {
+              "strategy": {
+                "kind": "bbox",
+                "x": 0.14954954954954955,
+                "y": 0.10667808219178082,
+                "w": 0.16670889639639638,
+                "h": 0.0273972602739726
+              },
+              "confidence": 0.1,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": {
+            "tag": "td",
+            "role": "cell"
+          }
+        },
+        "output": "memberName",
+        "parse": "text"
+      },
+      "risk": "read"
+    }
+  ],
+  "success": {
+    "condition": {
+      "kind": "all",
+      "of": [
+        {
+          "kind": "text_visible",
+          "text": "Savings Balance",
+          "frame": [
+            {
+              "name": "main"
+            }
+          ]
+        },
+        {
+          "kind": "url_matches",
+          "pattern": "/members/{input.memberId}(?![A-Za-z0-9])",
+          "frame": [
+            {
+              "name": "main"
+            }
+          ]
+        }
+      ]
+    },
+    "description": "Logged in to the CU Core Workstation, searched for member {input.memberId}, opened their profile, and read Savings Balance ({output.savingsBalance}) and Member Name ({output.memberName})."
+  },
+  "businessOutcomes": [
+    {
+      "name": "member_not_found",
+      "description": "The member ID searched does not match any member record; the search results area reports zero records instead of showing member details and savings balance.",
+      "detector": {
+        "kind": "text_visible",
+        "text": "No records found.",
+        "frame": [
+          {
+            "name": "main"
+          }
+        ]
+      },
+      "afterSteps": [
+        "s07"
+      ],
+      "returns": {
+        "recordCountMessage": {
+          "type": "string",
+          "description": "The not-found message shown in the search results area"
+        }
+      },
+      "extract": [
+        {
+          "output": "recordCountMessage",
+          "target": {
+            "description": "cell \"No records found.\" (<td>)",
+            "frame": [
+              {
+                "name": "main"
+              }
+            ],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "relative",
+                  "anchor": {
+                    "text": "0 record(s) found"
+                  },
+                  "relation": "below",
+                  "tag": "td"
+                },
+                "confidence": 0.5,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "css",
+                  "selector": "td > table > tbody > tr > td"
+                },
+                "confidence": 0.3,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "bbox",
+                  "x": 0.008108108108108109,
+                  "y": 0.2662671232876712,
+                  "w": 0.10126689189189189,
+                  "h": 0.036986301369863014
+                },
+                "confidence": 0.1,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "td",
+              "role": "cell",
+              "name": "No records found.",
+              "text": "No records found."
+            }
+          },
+          "parse": "text"
+        }
+      ]
+    },
+    {
+      "name": "member_access_denied",
+      "description": "The operator's role does not permit viewing this member record, so no savings balance or member name is shown.",
+      "detector": {
+        "kind": "text_visible",
+        "text": "Access Denied: your role does not permit viewing this member.",
+        "frame": [
+          {
+            "name": "main"
+          }
+        ]
+      },
+      "afterSteps": [
+        "s08"
+      ],
+      "returns": {}
+    }
+  ],
+  "recoveryRules": [
+    {
+      "name": "dismiss_system_maintenance_notice",
+      "description": "Dismiss the maintenance notice blocking the member search form",
+      "trigger": {
+        "kind": "text_visible",
+        "text": "Scheduled maintenance Sunday 02:00–04:00 ET. Some functions may be unavailable.",
+        "frame": [
+          {
+            "name": "main"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "click",
+          "target": {
+            "description": "clickable \"OK\" (<div>)",
+            "frame": [
+              {
+                "name": "main"
+              }
+            ],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "relative",
+                  "anchor": {
+                    "text": "Scheduled maintenance Sunday 02:00–04:00 ET. Some functions may be unavailable."
+                  },
+                  "relation": "below",
+                  "tag": "div"
+                },
+                "confidence": 0.5,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "css",
+                  "selector": "div:nth-of-type(3) > div"
+                },
+                "confidence": 0.3,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "bbox",
+                  "x": 0.5993102477477478,
+                  "y": 0.33232020547945207,
+                  "w": 0.0502393018018018,
+                  "h": 0.03424657534246575
+                },
+                "confidence": 0.1,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "div",
+              "role": "clickable",
+              "name": "OK",
+              "text": "OK"
+            }
+          }
+        },
+        {
+          "type": "wait",
+          "condition": {
+            "kind": "text_absent",
+            "text": "Scheduled maintenance Sunday 02:00–04:00 ET. Some functions may be unavailable.",
+            "frame": [
+              {
+                "name": "main"
+              }
+            ]
+          },
+          "timeoutMs": 5000
+        }
+      ],
+      "maxAttempts": 2
+    }
+  ],
+  "provenance": {
+    "discoveredAt": "2026-09-26T15:28:30.927Z",
+    "discoveryRunId": "run_20260926_pzjvoie3",
+    "recordedBy": "llm",
+    "model": "claude-opus-5",
+    "notes": "Extended by discovery run run_20260926_w3zhxokg at 2026-09-26T15:30:52.873Z (claude-opus-5): added outcomes member_not_found.\nExtended by discovery run run_20260926_2mv3uybz at 2026-09-26T15:32:13.505Z (claude-opus-5): added outcomes member_access_denied. Tenant override riverbend-fcu authored by hand on 2026-09-26 after observing locator drift (depth 2) on tenant B.\nApproved by Abhiram Dwivedi on 2026-09-26T15:33:26.893Z: Replayed on both tenants; not-found and access-denied outcomes verified; checkpoints bound to the member id."
+  },
+  "overrides": [
+    {
+      "tenant": "riverbend-fcu",
+      "stepPatches": [
+        {
+          "stepId": "s06",
+          "target": {
+            "description": "textbox \"Member #\" (<input>), the tenant B label for the member ID field",
+            "frame": [
+              {
+                "name": "main"
+              }
+            ],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "label",
+                  "label": "Member #",
+                  "exact": true
+                },
+                "confidence": 0.8,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "relative",
+                  "anchor": {
+                    "text": "Member #"
+                  },
+                  "relation": "right-of",
+                  "role": "textbox",
+                  "tag": "input"
+                },
+                "confidence": 0.5,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "css",
+                  "selector": "input[type=\"text\"][name=\"memberId\"]"
+                },
+                "confidence": 0.3,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "bbox",
+                  "x": 0.06157094594594595,
+                  "y": 0.12243150684931507,
+                  "w": 0.12522522522522522,
+                  "h": 0.026027397260273973
+                },
+                "confidence": 0.1,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "input",
+              "role": "textbox",
+              "name": "Member ID",
+              "text": ""
+            }
+          }
+        }
+      ],
+      "notes": "Riverbend labels the member ID field \"Member #\" and hosts the workstation in an iframe named main; the frame path is unchanged. Authored after a tenant B replay resolved s06 through a fallback locator (drift depth 2)."
+    }
+  ]
+}

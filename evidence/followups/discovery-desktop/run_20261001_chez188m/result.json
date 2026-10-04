@@ -1,0 +1,45 @@
+{
+  "runId": "run_20261001_chez188m",
+  "capabilityId": "teller-lookup-savings-balance",
+  "capabilityVersion": "1.0.0-optimize.1",
+  "capabilityDigest": "sha256:a53e72f0c77369089bc98b31dd8c2730c2f59e9e89273527673bd7c0dc17fc75",
+  "stepsExecuted": 7,
+  "durationMs": 2798,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "automation_id",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "automation_id",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "role",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s07",
+      "strategyKind": "automation_id",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [],
+  "kind": "success",
+  "outputs": {
+    "savingsBalance": "[REDACTED]"
+  }
+}

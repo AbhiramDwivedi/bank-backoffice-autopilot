@@ -1,0 +1,106 @@
+{
+  "capabilityId": "teller-lookup-savings-balance",
+  "versionBefore": "1.0.0",
+  "versionAfter": "1.0.0",
+  "readOnly": true,
+  "stop": "completed",
+  "vetoes": [],
+  "analysis": {
+    "redundantRepeats": [],
+    "checkpointsToProbe": [
+      "s04",
+      "s06"
+    ],
+    "removalCandidates": [
+      "s01",
+      "s02",
+      "s03",
+      "s04",
+      "s06"
+    ]
+  },
+  "changed": false,
+  "stepsBefore": 7,
+  "stepsAfter": 7,
+  "changes": [],
+  "rejected": [
+    {
+      "stepId": "s06",
+      "reason": "hard_failure: element_not_found at s07: step s07: target not found: textbox \"Savings Balance\" (edit)"
+    }
+  ],
+  "kept": [
+    {
+      "stepId": "s01",
+      "reason": "invalid_without",
+      "what": "step"
+    },
+    {
+      "stepId": "s02",
+      "reason": "invalid_without",
+      "what": "step"
+    },
+    {
+      "stepId": "s03",
+      "reason": "invalid_without",
+      "what": "step"
+    },
+    {
+      "stepId": "s04",
+      "reason": "invalid_without",
+      "what": "step"
+    },
+    {
+      "stepId": "s05",
+      "reason": "last_input_use",
+      "what": "step"
+    },
+    {
+      "stepId": "s07",
+      "reason": "last_extract",
+      "what": "step"
+    }
+  ],
+  "irreversibleSteps": [],
+  "trialsUsed": 2,
+  "removalTrialsUsed": 1,
+  "maxTrials": 25,
+  "budgetExhausted": false,
+  "trials": [
+    {
+      "n": 1,
+      "purpose": "baseline",
+      "label": "baseline (unmodified capability)",
+      "kind": "success",
+      "runId": "run_20261001_chez188m",
+      "locatorDepth": 0
+    },
+    {
+      "n": 2,
+      "purpose": "removal",
+      "label": "remove s06",
+      "kind": "hard_failure",
+      "runId": "run_20261001_trlwo8w5",
+      "detail": "element_not_found at s07: step s07: target not found: textbox \"Savings Balance\" (edit)",
+      "locatorDepth": 0,
+      "accepted": false
+    }
+  ],
+  "notes": [
+    "verified against one input set (memberId) on desktop://tellerworkstation: a step that only matters for other inputs or another tenant can be removed wrongly -- review the draft and replay it more widely before approving"
+  ],
+  "probedTenant": "base",
+  "baseline": {
+    "kind": "success",
+    "outputNames": [
+      "savingsBalance"
+    ],
+    "matchesReference": true,
+    "runId": "run_20261001_chez188m"
+  },
+  "verification": {
+    "kept": "unchanged",
+    "required": 3,
+    "attempts": []
+  }
+}

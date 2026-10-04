@@ -1,0 +1,74 @@
+{
+  "runId": "run_20260926_it9g8xmp",
+  "capabilityId": "lookup-member-savings-balance",
+  "capabilityVersion": "1.2.2",
+  "stepsExecuted": 10,
+  "durationMs": 16415,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s07",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s08",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s09",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s10",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [
+    "dismiss_system_maintenance_notice"
+  ],
+  "kind": "escalated",
+  "interventionId": "int_20260926_g9mqekmn",
+  "stepId": "s06",
+  "reason": "session expired (page shows \"Your session has expired\") while step s06: target not found: textbox \"Member ID\" (<input>)",
+  "resolution": "resumed_success",
+  "outcome": {
+    "kind": "success",
+    "outputs": {
+      "savingsBalance": 1234.56,
+      "memberName": "Jane Q. Sample"
+    }
+  }
+}

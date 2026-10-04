@@ -1,0 +1,559 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ReplayResult",
+  "$defs": {
+    "ReplayResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "runId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "capabilityId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "capabilityVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "capabilityDigest": {
+              "type": "string"
+            },
+            "stepsExecuted": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "durationMs": {
+              "type": "number",
+              "minimum": 0
+            },
+            "locatorReport": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "stepId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "strategyKind": {
+                    "type": "string",
+                    "enum": [
+                      "role",
+                      "label",
+                      "text",
+                      "relative",
+                      "css",
+                      "bbox",
+                      "automation_id"
+                    ]
+                  },
+                  "fallbackDepth": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "stepId",
+                  "strategyKind",
+                  "fallbackDepth"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "recoveries": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "kind": {
+              "type": "string",
+              "const": "success"
+            },
+            "outputs": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ]
+              }
+            }
+          },
+          "required": [
+            "runId",
+            "capabilityId",
+            "capabilityVersion",
+            "stepsExecuted",
+            "durationMs",
+            "locatorReport",
+            "recoveries",
+            "kind",
+            "outputs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "runId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "capabilityId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "capabilityVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "capabilityDigest": {
+              "type": "string"
+            },
+            "stepsExecuted": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "durationMs": {
+              "type": "number",
+              "minimum": 0
+            },
+            "locatorReport": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "stepId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "strategyKind": {
+                    "type": "string",
+                    "enum": [
+                      "role",
+                      "label",
+                      "text",
+                      "relative",
+                      "css",
+                      "bbox",
+                      "automation_id"
+                    ]
+                  },
+                  "fallbackDepth": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "stepId",
+                  "strategyKind",
+                  "fallbackDepth"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "recoveries": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "kind": {
+              "type": "string",
+              "const": "business_outcome"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "data": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ]
+              }
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "runId",
+            "capabilityId",
+            "capabilityVersion",
+            "stepsExecuted",
+            "durationMs",
+            "locatorReport",
+            "recoveries",
+            "kind",
+            "name",
+            "data"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "runId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "capabilityId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "capabilityVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "capabilityDigest": {
+              "type": "string"
+            },
+            "stepsExecuted": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "durationMs": {
+              "type": "number",
+              "minimum": 0
+            },
+            "locatorReport": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "stepId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "strategyKind": {
+                    "type": "string",
+                    "enum": [
+                      "role",
+                      "label",
+                      "text",
+                      "relative",
+                      "css",
+                      "bbox",
+                      "automation_id"
+                    ]
+                  },
+                  "fallbackDepth": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "stepId",
+                  "strategyKind",
+                  "fallbackDepth"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "recoveries": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "kind": {
+              "type": "string",
+              "const": "hard_failure"
+            },
+            "stepId": {
+              "type": "string"
+            },
+            "stepName": {
+              "type": "string"
+            },
+            "code": {
+              "type": "string",
+              "enum": [
+                "element_not_found",
+                "precondition_failed",
+                "checkpoint_failed",
+                "timeout",
+                "policy_violation",
+                "unexpected_dialog",
+                "session_expired",
+                "app_error",
+                "navigation_failed",
+                "input_validation",
+                "internal"
+              ]
+            },
+            "expected": {
+              "type": "string"
+            },
+            "observed": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "evidence": {
+              "type": "object",
+              "properties": {
+                "screenshot": {
+                  "type": "string"
+                },
+                "dom": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "runId",
+            "capabilityId",
+            "capabilityVersion",
+            "stepsExecuted",
+            "durationMs",
+            "locatorReport",
+            "recoveries",
+            "kind",
+            "code",
+            "expected",
+            "observed",
+            "message",
+            "evidence"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "runId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "capabilityId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "capabilityVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "capabilityDigest": {
+              "type": "string"
+            },
+            "stepsExecuted": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "durationMs": {
+              "type": "number",
+              "minimum": 0
+            },
+            "locatorReport": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "stepId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "strategyKind": {
+                    "type": "string",
+                    "enum": [
+                      "role",
+                      "label",
+                      "text",
+                      "relative",
+                      "css",
+                      "bbox",
+                      "automation_id"
+                    ]
+                  },
+                  "fallbackDepth": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "stepId",
+                  "strategyKind",
+                  "fallbackDepth"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "recoveries": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "kind": {
+              "type": "string",
+              "const": "escalated"
+            },
+            "interventionId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "stepId": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "resolution": {
+              "type": "string",
+              "enum": [
+                "resumed_success",
+                "resumed_failed",
+                "abandoned"
+              ]
+            },
+            "outcome": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "const": "success"
+                    },
+                    "outputs": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "outputs"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "const": "business_outcome"
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "name",
+                    "data"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "const": "hard_failure"
+                    },
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "element_not_found",
+                        "precondition_failed",
+                        "checkpoint_failed",
+                        "timeout",
+                        "policy_violation",
+                        "unexpected_dialog",
+                        "session_expired",
+                        "app_error",
+                        "navigation_failed",
+                        "input_validation",
+                        "internal"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "stepId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "code",
+                    "message"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "required": [
+            "runId",
+            "capabilityId",
+            "capabilityVersion",
+            "stepsExecuted",
+            "durationMs",
+            "locatorReport",
+            "recoveries",
+            "kind",
+            "interventionId",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://github.com/AbhiramDwivedi/understudy/schema/replay-result.json",
+  "title": "Replay Result"
+}

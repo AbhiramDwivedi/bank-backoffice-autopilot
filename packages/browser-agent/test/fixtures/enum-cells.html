@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Member Detail</title></head>
+<body>
+<h2>Member: Jane Q. Sample (#12345)</h2>
+
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td class="lbl">Member Name</td><td class="val">Jane Q. Sample</td></tr>
+<tr><td class="lbl">Savings Balance</td><td class="val">$1,234.56</td></tr>
+<tr><td class="lbl">Checking Balance</td><td class="val">$310.00</td></tr>
+</table>
+
+<p><font color="red">Invalid user ID or password.</font></p>
+
+<p>Reference: <b>SA-1000001</b></p>
+
+<table border="1" cellspacing="0" cellpadding="3" width="100%">
+<tr>
+<td class="hdr"><b>Member ID</b></td>
+<td class="hdr"><b>Name</b></td>
+<td class="hdr"><b>Joined</b></td>
+<td class="hdr"><b>Status</b></td>
+</tr>
+<tr bgcolor="#FFFFFF" style="cursor:pointer" onclick="location.hash='12345'">
+<td>12345</td><td>Jane Q. Sample</td><td>01/01/2020</td><td>Active</td>
+</tr>
+<tr bgcolor="#EEEEEE" style="cursor:pointer" onclick="location.hash='10002'">
+<td>10002</td><td>John Doe</td><td>02/02/2021</td><td>Active</td>
+</tr>
+</table>
+
+<table border="1" cellspacing="0" cellpadding="3">
+<tr><td class="msg">No records found.</td></tr>
+</table>
+
+<ul class="errors">
+<li>Please select an account type.</li>
+<li>Nickname must be 30 characters or fewer.</li>
+</ul>
+</body>
+</html>

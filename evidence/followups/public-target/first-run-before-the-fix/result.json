@@ -1,0 +1,24 @@
+{
+  "kind": "discovery",
+  "status": "max_steps",
+  "reason": "max_steps",
+  "outputs": {},
+  "runId": "run_20261001_jrx5qhg5",
+  "stepsRecorded": 11,
+  "llmCalls": 20,
+  "transcriptPath": "transcript.jsonl",
+  "riskJudge": {
+    "id": "anthropic:claude-haiku-4-5-20251001",
+    "mode": "enforce",
+    "calls": 5,
+    "cacheHits": 3,
+    "unavailable": 0,
+    "raised": 0
+  },
+  "llmUsage": {
+    "input": 49595,
+    "output": 8828,
+    "cacheRead": 87096,
+    "cacheWrite": 4584
+  }
+}

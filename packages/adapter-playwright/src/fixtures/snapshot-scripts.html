@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="refresh" content="3600; url=https://example.invalid/refresh-target">
+<title>Snapshot scripts</title>
+<script>window.__inlineRan = 'inline-script-body-marker';</script>
+<script src="/does-not-exist.js"></script>
+</head>
+<body onload="window.__bodyOnload = 1">
+  <h1 onclick="console.log('onclick-handler-marker')">Scripts fixture</h1>
+  <a id="js-link" href="  JaVaScript:console.log('js-href-marker')">js link</a>
+  <a id="ok-link" href="/safe-page.html">safe link</a>
+  <img id="pic" src="javascript:console.log('js-src-marker')" onerror="console.log('onerror-marker')" alt="pic">
+  <form action="javascript:console.log('js-action-marker')"><button formaction="javascript:console.log('js-formaction-marker')">Go</button></form>
+  <svg><script>console.log('svg-script-marker')</script><a xlink:href="javascript:console.log('xlink-marker')"><text>svg</text></a></svg>
+  <p style="color: red">styled text stays</p>
+</body>
+</html>

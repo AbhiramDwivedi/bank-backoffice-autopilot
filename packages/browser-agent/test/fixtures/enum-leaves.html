@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Leaf text blocks</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; }
+  .grid { display: grid; grid-template-columns: repeat(2, 300px); gap: 16px; padding: 16px; }
+  .card { display: flex; flex-direction: column; gap: 6px; border: 1px solid #ccc; padding: 8px; }
+  .pricebar { display: flex; justify-content: space-between; align-items: center; }
+  .hidden { display: none; }
+  .zero { width: 0; height: 0; overflow: hidden; }
+  #misc { padding: 16px; }
+</style>
+<script>window.__scriptText = 'Script text';</script>
+</head>
+<body>
+<!-- Modern, non-table markup: product cards whose name is a <div> inside a link, then a
+     description <div>, then a price <div> next to a button. Below, one case per leaf rule. -->
+<h1>Catalog</h1>
+<div class="grid">
+  <div class="card"><a href="#a"><div class="name">Canvas Backpack</div></a><div class="desc">Water-resistant canvas pack.</div><div class="pricebar"><div class="price">$29.99</div><button class="btn add">Add to cart</button></div></div>
+  <div class="card"><a href="#b"><div class="name">Bike Light</div></a><div class="desc">Rechargeable front light.</div><div class="pricebar"><div class="price">$9.99</div><button class="btn add">Add to cart</button></div></div>
+  <div class="card"><a href="#c"><div class="name">Fleece Jacket</div></a><div class="desc">Midweight fleece.</div><div class="pricebar"><div class="price">$49.99</div><button class="btn add">Add to cart</button></div></div>
+</div>
+<!-- A card nested in a card (a set holding a mug), and a card with a struck-through list price
+     above its sale price, both in the price class. -->
+<div class="grid">
+  <div class="card"><a href="#g"><div class="name">Gift Set</div></a><div class="desc">Boxed, holds a mug.</div>
+    <div class="card"><a href="#m"><div class="name">Mini Mug</div></a><div class="pricebar"><div class="price">$3.00</div></div></div>
+  </div>
+  <div class="card"><a href="#t"><div class="name">Trail Tent</div></a><div class="desc">Two-person tent.</div><div class="pricebar"><div class="price"><s>$120.00</s></div><div class="price">$80.00</div></div></div>
+</div>
+<!-- Row anchors: a data row of three cells (the cell left of "View" is an e-mail, not a label),
+     a two-cell label/value row, and a label ending in a colon. -->
+<table class="people" border="1"><tr><th>Name</th><th>E-mail</th><th></th></tr>
+<tr><td>Al Smithers</td><td>al.sm@example.test</td><td><button class="view">View</button></td></tr>
+<tr><td>Bo Lee</td><td>bo.l@example.test</td><td><button class="view">View</button></td></tr></table>
+<table class="kv"><tr><td>Plan</td><td>Gold</td></tr></table>
+<table class="kv3"><tr><td>Renewal:</td><td>Annual</td><td>auto</td></tr></table>
+<section id="misc">
+  <p id="total">Total: <b>$88.97</b></p>
+  <p id="sentence">Ships in <em>two</em> days.</p>
+  <p id="balance">Balance <span class="amount">$12.00</span></p>
+  <div id="wrap"><span>Wrapped text</span></div>
+  <dl><dt>Status</dt><dd>Shipped</dd></dl>
+  <ul class="tags"><li>Outdoor</li></ul>
+  <time datetime="2026-09-30">Sep 30, 2026</time>
+  <div role="status" id="msg">Saved your changes</div>
+  <div id="sep">|</div>
+  <div class="hidden">Hidden text</div>
+  <div class="zero">Zero size</div>
+  <h2><span>Inside heading</span></h2>
+  <label for="qty">Quantity</label> <input id="qty" name="qty" value="1">
+  <table><tr><td>Account no.</td><td><input name="acct"></td></tr></table>
+  <span id="coupon-label">Coupon code</span> <input name="coupon" aria-labelledby="coupon-label">
+  <p id="long">This paragraph is deliberately long prose rather than a value: it goes on about shipping times, return windows, care instructions and warranty terms for well over two hundred characters, so it must stay out of the element list and be read from the page text instead.</p>
+  <noscript>No script text</noscript>
+  <div style="opacity:0">Transparent text</div>
+  <div aria-hidden="true"><span>Hidden from readers</span></div>
+  <div style="position:absolute;left:-9999px">Off page text</div>
+  <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Screen reader only</span>
+  <p><font>This long legacy sentence runs past the eighty characters a name can hold, and the fee is <span class="note-amount">$7.25</span> with <i>more</i> words after it.</font></p>
+  <div class="order"><div class="order-ref">Ref ALPHA</div><span class="state state-in-transit">In transit</span></div>
+  <div class="twin-card"><div onclick="void 0"><span>Twin</span> <span>Twin</span></div><div class="twin-price">$1.00</div></div>
+</section>
+</body>
+</html>

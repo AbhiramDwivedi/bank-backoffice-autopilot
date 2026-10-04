@@ -1,0 +1,12 @@
+cu audit: risk judge: jev:jev-latest (enforce, irreversible at p >= 0.5, fail_closed, 5000ms)
+audit: lookup-member-savings-balance@1.2.2 (approved), 5 committing action(s): 4 step, 0 override extra step, 1 recovery; judge jev:jev-latest
+origin    id                                        action    declared    lexical     judged      p     status  rationale
+--------  ----------------------------------------  --------  ----------  ----------  ----------  ----  ------  ---------------------------------------------------------------
+step      s01 Open the entry page                   navigate  read        read        read        0.02  ok      jev-1.13.0: P(commits irreversibly)=0.02, P(changes state)=0.07
+step      s05 Sign on to the workstation            click     reversible  reversible  reversible  0.06  ok      jev-1.13.0: P(commits irreversibly)=0.06, P(changes state)=0.71
+step      s07 Search for the member by ID           click     reversible  reversible  read        0.02  ok      jev-1.13.0: P(commits irreversibly)=0.02, P(changes state)=0.13
+step      s08 Open the member record for the sear…  click     reversible  reversible  read        0.03  ok      jev-1.13.0: P(commits irreversibly)=0.03, P(changes state)=0.09
+recovery  dismiss_system_maintenance_notice#1 Dis…  click     -           reversible  read        0.03  ok      jev-1.13.0: P(commits irreversibly)=0.03, P(changes state)=0.22
+risk judge calls: 5 (cache hits 0, unavailable 0)
+audit: nothing is riskier than it declares
+exit code: 0

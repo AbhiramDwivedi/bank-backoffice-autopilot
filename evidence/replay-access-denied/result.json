@@ -1,0 +1,55 @@
+{
+  "runId": "run_20260926_llsrkku9",
+  "capabilityId": "lookup-member-savings-balance",
+  "capabilityVersion": "1.2.2",
+  "stepsExecuted": 7,
+  "durationMs": 4432,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s07",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s08",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [
+    "dismiss_system_maintenance_notice"
+  ],
+  "kind": "business_outcome",
+  "name": "member_access_denied",
+  "data": {}
+}

@@ -1,0 +1,153 @@
+/*
+ * App shell layout: the top bar grid, the three-pane shell grid, and the responsive breakpoints.
+ * .pane-head is a reusable sticky pane header (uppercase label + count) the panes engineer can
+ * reuse for each pane's own header row.
+ */
+
+.topbar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--sp-4);
+  height: var(--topbar-h);
+  padding: 0 var(--sp-4);
+  background: var(--surface);
+  border-bottom: var(--border-w) solid var(--border);
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-width: 0;
+}
+
+.brand-mark {
+  color: var(--accent);
+  flex: none;
+}
+
+.brand-name {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.topbar-status {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.topbar-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  justify-self: end;
+  min-width: 0;
+}
+
+.operator-field {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.operator-field input {
+  width: 12ch;
+}
+
+/* The three-pane shell. Each .pane scrolls on its own; the shell itself never does. */
+.shell {
+  display: grid;
+  grid-template-columns: var(--queue-w) minmax(0, 1fr) var(--act-w);
+  height: calc(100% - var(--topbar-h));
+}
+
+.pane {
+  min-height: 0;
+  overflow: auto;
+}
+
+.pane-queue,
+.pane-act {
+  background: var(--surface-2);
+}
+
+.pane-detail {
+  background: var(--bg);
+}
+
+.pane-queue {
+  border-right: var(--border-w) solid var(--border);
+}
+
+.pane-act {
+  border-left: var(--border-w) solid var(--border);
+}
+
+.pane-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  background: inherit;
+  border-bottom: var(--border-w) solid var(--border);
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.pane-head .count {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+}
+
+@media (max-width: 1200px) and (min-width: 901px) {
+  :root {
+    --queue-w: 280px;
+    --act-w: 320px;
+  }
+}
+
+@media (max-width: 900px) {
+  .shell {
+    display: block;
+    height: auto;
+  }
+
+  .pane {
+    overflow: visible;
+    padding-left: var(--sp-4);
+    padding-right: var(--sp-4);
+  }
+
+  .pane-queue,
+  .pane-act {
+    border: 0;
+    border-bottom: var(--border-w) solid var(--border);
+  }
+
+  .topbar {
+    height: auto;
+    grid-template-columns: 1fr;
+    row-gap: var(--sp-2);
+    padding: var(--sp-3) var(--sp-4);
+  }
+
+  .topbar-status,
+  .topbar-tools {
+    justify-content: flex-start;
+    justify-self: stretch;
+  }
+}

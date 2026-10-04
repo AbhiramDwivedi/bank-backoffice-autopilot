@@ -1,0 +1,4 @@
+valid: lookup-member-savings-balance@1.2.2 (approved, 10 steps, risk reversible)
+  warning steps.3: [redundant_repeated_step] step "s04" repeats step "s03" exactly (the same idempotent write to the same target with the same value); it is redundant -- `cu optimize` collapses it
+  warning businessOutcomes.0.detector: [unbound_outcome_detector] business outcome "member_not_found" is detected after step "s07", which submits what step "s06" filled from input "memberId", but its detector binds no input: a page that lost that state (an expired session, an emptied form) matches it too, and the run would report "member_not_found" for an input it never submitted. Bind the detector to the input (for example a url_matches on {input.memberId}), or add an input-bound checkpoint between "s06" and "s07".
+exit code: 0

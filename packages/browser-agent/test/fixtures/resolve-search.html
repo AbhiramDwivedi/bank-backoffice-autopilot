@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Member Search</title>
+</head>
+<body>
+<h2>Member Search</h2>
+<form name="frmSearch">
+<table border="0" cellpadding="2" cellspacing="0">
+<tr>
+<td>Member ID</td>
+<td><input type="text" id="txtMbrId" name="memberId" /></td>
+</tr>
+<tr>
+<td>Last Name:</td>
+<td><input type="text" id="txtLName" name="lastName" /></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td><div class="btn" id="btnSearch" onclick="document.getElementById('searchStatus').textContent='searched'">Search</div></td>
+</tr>
+</table>
+</form>
+<p id="searchStatus">idle</p>
+
+<table border="1" cellspacing="0" cellpadding="3" width="100%">
+<tr><td class="hdr"><b>Member ID</b></td><td class="hdr"><b>Name</b></td></tr>
+<tr id="rowMember12345" onclick="location.href='./resolve-detail.html'" style="cursor:pointer">
+<td>12345</td><td>Jane Q. Sample</td>
+</tr>
+<tr id="rowMember10002" onclick="location.href='./resolve-detail.html?m=10002'" style="cursor:pointer">
+<td>10002</td><td>Other Person</td>
+</tr>
+</table>
+
+<p>
+<button id="edit1" class="edit-btn">Edit</button>
+<button id="edit2" class="edit-btn">Edit</button>
+</p>
+</body>
+</html>

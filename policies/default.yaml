@@ -1,0 +1,139 @@
+# Default guardrail policy for the mock CU Core Workstation (both tenants).
+#
+# Validated against the `Policy` zod schema in packages/core/src/schema/policy.ts and loaded via
+# packages/core/src/policy/load.ts (`loadPolicy(DEFAULT_POLICY_PATH)` / `parsePolicy`).
+#
+# IMPORTANT — regex convention (see docs/contracts.md section 4 and
+# docs/design/foundation.md): every regex *source* string in this file is compiled by
+# consumers with the 'i' flag (case-insensitive) and no others. Write patterns assuming
+# case-insensitive matching; do not rely on inline regex flags (they aren't supported here,
+# these are plain regex sources, not /pattern/flags literals).
+#
+# YAML note: patterns are single-quoted so backslashes stay literal (e.g. `\b` really is
+# backslash-b, not an escape sequence YAML would otherwise interpret in a double-quoted or
+# unquoted scalar).
+
+name: mock-cu-core-default
+
+# Both tenants' mock app instances (docs/contracts.md section 9): tenant A on 4173, tenant B
+# on 4174. Exact origin match — no wildcards.
+allowedOrigins:
+  - 'http://localhost:4173'
+  - 'http://localhost:4174'
+
+# Empty = all paths on an allowed origin are in scope. The mock app's route map (member
+# search/detail, sub-account creation, session/login) is small and fully enumerated in
+# contracts.md section 9, and denylisting the fault-injection routes below is a stronger and
+# simpler control than trying to allowlist every legitimate path.
+allowedPathPatterns: []
+
+# Wins over allowedPathPatterns. The agent must never be able to touch fault injection: those
+# routes exist purely for test setup (flip on slowness/failures/interstitials/session expiry)
+# and letting automation or a compromised prompt hit them would let it fabricate or hide
+# evidence of its own runtime conditions.
+deniedPathPatterns:
+  - '^/__faults'
+  - '^/__reset'
+
+# All nine Action types (contracts.md section 2 / packages/core/src/schema/action.ts ActionType), listed
+# explicitly rather than left open-ended.
+allowedActions:
+  - navigate
+  - click
+  - type
+  - select
+  - press
+  - extract
+  - wait
+  - dismiss_dialog
+  - switch_frame
+
+risk:
+  # Matched against a target's name/text (TargetDescriptor.description / snapshot / locator
+  # text) to flag an action as irreversible even if a capability author forgot to mark the
+  # step's `risk`. `\b` after the alternation is deliberate: it requires a following
+  # non-word boundary, so "Submit" / "Confirm Transfer" / "Open Account" match but
+  # "Submitted items" does NOT (the 't' in "Submitted" is followed by 'e', not a word
+  # boundary) — a milder past-tense status label shouldn't trip the same guard as the live
+  # action.
+  irreversibleTextPatterns:
+    - '^(submit|confirm|create|open account|transfer|delete|approve|post)\b'
+  # The sub-account creation POST target (contracts.md section 9:
+  # POST /members/:id/subaccounts) — matched against the request/navigation URL.
+  irreversibleUrlPatterns:
+    - '/subaccounts$'
+  # Discovery is exploratory/LLM-driven, so an about-to-be-irreversible action gets escalated
+  # to a human rather than silently blocked or silently taken.
+  discoveryMode: escalate
+  # Replay only ever executes irreversible steps from a capability that has been reviewed and
+  # marked 'approved' — a 'draft' capability cannot open a sub-account unattended.
+  replayRequiresApproved: true
+  # Judgment-based check layered over the patterns above (docs/design/risk-judge.md). Consulted
+  # at discovery and by `cu audit`, never at replay: a step it judges irreversible is recorded
+  # `risk: irreversible` and the approval gate enforces it from then on. A judgment can only raise
+  # risk. The whole block is optional; these are the defaults.
+  judge:
+    # off | advise (log + provenance note only) | enforce (may raise risk)
+    mode: enforce
+    # pIrreversible at or above this counts as irreversible.
+    irreversibleThreshold: 0.5
+    # fail_closed: an unavailable judge makes the action count as irreversible (escalate/block).
+    onError: fail_closed
+    timeoutMs: 5000
+
+redaction:
+  # These must match what packages/core/src/evidence/redact.ts's DEFAULT_PATTERNS use, so a policy-driven
+  # redactor (redactionPatternsFromPolicy) and the hardcoded defaults agree.
+  patterns:
+    - name: ssn
+      regex: '\b\d{3}-\d{2}-\d{4}\b'
+      replacement: '[REDACTED:ssn]'
+    - name: card
+      regex: '\b(?:\d[ -]?){12,18}\d\b'
+      replacement: '[REDACTED:card]'
+    # An "account-number-ish" pattern is intentionally omitted: the mock app's member ids are
+    # plain 5-digit numbers (e.g. 12345) and dollar amounts appear right next to them in the
+    # same screens/logs, so any pattern generic enough to catch a real account number would
+    # also false-positive on ordinary member ids and balances. The card pattern above already
+    # covers the one genuinely sensitive long-digit-run case; a bespoke account-number pattern
+    # can be added later once real account-number formats (not just member ids) are known.
+
+  # Screen masking (docs/design/screen-masking.md): what every surface hides from screenshots, DOM
+  # snapshots and observed text before anything reaches the model, the evidence or the operator
+  # console. Every field defaults when omitted; these are the defaults made explicit, plus labels.
+  screen:
+    # Every non-empty input/textarea/select is painted over, so a value a human types during a
+    # handoff never reaches a screenshot. `typed` would paint only what the automation typed.
+    maskInputs: all
+    maskSelectors: []
+    # The VALUE next to a matching label is hidden (label/value cells, <label for>, dt/dd, a bold
+    # caption, a column header); the label itself stays visible. The mock app's member detail page
+    # shows an address and a phone number; the rest name PII a legacy app commonly shows. Member
+    # names and balances are left visible: the shipped capability reads them, and a balance alone
+    # identifies nobody. A deployment that must hide those adds their labels here, and discovery
+    # still extracts them (as sensitive outputs) without the model seeing the value.
+    # Each source must match a WHOLE label (case-insensitive, whitespace collapsed, a trailing colon
+    # dropped), never part of one: "Address book" or "Phone support hours" stay visible. In running
+    # text the label is any one to five words right before a colon, so "Mailing address: ..." and
+    # "...confirm the following address: ..." are caught by the one-word "address" candidate.
+    maskLabels:
+      - '(home |mailing |street |residential |postal )?address'
+      - '(phone|telephone|tel\.?|mobile|cell|fax)( number| no\.?| #)?'
+      - 'ssn|social security( number| no\.?)?|tax id|tin'
+      - 'date of birth|birth ?date|dob'
+      - 'e-?mail( address)?'
+    # Any element whose own text matches `patterns` above (an SSN, a card number) or contains one
+    # of the run's secret or sensitive values is painted over too.
+    maskTextPatterns: true
+    # Pages where no screenshot is taken at all (the text channel still flows, masked).
+    omitScreenshotUrlPatterns: []
+
+limits:
+  maxSteps: 40
+  maxDurationMs: 600000
+  maxLlmCalls: 60
+  # Replay only, and only for a run asserted read-only (the capability's `readOnly: true`, or
+  # `replay --read-only`): how many times one run may wait and restart its steps after a transient
+  # app error (HTTP 500, an "Application Error" page) before it reports `hard_failure app_error`.
+  # Optional; this is the default. 0 disables the retry.
+  maxAppErrorRetries: 2

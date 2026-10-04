@@ -1,0 +1,314 @@
+{
+  "schemaVersion": "1.0",
+  "id": "open-savings-subaccount",
+  "version": "0.1.0",
+  "name": "Open a Savings Sub-Account",
+  "description": "Signs on to the CU Core Workstation, finds member {memberId}, opens the 'new sub-account' form, fills a savings sub-account with an initial deposit of {amount}, confirms the client-side modal (the POST that actually creates the sub-account), and reads back the reference number. G2 (contracts.md section 10): irreversible, draft status, used by tests/e2e to prove the policy approval gate refuses an unapproved irreversible capability before the browser makes a single request.",
+  "app": {
+    "vendor": "Acme Core Systems",
+    "product": "CU Core Workstation",
+    "productVersion": "7.4.2",
+    "surface": "web",
+    "entryUrl": "{baseUrl}/login"
+  },
+  "status": "draft",
+  "riskLevel": "irreversible",
+  "inputs": {
+    "memberId": {
+      "type": "string",
+      "description": "The credit union member's numeric member ID.",
+      "required": true,
+      "sensitive": false,
+      "pattern": "^[0-9]{5}$",
+      "example": "12345"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Initial deposit for the new savings sub-account, in US dollars.",
+      "required": true,
+      "sensitive": false,
+      "example": "100"
+    }
+  },
+  "outputs": {
+    "referenceNumber": {
+      "type": "string",
+      "description": "The sub-account reference number (SA-XXXXXXX) shown on the confirmation page."
+    }
+  },
+  "steps": [
+    {
+      "id": "s01",
+      "name": "Open the login page",
+      "risk": "read",
+      "action": { "type": "navigate", "url": "{baseUrl}/login" },
+      "postcondition": {
+        "kind": "element_visible",
+        "target": {
+          "description": "User ID text field on the login form.",
+          "frame": [],
+          "locators": [
+            { "strategy": { "kind": "role", "role": "textbox", "name": "User ID" }, "confidence": 0.9, "source": "recorded" },
+            { "strategy": { "kind": "css", "selector": "input[name=userId]" }, "confidence": 0.5, "source": "inferred" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "s02",
+      "name": "Enter the user ID",
+      "risk": "read",
+      "action": {
+        "type": "type",
+        "target": {
+          "description": "User ID text field on the login form.",
+          "frame": [],
+          "locators": [
+            { "strategy": { "kind": "role", "role": "textbox", "name": "User ID" }, "confidence": 0.9, "source": "recorded" },
+            { "strategy": { "kind": "css", "selector": "input[name=userId]" }, "confidence": 0.5, "source": "inferred" }
+          ]
+        },
+        "value": { "kind": "secret", "env": "MOCK_USER" },
+        "clear": true
+      }
+    },
+    {
+      "id": "s03",
+      "name": "Enter the password",
+      "risk": "read",
+      "action": {
+        "type": "type",
+        "target": {
+          "description": "Password field on the login form.",
+          "frame": [],
+          "locators": [
+            { "strategy": { "kind": "role", "role": "textbox", "name": "Password" }, "confidence": 0.9, "source": "recorded" },
+            { "strategy": { "kind": "css", "selector": "input[name=password]" }, "confidence": 0.5, "source": "inferred" }
+          ]
+        },
+        "value": { "kind": "secret", "env": "MOCK_PASSWORD" },
+        "clear": true
+      }
+    },
+    {
+      "id": "s04",
+      "name": "Sign on",
+      "risk": "read",
+      "action": {
+        "type": "click",
+        "target": {
+          "description": "Sign-on submit control on the login form.",
+          "frame": [],
+          "locators": [
+            { "strategy": { "kind": "role", "role": "button", "name": "login" }, "confidence": 0.85, "source": "recorded" },
+            { "strategy": { "kind": "css", "selector": "input[name=login]" }, "confidence": 0.5, "source": "inferred" }
+          ]
+        }
+      },
+      "postcondition": { "kind": "url_matches", "pattern": "/workstation$" },
+      "onFailure": "escalate"
+    },
+    {
+      "id": "s05",
+      "name": "Enter the member ID",
+      "risk": "read",
+      "action": {
+        "type": "type",
+        "target": {
+          "description": "Member ID text field on the member search form, main frame.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            { "strategy": { "kind": "role", "role": "textbox", "name": "Member ID" }, "confidence": 0.85, "source": "recorded" },
+            { "strategy": { "kind": "css", "selector": "input[name=memberId]" }, "confidence": 0.5, "source": "inferred" }
+          ]
+        },
+        "value": { "kind": "input", "name": "memberId" },
+        "clear": true
+      }
+    },
+    {
+      "id": "s06",
+      "name": "Search for the member",
+      "risk": "read",
+      "action": {
+        "type": "click",
+        "target": {
+          "description": "Search control on the member search form, main frame.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            { "strategy": { "kind": "text", "text": "Search", "tag": "div" }, "confidence": 0.75, "source": "recorded" },
+            { "strategy": { "kind": "css", "selector": "div.btn[onclick^=\"doSearch\"]" }, "confidence": 0.5, "source": "inferred" }
+          ]
+        }
+      },
+      "postcondition": { "kind": "text_visible", "text": "record(s) found", "frame": [{ "name": "main" }] },
+      "timeoutMs": 15000
+    },
+    {
+      "id": "s07",
+      "name": "Open the matching result",
+      "risk": "read",
+      "action": {
+        "type": "click",
+        "target": {
+          "description": "The single result row in the search results table, for {input.memberId}.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            { "strategy": { "kind": "text", "text": "{input.memberId}", "tag": "tr" }, "confidence": 0.55, "source": "recorded" },
+            { "strategy": { "kind": "css", "selector": "tr[onclick*=\"/members/{input.memberId}\"]" }, "confidence": 0.4, "source": "inferred" }
+          ]
+        }
+      },
+      "postcondition": {
+        "kind": "all",
+        "of": [
+          { "kind": "url_matches", "pattern": "/members/{input.memberId}", "frame": [{ "name": "main" }] },
+          { "kind": "text_absent", "text": "Access Denied" }
+        ]
+      }
+    },
+    {
+      "id": "s08",
+      "name": "Open the new sub-account form",
+      "risk": "reversible",
+      "action": { "type": "navigate", "url": "{baseUrl}/members/{input.memberId}/subaccounts/new" },
+      "postcondition": {
+        "kind": "element_visible",
+        "target": {
+          "description": "Account type dropdown on the new sub-account form, main frame.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            { "strategy": { "kind": "text", "text": "Account Type", "tag": "div" }, "confidence": 0.7, "source": "recorded" },
+            { "strategy": { "kind": "css", "selector": "#accountType" }, "confidence": 0.5, "source": "inferred" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "s09",
+      "name": "Choose the savings account type",
+      "risk": "reversible",
+      "action": {
+        "type": "select",
+        "target": {
+          "description": "Account type dropdown (custom div control) on the new sub-account form, main frame.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            { "strategy": { "kind": "css", "selector": "#accountType" }, "confidence": 0.6, "source": "recorded" }
+          ]
+        },
+        "value": { "kind": "literal", "value": "SAV" }
+      }
+    },
+    {
+      "id": "s10",
+      "name": "Enter the initial deposit",
+      "risk": "reversible",
+      "action": {
+        "type": "type",
+        "target": {
+          "description": "Initial deposit text field on the new sub-account form, main frame.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            { "strategy": { "kind": "role", "role": "textbox", "name": "Initial Deposit" }, "confidence": 0.75, "source": "recorded" },
+            { "strategy": { "kind": "css", "selector": "input[name=initialDeposit]" }, "confidence": 0.5, "source": "inferred" }
+          ]
+        },
+        "value": { "kind": "input", "name": "amount" },
+        "clear": true
+      }
+    },
+    {
+      "id": "s11",
+      "name": "Enter a nickname for the sub-account",
+      "risk": "reversible",
+      "action": {
+        "type": "type",
+        "target": {
+          "description": "Nickname text field on the new sub-account form, main frame.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            { "strategy": { "kind": "role", "role": "textbox", "name": "Nickname" }, "confidence": 0.7, "source": "recorded" },
+            { "strategy": { "kind": "css", "selector": "input[name=nickname]" }, "confidence": 0.5, "source": "inferred" }
+          ]
+        },
+        "value": { "kind": "literal", "value": "Test Sub-Account" },
+        "clear": true
+      }
+    },
+    {
+      "id": "s12",
+      "name": "Continue to the confirm dialog",
+      "risk": "reversible",
+      "action": {
+        "type": "click",
+        "target": {
+          "description": "Continue control that raises the client-side confirm modal (no server request yet), main frame.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            { "strategy": { "kind": "text", "text": "Continue", "tag": "div" }, "confidence": 0.6, "source": "recorded" },
+            { "strategy": { "kind": "css", "selector": "div.btn[onclick^=\"doContinue\"]" }, "confidence": 0.4, "source": "inferred" }
+          ]
+        }
+      },
+      "postcondition": { "kind": "dialog_open" }
+    },
+    {
+      "id": "s13",
+      "name": "Confirm opening the sub-account",
+      "risk": "irreversible",
+      "action": {
+        "type": "click",
+        "target": {
+          "description": "Confirm button on the client-side confirmation modal; clicking it submits the POST that actually creates the sub-account (irreversible).",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            { "strategy": { "kind": "text", "text": "Confirm", "tag": "div" }, "confidence": 0.65, "source": "recorded" },
+            { "strategy": { "kind": "css", "selector": "div.modal-confirm" }, "confidence": 0.4, "source": "inferred" }
+          ]
+        }
+      },
+      "postcondition": {
+        "kind": "url_matches",
+        "pattern": "/members/{input.memberId}/subaccounts/.+/confirmation$",
+        "frame": [{ "name": "main" }]
+      }
+    },
+    {
+      "id": "s14",
+      "name": "Read the reference number",
+      "risk": "read",
+      "action": {
+        "type": "extract",
+        "target": {
+          "description": "Reference number value on the confirmation page, main frame.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            { "strategy": { "kind": "label", "label": "Reference Number" }, "confidence": 0.8, "source": "recorded" },
+            { "strategy": { "kind": "css", "selector": "#pnlConfirmation b" }, "confidence": 0.4, "source": "inferred" }
+          ]
+        },
+        "output": "referenceNumber",
+        "parse": "text"
+      }
+    }
+  ],
+  "success": {
+    "condition": {
+      "kind": "all",
+      "of": [
+        { "kind": "url_matches", "pattern": "/members/{input.memberId}/subaccounts/.+/confirmation$", "frame": [{ "name": "main" }] },
+        { "kind": "text_visible", "text": "Reference Number", "frame": [{ "name": "main" }] }
+      ]
+    },
+    "description": "The sub-account confirmation page is showing in the main frame for the searched member and the reference number has been extracted."
+  },
+  "businessOutcomes": [],
+  "recoveryRules": [],
+  "provenance": {
+    "discoveredAt": "2026-09-25T18:04:11Z",
+    "discoveryRunId": "run_test_fixture_open_subaccount",
+    "recordedBy": "human",
+    "notes": "Hand-written test fixture (tests/fixtures/open-subaccount.draft.json), not a real discovery transcript. status:'draft' + riskLevel:'irreversible' + s13 risk:'irreversible' deliberately trip the replay approval gate (docs/design/replay.md 1.1 'policy' row): under the default policy (replayRequiresApproved: true) replay must refuse this capability with hard_failure/policy_violation before touching the surface at all, so the mock app receives zero requests and stepsExecuted stays 0."
+  }
+}

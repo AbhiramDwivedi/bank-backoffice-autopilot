@@ -1,0 +1,154 @@
+{
+  "runId": "run_20261003_876825xh",
+  "capabilityId": "lookup-member-savings-balance",
+  "capabilityVersion": "1.2.2",
+  "capabilityDigest": "sha256:82dacd3bbda1f3b4b1379a7550aff54e5816854f2c8fa94d314a6b7c7871ea69",
+  "stepsExecuted": 23,
+  "durationMs": 64912,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s07",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s08",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s07",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s07",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s07",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [
+    "dismiss_system_maintenance_notice",
+    "dismiss_system_maintenance_notice",
+    "retry_app_error",
+    "dismiss_system_maintenance_notice",
+    "retry_app_error",
+    "dismiss_system_maintenance_notice"
+  ],
+  "kind": "escalated",
+  "interventionId": "int_20261003_mtj8itks",
+  "stepId": "s06",
+  "reason": "session expired (page shows \"Your session has expired\") while step s06: target not found: textbox \"Member ID\" (<input>)",
+  "resolution": "resumed_failed",
+  "outcome": {
+    "kind": "hard_failure",
+    "code": "app_error",
+    "message": "app error (page shows \"Application Error\") while step s08: target not found: clickable \"12345\" (<tr>)",
+    "stepId": "s08"
+  }
+}

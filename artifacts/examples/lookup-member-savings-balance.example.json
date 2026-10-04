@@ -1,0 +1,493 @@
+{
+  "schemaVersion": "1.0",
+  "id": "lookup-member-savings-balance",
+  "version": "1.0.2",
+  "name": "Look Up Member Savings Balance",
+  "description": "Signs on to the CU Core Workstation, searches for a member by memberId, opens their profile, and returns their name and current savings balance.",
+  "app": {
+    "vendor": "Acme Core Systems",
+    "product": "CU Core Workstation",
+    "productVersion": "7.4.2",
+    "surface": "web",
+    "entryUrl": "{baseUrl}/login"
+  },
+  "status": "approved",
+  "riskLevel": "read",
+  "inputs": {
+    "memberId": {
+      "type": "string",
+      "description": "The credit union member's numeric member ID, as printed on their account documents.",
+      "required": true,
+      "sensitive": false,
+      "pattern": "^[0-9]{5}$",
+      "example": "12345"
+    }
+  },
+  "outputs": {
+    "memberName": {
+      "type": "string",
+      "description": "The member's full display name as shown on the profile tab."
+    },
+    "savingsBalance": {
+      "type": "number",
+      "description": "The member's current savings account balance, in US dollars."
+    }
+  },
+  "steps": [
+    {
+      "id": "s01",
+      "name": "Open the login page",
+      "risk": "read",
+      "action": { "type": "navigate", "url": "{baseUrl}/login" },
+      "postcondition": {
+        "kind": "element_visible",
+        "target": {
+          "description": "User ID text field on the login form. The form is a legacy (1998-era) HTML table layout with no <label> elements, so the label cell is a td immediately to the left of the input in the same row, reading \"User ID:\" (trailing colon); the 'label' locator uses that adjacent-cell heuristic and matches on substring, so the colon doesn't need to be repeated here. No role locator: a bare <input type=text> whose only name source is that adjacent <td> (not a <label>, aria-label, or placeholder) has no genuine accessible name in Chromium, so getByRole would never resolve it -- the surface itself never emits a role locator for this case (see src/surface/playwright/enumerate.ts's isGenuineRoleName).",
+          "frame": [],
+          "locators": [
+            {
+              "strategy": { "kind": "label", "label": "User ID" },
+              "confidence": 0.85,
+              "source": "recorded"
+            },
+            {
+              "strategy": { "kind": "css", "selector": "input[name=userId]" },
+              "confidence": 0.55,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": { "tag": "input", "role": "textbox", "name": "User ID" }
+        }
+      }
+    },
+    {
+      "id": "s02",
+      "name": "Enter the user ID",
+      "risk": "read",
+      "action": {
+        "type": "type",
+        "target": {
+          "description": "User ID text field on the login form (same control as the s01 checkpoint). See the s01 checkpoint target for why no role locator is emitted here.",
+          "frame": [],
+          "locators": [
+            {
+              "strategy": { "kind": "label", "label": "User ID" },
+              "confidence": 0.85,
+              "source": "recorded"
+            },
+            {
+              "strategy": { "kind": "css", "selector": "input[name=userId]" },
+              "confidence": 0.55,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": { "tag": "input", "role": "textbox", "name": "User ID" }
+        },
+        "value": { "kind": "secret", "env": "MOCK_USER" },
+        "clear": true
+      }
+    },
+    {
+      "id": "s03",
+      "name": "Enter the password",
+      "risk": "read",
+      "action": {
+        "type": "type",
+        "target": {
+          "description": "Password field on the login form; label cell reads \"Password:\" (trailing colon), the td to its left in the same row. No role locator: the surface never emits one for password inputs at all (src/surface/playwright/enumerate.ts's synthesizeDescriptor explicitly skips password fields), and independently this field's name would only ever come from the adjacent <td>, not a genuine accessible-name source.",
+          "frame": [],
+          "locators": [
+            {
+              "strategy": { "kind": "label", "label": "Password" },
+              "confidence": 0.85,
+              "source": "recorded"
+            },
+            {
+              "strategy": { "kind": "css", "selector": "input[name=password]" },
+              "confidence": 0.55,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": { "tag": "input", "role": "textbox", "name": "Password" }
+        },
+        "value": { "kind": "secret", "env": "MOCK_PASSWORD" },
+        "clear": true
+      }
+    },
+    {
+      "id": "s04",
+      "name": "Sign on",
+      "risk": "read",
+      "action": {
+        "type": "click",
+        "target": {
+          "description": "Sign-on submit control on the login form: an <input type=\"image\"> with no alt text. It has no visible text and no stable accessible name (Chromium reports the UA default \"Submit\"), so the primary locator targets the name attribute via CSS, with a relative locator and a bounding box as fallbacks. Signing on is idempotent, so the step is read-risk.",
+          "frame": [],
+          "locators": [
+            {
+              "strategy": { "kind": "css", "selector": "input[name=login]" },
+              "confidence": 0.7,
+              "source": "recorded"
+            },
+            {
+              "strategy": { "kind": "css", "selector": "input[type=image]" },
+              "confidence": 0.4,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": { "tag": "input", "role": "button", "name": "login" }
+        }
+      },
+      "postcondition": { "kind": "url_matches", "pattern": "/workstation$" },
+      "onFailure": "escalate"
+    },
+    {
+      "id": "s05",
+      "name": "Enter the member ID",
+      "risk": "read",
+      "precondition": {
+        "kind": "element_visible",
+        "target": {
+          "description": "Member ID text field on the member search form, in the workstation shell's main frame (a real <frame> for tenant A's <frameset>, an <iframe name=\"main\"> for tenant B). A 'System Maintenance Notice' interstitial is shown once per session over this form; the dismiss_maintenance_notice recovery rule clears it automatically before this precondition is (re-)checked, so it does not need to be a step of its own. The label has no trailing colon here (unlike the login page's \"User ID:\"/\"Password:\"). No role locator: like the login fields, this input's only name source is the adjacent <td>, not a <label>/aria-label/placeholder, so it has no genuine accessible name and the surface never emits a role locator for it.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            {
+              "strategy": { "kind": "label", "label": "Member ID" },
+              "confidence": 0.85,
+              "source": "recorded"
+            },
+            {
+              "strategy": { "kind": "css", "selector": "input[name=memberId]" },
+              "confidence": 0.55,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": { "tag": "input", "role": "textbox", "name": "Member ID" }
+        }
+      },
+      "action": {
+        "type": "type",
+        "target": {
+          "description": "Member ID text field on the member search form, main frame (same control as the precondition target). See the precondition target for why no role locator is emitted here.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            {
+              "strategy": { "kind": "label", "label": "Member ID" },
+              "confidence": 0.85,
+              "source": "recorded"
+            },
+            {
+              "strategy": { "kind": "css", "selector": "input[name=memberId]" },
+              "confidence": 0.55,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": { "tag": "input", "role": "textbox", "name": "Member ID" }
+        },
+        "value": { "kind": "input", "name": "memberId" },
+        "clear": true
+      }
+    },
+    {
+      "id": "s06",
+      "name": "Search for the member",
+      "risk": "read",
+      "action": {
+        "type": "click",
+        "target": {
+          "description": "Search control on the member search form, main frame: a plain <div class=\"btn\" onclick=\"doSearch()\">Search</div>, not a <button> or <input type=submit> -- it has no ARIA role at all, which is what defeats getByRole('button') against this page. \"Search\" is the only div with that visible text (the adjacent \"Clear\" button reads differently), so the text locator is unambiguous and most stable; the css fallback keys off the onclick handler rather than the shared `.btn` class, which also matches the Clear button.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            {
+              "strategy": { "kind": "text", "text": "Search", "tag": "div" },
+              "confidence": 0.75,
+              "source": "recorded"
+            },
+            {
+              "strategy": { "kind": "css", "selector": "div.btn[onclick^=\"doSearch\"]" },
+              "confidence": 0.5,
+              "source": "inferred"
+            },
+            {
+              "strategy": { "kind": "bbox", "x": 0.26, "y": 0.27, "w": 0.06, "h": 0.04 },
+              "confidence": 0.2,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": { "tag": "div", "role": "clickable", "text": "Search" }
+        }
+      },
+      "postcondition": {
+        "kind": "text_visible",
+        "text": "record(s) found",
+        "frame": [{ "name": "main" }]
+      },
+      "timeoutMs": 15000
+    },
+    {
+      "id": "s07",
+      "name": "Open the matching result",
+      "risk": "read",
+      "action": {
+        "type": "click",
+        "target": {
+          "description": "The single result row in the search results table: a plain <tr onclick=\"$$go('/members/<id>')\" ...>, no <a> and no ARIA role, which is what defeats getByRole('link') against this page. Locator strings can be templated per invocation (src/schema/template.ts's bindStep), so this descriptor targets exactly the searched memberId rather than the generic 'first row' fallback an earlier draft of this example used. The primary locator matches the row's rendered text (\"<id> <name> <joined> Active\") constrained to `tag: 'tr'`: the id text itself lives in a <td>, but the resolver climbs from that raw <td> match to its closest clickable ancestor -- the <tr> -- before applying the tag filter, so `tag: 'tr'` correctly constrains the element that actually gets clicked (the row), not the <td> text leaf. The css locator matches the row's onclick handler (\"$$go('/members/<id>')\"), keyed on {input.memberId}. For a 5-digit exact memberId search this app returns at most one row, so both locators are unambiguous on their own; the postcondition below adds an independent 'landed on the right member' checkpoint via a frame-scoped url_matches on the same {input.memberId}. Recorded during discovery against memberId 12345 (row text shown in snapshot below).",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            {
+              "strategy": { "kind": "text", "text": "{input.memberId}", "tag": "tr" },
+              "confidence": 0.6,
+              "source": "recorded"
+            },
+            {
+              "strategy": { "kind": "css", "selector": "tr[onclick*=\"/members/{input.memberId}\"]" },
+              "confidence": 0.4,
+              "source": "inferred"
+            },
+            {
+              "strategy": { "kind": "bbox", "x": 0.17, "y": 0.35, "w": 0.31, "h": 0.03 },
+              "confidence": 0.2,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": { "tag": "tr", "role": "clickable", "text": "12345 Jane Q. Sample 08/15/2004 Active" }
+        }
+      },
+      "postcondition": {
+        "kind": "all",
+        "of": [
+          { "kind": "url_matches", "pattern": "/members/{input.memberId}", "frame": [{ "name": "main" }] },
+          { "kind": "text_visible", "text": "Savings Balance", "frame": [{ "name": "main" }] },
+          { "kind": "text_visible", "text": "Member Name", "frame": [{ "name": "main" }] },
+          { "kind": "text_absent", "text": "Access Denied" }
+        ]
+      }
+    },
+    {
+      "id": "s08",
+      "name": "Read the member name",
+      "risk": "read",
+      "action": {
+        "type": "extract",
+        "target": {
+          "description": "Value cell for the 'Member Name' row in the profile label/value table, main frame (first row of the table). Value cells are td elements to the right of the label td in the same row; neither label has a trailing colon on this page. No label locator: label matching (a real <label>/aria label, or this app's adjacent-cell heuristic) only ever resolves to a form control in the adjacent cell, never the read-only value <td> itself, so a label locator here can never match on the real surface. The primary locator instead anchors on the (stable) 'Member Name' label text and takes the value cell right-of it in the same row -- the same 'relative' shape the surface's own observe() synthesizes for this element -- since the cell's own text is member data, not a fixed string, and so is not used as a `text` locator.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            {
+              "strategy": {
+                "kind": "relative",
+                "anchor": { "text": "Member Name" },
+                "relation": "right-of",
+                "tag": "td"
+              },
+              "confidence": 0.75,
+              "source": "recorded"
+            },
+            {
+              "strategy": {
+                "kind": "css",
+                "selector": "#pnlProfile tr:nth-child(1) td.val"
+              },
+              "confidence": 0.4,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": { "tag": "td", "role": "cell", "text": "Jane Q. Sample" }
+        },
+        "output": "memberName",
+        "parse": "text"
+      }
+    },
+    {
+      "id": "s09",
+      "name": "Read the savings balance",
+      "risk": "read",
+      "action": {
+        "type": "extract",
+        "target": {
+          "description": "Value cell for the 'Savings Balance' row in the profile label/value table, main frame (sixth row: Member Name, Member ID, Join Date, Address, Phone, then Savings Balance). No label locator: label matching only ever resolves to a form control in the adjacent cell, never this read-only value <td>, so it can never match on the real surface (this was the diagnosed cause of the base tenant's persistent fallbackDepth-1 replays). The primary locator instead anchors on the (stable) 'Savings Balance' label text and takes the value cell right-of it in the same row -- the same 'relative' shape the surface's own observe() synthesizes here -- since the balance itself is live account data, not a fixed string, and so is not used as a `text` locator.",
+          "frame": [{ "name": "main" }],
+          "locators": [
+            {
+              "strategy": {
+                "kind": "relative",
+                "anchor": { "text": "Savings Balance" },
+                "relation": "right-of",
+                "tag": "td"
+              },
+              "confidence": 0.75,
+              "source": "recorded"
+            },
+            {
+              "strategy": {
+                "kind": "css",
+                "selector": "#pnlProfile tr:nth-child(6) td.val"
+              },
+              "confidence": 0.4,
+              "source": "inferred"
+            },
+            {
+              "strategy": { "kind": "bbox", "x": 0.36, "y": 0.36, "w": 0.14, "h": 0.03 },
+              "confidence": 0.25,
+              "source": "inferred"
+            }
+          ],
+          "snapshot": { "tag": "td", "role": "cell", "text": "$1,234.56" }
+        },
+        "output": "savingsBalance",
+        "parse": "currency"
+      }
+    }
+  ],
+  "success": {
+    "condition": {
+      "kind": "all",
+      "of": [
+        { "kind": "url_matches", "pattern": "/members/{input.memberId}", "frame": [{ "name": "main" }] },
+        { "kind": "text_visible", "text": "Savings Balance", "frame": [{ "name": "main" }] },
+        { "kind": "text_visible", "text": "Member Name", "frame": [{ "name": "main" }] }
+      ]
+    },
+    "description": "The member's profile is showing in the main frame for exactly the searched member (a frame-scoped url_matches on {input.memberId}, since inside the frameset/iframe shell the top-level URL stays /workstation and only the main frame's own URL carries /members/<id>), a 'Member Name' and a 'Savings Balance' row are visible, and both memberName and savingsBalance have been extracted."
+  },
+  "businessOutcomes": [
+    {
+      "name": "member_not_found",
+      "description": "No member matches the searched memberId. This is a legitimate result the caller needs to know about, not a failure.",
+      "detector": {
+        "kind": "text_visible",
+        "text": "No records found.",
+        "frame": [{ "name": "main" }]
+      },
+      "afterSteps": ["s06"],
+      "returns": {  }
+    },
+    {
+      "name": "access_denied",
+      "description": "The signed-on user's role does not permit viewing this member's record. Distinguished from member_not_found because the member exists but is restricted.",
+      "detector": { "kind": "text_visible", "text": "Access Denied", "frame": [{ "name": "main" }] },
+      "afterSteps": ["s07"],
+      "returns": {
+        "message": {
+          "type": "string",
+          "description": "The access-denied message shown to the operator."
+        }
+      },
+      "extract": [
+        {
+          "output": "message",
+          "target": {
+            "description": "Access-denied message shown in place of the profile, main frame: a standalone <p class=\"denied\"> on its own 403 page (not a div, and not part of the profile markup).",
+            "frame": [{ "name": "main" }],
+            "locators": [
+              {
+                "strategy": { "kind": "text", "text": "Access Denied", "tag": "p" },
+                "confidence": 0.75,
+                "source": "recorded"
+              },
+              {
+                "strategy": { "kind": "css", "selector": "p.denied" },
+                "confidence": 0.55,
+                "source": "inferred"
+              },
+              {
+                "strategy": { "kind": "bbox", "x": 0.1, "y": 0.2, "w": 0.7, "h": 0.06 },
+                "confidence": 0.25,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "p",
+              "text": "Access Denied: your role does not permit viewing this member."
+            }
+          },
+          "parse": "text"
+        }
+      ]
+    }
+  ],
+  "recoveryRules": [
+    {
+      "name": "dismiss_maintenance_notice",
+      "description": "The core workstation shows a one-time-per-session 'System Maintenance Notice' interstitial over the main frame after sign-on. It covers the search form and blocks the s05 precondition until dismissed. This is a recoverable condition, not a step: the executor checks the trigger continuously and clears it whenever it appears, so replay does not fail or escalate because of it.",
+      "trigger": {
+        "kind": "text_visible",
+        "text": "System Maintenance Notice",
+        "frame": [{ "name": "main" }]
+      },
+      "actions": [
+        {
+          "type": "click",
+          "target": {
+            "description": "OK button dismissing the System Maintenance Notice interstitial: a non-semantic <div class=\"maint-ok\" onclick=...>OK</div> rendered as a modal button rather than a native <button>, so it has no ARIA role at all. No role locator: 'clickable' is a synthetic role a surface may assign such controls for its own bookkeeping, never a real ARIA role, so a role locator naming it always misses immediately rather than ever asking Playwright's accessibility tree to match it. The div's own visible text, \"OK\", is unique in this frame, so a text locator is primary instead, with the onclick-class css selector as fallback.",
+            "frame": [{ "name": "main" }],
+            "locators": [
+              {
+                "strategy": { "kind": "text", "text": "OK", "tag": "div" },
+                "confidence": 0.75,
+                "source": "recorded"
+              },
+              {
+                "strategy": { "kind": "css", "selector": "div.maint-ok" },
+                "confidence": 0.5,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": { "tag": "div", "role": "clickable", "name": "OK" }
+          }
+        },
+        {
+          "type": "wait",
+          "condition": {
+            "kind": "text_absent",
+            "text": "System Maintenance Notice"
+          },
+          "timeoutMs": 5000
+        }
+      ],
+      "maxAttempts": 2
+    }
+  ],
+  "auth": {
+    "steps": ["s01", "s02", "s03", "s04"],
+    "signedIn": {
+      "kind": "url_matches",
+      "pattern": "/workstation$"
+    }
+  },
+  "provenance": {
+    "discoveredAt": "2026-09-25T18:04:11Z",
+    "discoveryRunId": "run_20260925_k3v9x2qa",
+    "recordedBy": "mixed",
+    "model": "claude (discovery agent)",
+    "notes": "Hand-written reference capability for the schema, edited from an earlier discovery run against the mock app."
+  },
+  "overrides": [
+    {
+      "tenant": "riverbend-fcu",
+      "stepPatches": [
+        {
+          "stepId": "s05",
+          "target": {
+            "description": "Member # text field on the search form. Tenant B (riverbend-fcu) relabels 'Member ID' as 'Member #' (again with no trailing colon) and renders the main frame as an <iframe name=\"main\"> inside a table rather than a top-level frameset frame, with banner/nav inlined into the top document instead of their own frames; since both surfaces still expose a frame named 'main', the frame path [{name:'main'}] is unchanged and the iframe/frameset difference is fully absorbed there. No role locator, for the same reason as the base s05 target: the field's name comes only from the adjacent <td> ('Member #'), not a <label>/aria-label/placeholder, so it has no genuine accessible name.",
+            "frame": [{ "name": "main" }],
+            "locators": [
+              {
+                "strategy": { "kind": "label", "label": "Member #" },
+                "confidence": 0.85,
+                "source": "recorded"
+              },
+              {
+                "strategy": { "kind": "css", "selector": "input[name=memberId]" },
+                "confidence": 0.55,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": { "tag": "input", "role": "textbox", "name": "Member #" }
+          }
+        }
+      ],
+      "notes": "Same vendor product and underlying form field (input[name=memberId]); only the visible label text and the main-frame container element change. No other steps need patching for this tenant."
+    }
+  ]
+}

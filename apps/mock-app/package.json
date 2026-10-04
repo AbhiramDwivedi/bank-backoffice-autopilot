@@ -1,0 +1,24 @@
+{
+  "name": "@cu/mock-app",
+  "version": "0.1.0",
+  "description": "Deliberately legacy credit-union back-office app used as the target surface for discovery and replay",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./app": "./app.ts",
+    "./tenant": "./tenant.ts",
+    "./test-helpers": "./test-helpers.ts",
+    "./server": "./server.ts"
+  },
+  "dependencies": {
+    "@cu/browser-agent": "*",
+    "cookie-parser": "^1.4.7",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1"
+  },
+  "scripts": {
+    "test": "vitest run --root ../.. --project mock-app",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "start": "tsx server.ts"
+  }
+}

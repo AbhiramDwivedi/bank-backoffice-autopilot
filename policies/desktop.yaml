@@ -1,0 +1,74 @@
+# Guardrail policy for Teller Workstation, the mock desktop app (apps/mock-desktop).
+#
+# Same schema and regex convention as default.yaml (every regex source compiles with the 'i' flag
+# and no others). Use it with a desktop base URL:
+#
+#   npm run --silent cli -- --policy policies/desktop.yaml --base-url desktop://tellerworkstation \
+#     --app-command "powershell.exe -NoProfile -ExecutionPolicy Bypass -File apps/mock-desktop/teller.ps1" \
+#     replay <capability.json> --input memberId=12345
+
+name: mock-teller-desktop
+
+# A desktop origin is desktop://<process name>: exactly that process (case-insensitive, no
+# wildcards), and only the process tree the run launched or attached to. A web origin here would
+# allow nothing in a desktop run, and this entry allows nothing in a web run.
+allowedOrigins:
+  - 'desktop://tellerworkstation'
+
+# Path patterns match "/" + the window title (decoded). Empty = every window of the app.
+allowedPathPatterns: []
+deniedPathPatterns: []
+
+allowedActions:
+  - navigate
+  - click
+  - type
+  - select
+  - press
+  - extract
+  - wait
+  - dismiss_dialog
+  - switch_frame
+
+risk:
+  # The generic list from default.yaml, plus Teller Workstation's own irreversible control: the
+  # confirmation dialog's "Open Sub-Account" button (anchored, so the "Open Sub-Account..." button
+  # that only opens the dialog is not flagged), and the dialog's message for dismiss_dialog(accept).
+  irreversibleTextPatterns:
+    - '^(submit|confirm|create|open account|transfer|delete|approve|post)\b'
+    - '^open sub-account$'
+    - '^open a new .*sub-account'
+  # Matched against the location an action runs in, both as the URL (title percent-encoded:
+  # 'Confirm%20Open') and with the title decoded ('desktop://tellerworkstation/Confirm Open
+  # Sub-Account'), so a pattern may be written with the title's spaces: '/Confirm Open Sub-Account$'.
+  irreversibleUrlPatterns: []
+  discoveryMode: escalate
+  replayRequiresApproved: true
+
+redaction:
+  patterns:
+    - name: ssn
+      regex: '\b\d{3}-\d{2}-\d{4}\b'
+      replacement: '[REDACTED:ssn]'
+    - name: card
+      regex: '\b(?:\d[ -]?){12,18}\d\b'
+      replacement: '[REDACTED:card]'
+  # Screen masking on the desktop surface (docs/design/screen-masking.md, docs/design/desktop.md):
+  # every edit field's value is hidden (Teller Workstation shows a member's record in read-only
+  # edit fields, so the model sees the labels and extracts values it cannot see), and a value whose
+  # whole label matches one of these is hidden wherever it shows. The "Checking Balance" static is
+  # left visible, like balances on the web. maskSelectors are CSS and mean nothing on the desktop.
+  screen:
+    maskInputs: all
+    maskLabels:
+      - '(home |mailing |street |residential |postal )?address'
+      - '(phone|telephone|tel\.?|mobile|cell|fax)( number| no\.?| #)?'
+      - 'ssn|social security( number| no\.?)?|tax id|tin'
+      - 'date of birth|birth ?date|dob'
+      - 'e-?mail( address)?'
+    maskTextPatterns: true
+
+limits:
+  maxSteps: 40
+  maxDurationMs: 600000
+  maxLlmCalls: 60

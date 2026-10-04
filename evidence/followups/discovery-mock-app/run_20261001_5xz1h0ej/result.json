@@ -1,0 +1,54 @@
+{
+  "runId": "run_20261001_5xz1h0ej",
+  "capabilityId": "lookup-member-savings-balance",
+  "capabilityVersion": "1.0.0",
+  "capabilityDigest": "sha256:bd9d3406e083afcea33ba0efa43691d0fa8834d85cd7efb0ff2b18ae7b5e1d83",
+  "stepsExecuted": 6,
+  "durationMs": 12555,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [
+    "dismiss_system_maintenance_notice"
+  ],
+  "kind": "hard_failure",
+  "stepId": "s07",
+  "stepName": "Open the member record from the search results",
+  "code": "element_not_found",
+  "expected": "target \"clickable \"99999\" (<tr>)\" resolvable by one of 1 locators",
+  "observed": "text: no match",
+  "message": "step s07: target not found: clickable \"99999\" (<tr>)",
+  "evidence": {
+    "screenshot": "shots/37.png",
+    "dom": "dom/37.html"
+  }
+}

@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Member 4242 - Pat Example</title>
+<style>
+  body { margin: 0; font: bold 22px Arial, sans-serif; background: #ffffff; color: #000; }
+  .pii { color: #ff00aa; }
+  td { padding: 6px 12px; height: 40px; }
+  input { width: 300px; height: 40px; font: bold 22px Arial, sans-serif; }
+  input.pii { color: #ff00aa; }
+</style>
+</head>
+<body>
+  <h2 id="heading" style="margin:8px">Member: <span class="pii">Pat Example</span></h2>
+  <table>
+    <tr><td>Member Name</td><td id="name" class="pii">Pat Example</td></tr>
+    <tr><td>Member ID</td><td id="mid">4242</td></tr>
+    <tr><td>Phone</td><td id="phone" class="pii">(413) 555-0199</td></tr>
+    <tr><td>Savings Balance</td><td id="bal" class="pii">$9,876.54</td></tr>
+    <tr><td>Nickname</td><td><input id="nick" class="pii" type="text" value="prefilled-nick"></td></tr>
+    <tr><td>Search</td><td><input id="search" class="pii" type="text"></td></tr>
+  </table>
+  <div class="account-note pii" id="note">Private note: prefers mail</div>
+  <p id="ssnline">Tax record <span class="pii">123-45-6789</span> on file</p>
+  <p id="banner">Signed in as <span class="pii">operator-sekrit-7</span></p>
+  <p><b>Email:</b> <span class="pii">pat@example.org</span><br><b>Branch:</b> Main</p>
+  <p id="plain">Nothing secret here</p>
+  <select id="statesel"><option>Ohio</option><option selected>Utah</option><option>Iowa</option></select>
+</body>
+</html>

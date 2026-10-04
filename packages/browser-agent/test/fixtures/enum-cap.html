@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Cap Test</title></head>
+<body>
+<div id="host"></div>
+<script>
+(function () {
+  var host = document.getElementById('host');
+  var html = '';
+  for (var i = 0; i < 300; i++) {
+    html += '<button type="button">Btn' + i + '</button> ';
+  }
+  host.innerHTML = html;
+})();
+</script>
+</body>
+</html>

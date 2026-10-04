@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Member Detail</title>
+<style>
+.tab { padding: 3px 10px; border: 1px solid #999999; background-color: #DDDDDD; cursor: pointer; }
+.tab-on { padding: 3px 10px; border: 1px solid #999999; background-color: #FFFFFF; font-weight: bold; cursor: pointer; }
+</style>
+<script>
+function showTab(name) {
+  document.getElementById('pnlProfile').style.display = name === 'profile' ? '' : 'none';
+  document.getElementById('pnlAccounts').style.display = name === 'accounts' ? '' : 'none';
+  document.getElementById('tabProfile').className = name === 'profile' ? 'tab tab-on' : 'tab';
+  document.getElementById('tabAccounts').className = name === 'accounts' ? 'tab tab-on' : 'tab';
+}
+</script>
+</head>
+<body>
+<h2>Member: Jane Q. Sample (#12345)</h2>
+<p>
+<span class="tab tab-on" id="tabProfile" onclick="showTab('profile')">Profile</span>
+&nbsp;|&nbsp;
+<span class="tab" id="tabAccounts" onclick="showTab('accounts')">Accounts</span>
+</p>
+<div id="pnlProfile">
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td class="lbl">Member Name</td><td class="val">Jane Q. Sample</td></tr>
+<tr><td class="lbl">Member ID</td><td class="val">12345</td></tr>
+<tr><td class="lbl">Savings Balance</td><td class="val" id="savingsCell">$1,234.56</td></tr>
+<tr><td class="lbl">Checking Balance</td><td class="val">$310.00</td></tr>
+<tr><td class="lbl">Nickname</td><td class="val"><input type="text" id="nicknameInput" value="Jane's Savings" /></td></tr>
+<tr><td class="lbl">PIN</td><td class="val"><input type="password" id="pinInput" value="secret123" /></td></tr>
+</table>
+</div>
+<div id="pnlAccounts" style="display:none">
+<p>Accounts panel content.</p>
+</div>
+</body>
+</html>

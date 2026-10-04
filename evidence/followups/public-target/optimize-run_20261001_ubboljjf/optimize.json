@@ -1,0 +1,100 @@
+{
+  "capabilityId": "read-product-price",
+  "versionBefore": "1.0.0",
+  "versionAfter": "1.0.0",
+  "readOnly": true,
+  "stop": "completed",
+  "vetoes": [],
+  "analysis": {
+    "redundantRepeats": [],
+    "checkpointsToProbe": [
+      "s04",
+      "s05"
+    ],
+    "removalCandidates": [
+      "s01",
+      "s02",
+      "s03",
+      "s04",
+      "s05"
+    ]
+  },
+  "changed": false,
+  "stepsBefore": 6,
+  "stepsAfter": 6,
+  "changes": [],
+  "rejected": [
+    {
+      "stepId": "s05",
+      "reason": "hard_failure: element_not_found at s06: step s06: target not found: generic below \"Sauce Labs Backpack\" (<div>)"
+    }
+  ],
+  "kept": [
+    {
+      "stepId": "s01",
+      "reason": "invalid_without",
+      "what": "step"
+    },
+    {
+      "stepId": "s02",
+      "reason": "invalid_without",
+      "what": "step"
+    },
+    {
+      "stepId": "s03",
+      "reason": "invalid_without",
+      "what": "step"
+    },
+    {
+      "stepId": "s04",
+      "reason": "invalid_without",
+      "what": "step"
+    },
+    {
+      "stepId": "s06",
+      "reason": "last_extract",
+      "what": "step"
+    }
+  ],
+  "irreversibleSteps": [],
+  "trialsUsed": 2,
+  "removalTrialsUsed": 1,
+  "maxTrials": 3,
+  "budgetExhausted": false,
+  "trials": [
+    {
+      "n": 1,
+      "purpose": "baseline",
+      "label": "baseline (unmodified capability)",
+      "kind": "success",
+      "runId": "run_20261001_1c7ftp6r",
+      "locatorDepth": 1
+    },
+    {
+      "n": 2,
+      "purpose": "removal",
+      "label": "remove s05",
+      "kind": "hard_failure",
+      "runId": "run_20261001_3nzbsxwe",
+      "detail": "element_not_found at s06: step s06: target not found: generic below \"Sauce Labs Backpack\" (<div>)",
+      "locatorDepth": 0,
+      "accepted": false
+    }
+  ],
+  "notes": [
+    "verified against one input set (productName) on https://www.saucedemo.com: a step that only matters for other inputs or another tenant can be removed wrongly -- review the draft and replay it more widely before approving"
+  ],
+  "probedTenant": "base",
+  "baseline": {
+    "kind": "success",
+    "outputNames": [
+      "price"
+    ],
+    "runId": "run_20261001_1c7ftp6r"
+  },
+  "verification": {
+    "kept": "unchanged",
+    "required": 1,
+    "attempts": []
+  }
+}

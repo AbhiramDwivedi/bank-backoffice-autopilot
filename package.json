@@ -1,0 +1,63 @@
+{
+  "name": "cu-capability-runtime",
+  "version": "0.1.0",
+  "description": "Computer-use automation: LLM discovery -> capability artifact -> deterministic replay, with human handoff",
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "tools/*"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:unit": "vitest run --project core --project adapter-playwright --project adapter-desktop --project adapter-anthropic --project adapter-jev --project adapter-credentials --project cli --project mock-app --project relay --project browser-agent",
+    "test:e2e": "vitest run --project e2e",
+    "typecheck": "npm run typecheck -w @cu/core -w @cu/adapter-playwright -w @cu/adapter-desktop -w @cu/adapter-anthropic -w @cu/adapter-jev -w @cu/adapter-credentials -w @cu/cli -w @cu/mock-app -w @cu/mock-desktop -w @cu/video -w @cu/make-evidence -w @cu/relay -w @cu/browser-agent && tsc --noEmit -p tsconfig.json",
+    "lint": "eslint packages/core packages/adapter-playwright packages/adapter-desktop packages/adapter-anthropic packages/adapter-jev packages/adapter-credentials packages/browser-agent apps/cu apps/mock-app apps/mock-desktop apps/relay tools tests",
+    "schema:export": "tsx packages/core/src/schema/export.ts",
+    "mock-app": "tsx apps/mock-app/server.ts",
+    "mock-desktop": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File apps/mock-desktop/teller.ps1",
+    "cli": "tsx apps/cu/src/index.ts",
+    "discover": "tsx apps/cu/src/index.ts discover",
+    "replay": "tsx apps/cu/src/index.ts replay",
+    "operator": "tsx apps/cu/src/index.ts operator --demo",
+    "approve": "tsx apps/cu/src/index.ts approve",
+    "judge:eval": "tsx apps/cu/src/commands/judge-eval.ts",
+    "evidence": "tsx tools/evidence/make-evidence.ts",
+    "video:build": "tsx tools/video/build.ts",
+    "build:relay": "npm run build -w @cu/relay"
+  },
+  "keywords": [
+    "computer-use",
+    "rpa",
+    "playwright",
+    "llm-agents"
+  ],
+  "author": "Abhiram Dwivedi",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.3",
+    "eslint": "^10.11.0",
+    "playwright": "^1.63.0",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.70.1",
+    "vitest": "^5.0.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AbhiramDwivedi/understudy.git"
+  }
+}

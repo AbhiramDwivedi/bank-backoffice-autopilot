@@ -1,0 +1,123 @@
+{
+  "id": "int_20260926_g9mqekmn",
+  "runId": "run_20260926_it9g8xmp",
+  "runKind": "replay",
+  "capabilityId": "lookup-member-savings-balance",
+  "stepId": "s06",
+  "reason": {
+    "code": "unrecoverable_condition",
+    "message": "session expired (page shows \"Your session has expired\") while step s06: target not found: textbox \"Member ID\" (<input>)"
+  },
+  "screenshotPath": "shots/33.png",
+  "currentUrl": "http://localhost:4173/session-expired",
+  "createdAt": "2026-09-26T15:37:02.377Z",
+  "status": "resolved",
+  "resolution": {
+    "by": "scripted-operator",
+    "at": "2026-09-26T15:37:04.529Z",
+    "notes": "scripted operator re-authenticated in the same browser session; current_step (s06 has no postcondition; retrying the step)",
+    "humanActions": [
+      {
+        "ts": "2026-09-26T15:37:02.563Z",
+        "type": "navigate",
+        "frame": [],
+        "target": {},
+        "url": "http://localhost:4173/login"
+      },
+      {
+        "ts": "2026-09-26T15:37:03.052Z",
+        "type": "input",
+        "frame": [],
+        "target": {
+          "tag": "input",
+          "role": "textbox",
+          "name": "User ID",
+          "selector": "input[type=\"text\"][name=\"userId\"]"
+        },
+        "valueRedacted": true,
+        "url": "http://localhost:4173/login"
+      },
+      {
+        "ts": "2026-09-26T15:37:03.263Z",
+        "type": "input",
+        "frame": [],
+        "target": {
+          "tag": "input",
+          "role": "textbox",
+          "name": "Password",
+          "selector": "input[type=\"password\"][name=\"password\"]"
+        },
+        "valueRedacted": true,
+        "url": "http://localhost:4173/login"
+      },
+      {
+        "ts": "2026-09-26T15:37:03.756Z",
+        "type": "click",
+        "frame": [],
+        "target": {
+          "tag": "input",
+          "role": "button",
+          "name": "login",
+          "selector": "input[type=\"image\"][name=\"login\"]"
+        },
+        "valueRedacted": true,
+        "url": "http://localhost:4173/login"
+      },
+      {
+        "ts": "2026-09-26T15:37:03.888Z",
+        "type": "submit",
+        "frame": [],
+        "target": {
+          "tag": "form",
+          "role": "generic",
+          "name": "Operator Sign-On User ID: Password:",
+          "text": "Operator Sign-On User ID: Password:",
+          "selector": "form"
+        },
+        "valueRedacted": true,
+        "url": "http://localhost:4173/login"
+      },
+      {
+        "ts": "2026-09-26T15:37:04.221Z",
+        "type": "navigate",
+        "frame": [],
+        "target": {},
+        "url": "http://localhost:4173/workstation"
+      },
+      {
+        "ts": "2026-09-26T15:37:04.259Z",
+        "type": "navigate",
+        "frame": [
+          {
+            "name": "banner"
+          }
+        ],
+        "target": {},
+        "url": "http://localhost:4173/frames/banner"
+      },
+      {
+        "ts": "2026-09-26T15:37:04.285Z",
+        "type": "navigate",
+        "frame": [
+          {
+            "name": "nav"
+          }
+        ],
+        "target": {},
+        "url": "http://localhost:4173/frames/nav"
+      },
+      {
+        "ts": "2026-09-26T15:37:04.293Z",
+        "type": "navigate",
+        "frame": [
+          {
+            "name": "main"
+          }
+        ],
+        "target": {},
+        "url": "http://localhost:4173/members/search"
+      }
+    ],
+    "resumeFrom": "current_step"
+  }
+}

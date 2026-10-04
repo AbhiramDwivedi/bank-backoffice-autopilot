@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>XSS fixture</title></head>
+<body>
+<h1>XSS-hostile attribute/content fixture</h1>
+<div id="host"></div>
+<script>
+(function () {
+  var host = document.getElementById('host');
+
+  // Payloads. Built as JS strings and applied via setAttribute/textContent (never innerHTML), so
+  // whatever the payload text looks like, it can never be parsed as real markup or executed -- the
+  // point of this fixture is to hand the library these strings as plain attribute/text VALUES and
+  // confirm it only ever reads them, never evaluates them.
+  var PAYLOAD_IMG = '"><img src=x onerror="window.__pwned=1">';
+  // Built by concatenation, so the closing script-end-tag sequence never appears contiguously
+  // anywhere in this file's source (not even in a comment): the HTML PARSER ends a <script>
+  // element's content at that literal sequence, even inside a JS string OR a `//` comment --
+  // HTML tokenizing runs before JS parsing even starts, so it does not know about JS syntax at
+  // all. A contiguous occurrence here would break out of this very script block.
+  var PAYLOAD_SCRIPT = '<' + '/script><script>window.__pwned=2<' + '/script>';
+  var PAYLOAD_QUOTES = '\'";}{`';
+  var PAYLOAD_BRACKETS = '" ] , > + ~';
+  var PAYLOAD_WHITESPACE = 'line1\nline2\tend';
+  var PAYLOAD_LONG = 'A'.repeat(5000);
+  var PAYLOAD_RTL = '‮evil‬';
+
+  function make(tag) {
+    var el = document.createElement(tag);
+    el.setAttribute('data-xss', '1');
+    host.appendChild(el);
+    return el;
+  }
+
+  // aria-label
+  var b1 = make('button'); b1.type = 'button'; b1.id = 'b-img'; b1.setAttribute('aria-label', PAYLOAD_IMG);
+  var b2 = make('button'); b2.type = 'button'; b2.id = 'b-script'; b2.setAttribute('aria-label', PAYLOAD_SCRIPT);
+  var b3 = make('button'); b3.type = 'button'; b3.id = 'b-quotes'; b3.setAttribute('aria-label', PAYLOAD_QUOTES);
+  var b4 = make('button'); b4.type = 'button'; b4.id = 'b-brackets'; b4.setAttribute('aria-label', PAYLOAD_BRACKETS);
+  var b5 = make('button'); b5.type = 'button'; b5.id = 'b-ws'; b5.setAttribute('aria-label', PAYLOAD_WHITESPACE);
+  var b6 = make('button'); b6.type = 'button'; b6.id = 'b-long'; b6.setAttribute('aria-label', PAYLOAD_LONG);
+  var b7 = make('button'); b7.type = 'button'; b7.id = 'b-rtl'; b7.setAttribute('aria-label', PAYLOAD_RTL);
+
+  // title (accessible-name fallback source)
+  var t1 = make('button'); t1.type = 'button'; t1.id = 'b-title'; t1.setAttribute('title', PAYLOAD_IMG);
+
+  // name
+  var n1 = make('input'); n1.type = 'text'; n1.id = 'in-name'; n1.setAttribute('name', PAYLOAD_SCRIPT);
+
+  // id (hostile enough that structuralSelector must refuse to use it as `#id`)
+  var idEl = make('div'); idEl.setAttribute('onclick', 'void(0)'); idEl.setAttribute('id', PAYLOAD_BRACKETS);
+  idEl.textContent = 'IdPayload';
+
+  // placeholder
+  var p1 = make('input'); p1.type = 'text'; p1.id = 'in-placeholder'; p1.setAttribute('placeholder', PAYLOAD_BRACKETS);
+
+  // value (button-type input reads its name from the `value` attribute)
+  var v1 = make('input'); v1.type = 'button'; v1.id = 'in-value'; v1.setAttribute('value', PAYLOAD_IMG);
+
+  // class (must still be recognized as clickable via the trailing `.btn` token)
+  var c1 = make('div'); c1.setAttribute('onclick', 'void(0)'); c1.id = 'div-class';
+  c1.setAttribute('class', 'btn ' + PAYLOAD_QUOTES);
+  c1.textContent = 'Clickable';
+
+  // alt
+  var img1 = make('img'); img1.id = 'img-alt'; img1.setAttribute('alt', PAYLOAD_SCRIPT); img1.setAttribute('src', 'x');
+
+  // text content
+  var d1 = make('div'); d1.setAttribute('onclick', 'void(0)'); d1.id = 'div-text-img'; d1.textContent = PAYLOAD_IMG;
+  var d2 = make('div'); d2.setAttribute('onclick', 'void(0)'); d2.id = 'div-text-script'; d2.textContent = PAYLOAD_SCRIPT;
+  var d3 = make('div'); d3.setAttribute('onclick', 'void(0)'); d3.id = 'div-text-rtl'; d3.textContent = PAYLOAD_RTL;
+  var d4 = make('div'); d4.setAttribute('onclick', 'void(0)'); d4.id = 'div-text-ws'; d4.textContent = PAYLOAD_WHITESPACE;
+  var d5 = make('div'); d5.setAttribute('onclick', 'void(0)'); d5.id = 'div-text-long'; d5.textContent = PAYLOAD_LONG;
+
+  window.__xssPayloads = {
+    PAYLOAD_IMG: PAYLOAD_IMG,
+    PAYLOAD_SCRIPT: PAYLOAD_SCRIPT,
+    PAYLOAD_QUOTES: PAYLOAD_QUOTES,
+    PAYLOAD_BRACKETS: PAYLOAD_BRACKETS,
+    PAYLOAD_WHITESPACE: PAYLOAD_WHITESPACE,
+    PAYLOAD_LONG: PAYLOAD_LONG,
+    PAYLOAD_RTL: PAYLOAD_RTL
+  };
+})();
+</script>
+</body>
+</html>

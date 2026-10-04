@@ -1,0 +1,6 @@
+operator console: http://127.0.0.1:59472
+run dir: runs-live/ev/discovery-mock-app/run_20261001_5xz1h0ej
+Capability lookup-member-savings-balance@1.0.0 FAILED at step s07 ("Open the member record from the search results") with element_not_found: step s07: target not found: clickable "99999" (<tr>). Expected: target "clickable "99999" (<tr>)" resolvable by one of 1 locators. Observed: text: no match. Evidence: shots/37.png, dom/37.html. Recoveries: dismiss_system_maintenance_notice. Locator drift: none.
+result: runs-live/ev/discovery-mock-app/run_20261001_5xz1h0ej/result.json
+control: automation
+exit code: 4

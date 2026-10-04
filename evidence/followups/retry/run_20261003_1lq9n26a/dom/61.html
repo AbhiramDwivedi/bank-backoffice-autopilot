@@ -1,0 +1,120 @@
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<!-- frame: top http://localhost:4173/workstation -->
+<html data-cu-agent="1.4.0"><head>
+
+
+
+<title>Pioneer Valley Community CU - CU Core Workstation</title>
+</head>
+<frameset rows="70,*" border="0" framespacing="0" frameborder="0">
+<frame name="banner" src="/frames/banner" scrolling="no" noresize="" marginwidth="0" marginheight="0">
+<frameset cols="170,*" border="0" framespacing="0" frameborder="0">
+<frame name="nav" src="/frames/nav" marginwidth="0" marginheight="0">
+<frame name="main" src="/members/search" marginwidth="0" marginheight="0">
+</frameset>
+<noframes>
+<body>
+<p>This application requires a browser that supports frames. Please use a browser with frame support to access CU Core Workstation.</p>
+</body>
+</noframes>
+</frameset>
+
+</html>
+<!-- frame: banner http://localhost:4173/frames/banner -->
+<html data-cu-agent="1.4.0"><head>
+
+
+
+<title>Banner</title>
+
+</head>
+<body bgcolor="#003366" topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" cellpadding="6" cellspacing="0" border="0" bgcolor="#003366">
+<tbody><tr>
+<td valign="middle">
+<font face="Verdana,Arial" color="#FFCC00" size="4"><b>Pioneer Valley Community CU</b></font>
+&nbsp;&nbsp;
+<font face="Verdana,Arial" color="#FFCC00" size="2">CU Core Workstation 7.4.2</font>
+</td>
+<td valign="middle" align="right" nowrap="">
+<font face="Verdana,Arial" color="#FFCC00" size="2">Operator: [MASKED:sensitive]</font>
+&nbsp;
+<a><img src="/static/img/ico_help.png" border="0" width="16" height="16"></a>
+&nbsp;
+<a href="/logout" target="_top"><img src="/static/img/ico_power.png" border="0" width="16" height="16"></a>
+</td>
+</tr>
+</tbody></table>
+
+
+
+</body></html>
+<!-- frame: nav http://localhost:4173/frames/nav -->
+<html data-cu-agent="1.4.0"><head>
+
+
+
+<title>Navigation</title>
+
+<link rel="stylesheet" href="/static/css/legacy.css">
+</head>
+<body bgcolor="#EEEEEE" topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" cellpadding="3" cellspacing="0" border="0">
+<tbody><tr><td><img src="/static/img/spacer.gif" width="1" height="6"></td></tr>
+<tr><td><font face="Verdana,Arial" size="2"><a href="/members/search" target="main">Member Search</a></font></td></tr>
+<tr><td><img src="/static/img/spacer.gif" width="1" height="4"></td></tr>
+<tr><td><font face="Verdana,Arial" size="2"><a target="main">Teller Journal</a></font></td></tr>
+<tr><td><img src="/static/img/spacer.gif" width="1" height="4"></td></tr>
+<tr><td><font face="Verdana,Arial" size="2"><a target="main">Loan Queue</a></font></td></tr>
+<tr><td><img src="/static/img/spacer.gif" width="1" height="4"></td></tr>
+<tr><td><font face="Verdana,Arial" size="2"><a href="/members/search?module=reports" target="main">Reports</a></font></td></tr>
+<tr><td><img src="/static/img/spacer.gif" width="1" height="16"></td></tr>
+<tr><td><font face="Verdana,Arial" size="2"><a href="/logout" target="_top">Log Off</a></font></td></tr>
+</tbody></table>
+
+
+
+</body></html>
+<!-- frame: main http://localhost:4173/members/search -->
+<html data-cu-agent="1.4.0"><head>
+
+
+
+<title>Application Error</title>
+</head>
+<body bgcolor="#FFFFFF" text="#000000" marginwidth="0" marginheight="0">
+<h1>Application Error</h1>
+<p>
+An error has occurred while processing your request. The error has been logged.
+</p>
+<p>
+<b>ORA-01017: invalid username/password; logon denied</b>
+</p>
+<pre>java.sql.SQLException: ORA-01017: invalid username/password; logon denied
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:447)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:396)
+	at oracle.jdbc.driver.T4C8Oall.processError(T4C8Oall.java:1052)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:626)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:249)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:531)
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:544)
+	at oracle.jdbc.driver.PhysicalConnection.&lt;init&gt;(PhysicalConnection.java:679)
+	at oracle.jdbc.driver.T4CConnection.&lt;init&gt;(T4CConnection.java:255)
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:32)
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:521)
+	at coldfusion.server.j2ee.sql.JDBCConnection.getConnection(JDBCConnection.java:381)
+	at coldfusion.server.j2ee.sql.pool.JDBCPool.getConnection(JDBCPool.java:296)
+	at coldfusion.sql.Sql.execute(Sql.java:1024)
+	at coldfusion.tagext.sql.QueryTag.executeQuery(QueryTag.java:1046)
+	at coldfusion.tagext.sql.QueryTag.doStartTag(QueryTag.java:583)
+	at coldfusion.runtime.CfJspPage._emptyTcfTag(CfJspPage.java:4230)
+	at cfmembersearch2ecfm1774002913.runPage(/cfroot/members/search.cfm:112)
+	at coldfusion.runtime.CfJspPage.invoke(CfJspPage.java:249)
+	at coldfusion.tagext.lang.IncludeTag.doStartTag(IncludeTag.java:415)
+</pre>
+<p>
+Please contact your system administrator.
+</p>
+
+
+</body></html>

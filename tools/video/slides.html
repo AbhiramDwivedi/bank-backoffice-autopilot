@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Capability runtime — slides</title>
+<style>
+  :root{
+    --bg:#0f1419;
+    --panel:#161d27;
+    --panel-2:#1b2430;
+    --border:#2a3542;
+    --text:#eef2f6;
+    --muted:#7d8a97;
+    --accent:#38bdf8;
+    --amber:#f5a623;
+    --red:#f87171;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;width:1280px;height:720px;overflow:hidden;background:var(--bg);}
+  body{font-family:system-ui,"Segoe UI",sans-serif;color:var(--text);}
+  code,.mono{font-family:Consolas,"Cascadia Mono",monospace;}
+
+  .slide{
+    display:none;
+    width:1280px;height:720px;
+    padding:64px 64px 32px 64px;
+    flex-direction:column;
+    position:relative;
+  }
+  .slide.active{display:flex;}
+  .slide.active{animation:fadein 220ms ease-out;}
+  @keyframes fadein{from{opacity:0;} to{opacity:1;}}
+  @keyframes hb{from{opacity:0.01;}to{opacity:0.02;}}
+  #hb{position:fixed;right:0;bottom:0;width:2px;height:2px;background:#fff;animation:hb 0.2s linear infinite alternate;pointer-events:none;}
+
+  .eyebrow{
+    font-size:20px;
+    font-weight:600;
+    color:var(--amber);
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    margin:0 0 14px 0;
+  }
+  h1.title{
+    font-size:56px;
+    font-weight:800;
+    color:var(--accent);
+    margin:0 0 30px 0;
+    line-height:1.15;
+    letter-spacing:-0.01em;
+  }
+  .body{
+    flex:1 1 auto;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+  }
+  footer.foot{
+    flex:0 0 auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-top:14px;
+    margin-top:14px;
+    border-top:1px solid var(--border);
+    font-size:18px;
+    color:var(--muted);
+  }
+
+  ul.points{list-style:none;margin:0;padding:0;flex:1;display:flex;flex-direction:column;justify-content:center;gap:26px;}
+  ul.points li{font-size:32px;line-height:1.4;color:var(--text);padding-left:40px;position:relative;}
+  ul.points li::before{
+    content:"";position:absolute;left:0;top:0.45em;width:16px;height:16px;
+    background:var(--accent);border-radius:3px;
+  }
+  ul.points.cuts li::before{background:var(--muted);}
+
+  .callout{
+    border-left:4px solid var(--amber);
+    background:rgba(245,166,35,0.08);
+    padding:18px 24px;
+    font-size:26px;
+    line-height:1.4;
+    color:var(--text);
+    border-radius:6px;
+  }
+  .callout.red{border-left-color:var(--red);background:rgba(248,113,113,0.08);}
+  .callout b{color:var(--amber);}
+  .callout.red b{color:var(--red);}
+
+  .caption{
+    font-size:24px;
+    color:var(--muted);
+    font-style:italic;
+    margin-top:18px;
+  }
+
+  svg text{font-family:system-ui,"Segoe UI",sans-serif;}
+  svg .mono-t{font-family:Consolas,"Cascadia Mono",monospace;}
+
+  /* slide 5: two column */
+  .cols{flex:1;display:flex;align-items:stretch;gap:40px;}
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:30px 32px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:22px;
+  }
+  .panel.left{flex:0 0 420px;}
+  .panel.right{flex:1;border-color:var(--accent);}
+  .panel-h{font-size:20px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin:0 0 4px 0;}
+  .panel .line{font-size:29px;line-height:1.5;color:var(--text);}
+  .panel.right .line{font-family:Consolas,"Cascadia Mono",monospace;font-size:21px;line-height:1.6;color:#c9e8fb;word-break:break-word;}
+  .mid-arrow{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--accent);}
+  .mid-arrow .arrow-glyph{font-size:40px;line-height:1;}
+  .mid-arrow .arrow-label{font-size:16px;color:var(--muted);white-space:nowrap;}
+
+  /* slide 6: table */
+  .rtable{flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;}
+  .rrow{
+    display:grid;
+    grid-template-columns:270px 1fr 120px;
+    align-items:center;
+    gap:24px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-left:6px solid var(--muted);
+    border-radius:10px;
+    padding:18px 26px;
+  }
+  .rrow.success{border-left-color:var(--accent);}
+  .rrow.outcome{border-left-color:var(--amber);}
+  .rrow.hard{border-left-color:var(--red);}
+  .rrow.escalated{border-left-color:#94a3b8;}
+  .rkind{font-family:Consolas,"Cascadia Mono",monospace;font-size:26px;font-weight:700;}
+  .rrow.success .rkind{color:var(--accent);}
+  .rrow.outcome .rkind{color:var(--amber);}
+  .rrow.hard .rkind{color:var(--red);}
+  .rrow.escalated .rkind{color:#94a3b8;}
+  .rdetail{font-size:27px;color:var(--text);line-height:1.3;}
+  .rexit{font-family:Consolas,"Cascadia Mono",monospace;font-size:24px;color:var(--muted);text-align:right;white-space:nowrap;}
+
+  /* slide 9: paths */
+  .pathlist{flex:1;display:flex;flex-direction:column;justify-content:center;gap:24px;}
+  .prow{display:flex;align-items:baseline;gap:20px;font-size:28px;}
+  .prow .p{font-family:Consolas,"Cascadia Mono",monospace;color:var(--accent);white-space:nowrap;}
+  .prow .d{color:var(--text);}
+  .prow .dash{color:var(--muted);}
+
+  /* title slide */
+  .cover{flex:1;display:flex;flex-direction:column;justify-content:center;}
+  .cover h1{font-size:58px;font-weight:800;color:var(--text);margin:0 0 26px 0;line-height:1.2;max-width:1080px;}
+  .cover .subtitle{font-size:32px;color:var(--accent);margin:0 0 40px 0;line-height:1.4;}
+  .cover .small{font-size:20px;color:var(--muted);}
+</style>
+</head>
+<body>
+
+  <!-- Slide 1: Title -->
+  <section class="slide" id="slide-1">
+    <div class="cover">
+      <h1>Capability runtime for legacy back-office apps</h1>
+      <div class="subtitle">Automating a legacy back-office app: the problem, the design, a live run</div>
+      <div class="small">Narration is synthesized speech.</div>
+    </div>
+  </section>
+
+  <!-- Slide 2: The problem -->
+  <section class="slide" id="slide-2">
+    <h1 class="title">No API. Only the screen.</h1>
+    <div class="body">
+      <ul class="points">
+        <li>Back-office apps with no API — the only way in is the screen.</li>
+        <li>Hundreds of tenants, running the same product, configured differently.</li>
+        <li>A hand-written script per tenant does not scale.</li>
+      </ul>
+    </div>
+    <footer class="foot"><span>The problem</span><span>2 / 10</span></footer>
+  </section>
+
+  <!-- Slide 3: architecture seam -->
+  <section class="slide" id="slide-3">
+    <h1 class="title">Discover once. Replay without a model.</h1>
+    <div class="body">
+      <svg viewBox="0 0 1040 365" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <marker id="ah-accent" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/>
+          </marker>
+          <marker id="ah-border" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#5c6b79"/>
+          </marker>
+        </defs>
+
+        <!-- top flow -->
+        <g>
+          <rect x="20" y="20" width="110" height="60" rx="10" fill="#161d27" stroke="#38bdf8" stroke-width="2"/>
+          <text x="75" y="55" text-anchor="middle" font-size="20" fill="#eef2f6">goal</text>
+
+          <line x1="130" y1="50" x2="148" y2="50" stroke="#38bdf8" stroke-width="2" marker-end="url(#ah-accent)"/>
+
+          <rect x="150" y="20" width="190" height="60" rx="10" fill="#161d27" stroke="#38bdf8" stroke-width="2"/>
+          <text x="245" y="55" text-anchor="middle" font-size="20" fill="#eef2f6">discover (LLM)</text>
+
+          <line x1="340" y1="50" x2="358" y2="50" stroke="#38bdf8" stroke-width="2" marker-end="url(#ah-accent)"/>
+
+          <rect x="360" y="20" width="210" height="60" rx="10" fill="#161d27" stroke="#38bdf8" stroke-width="2"/>
+          <text x="465" y="55" text-anchor="middle" font-size="19" class="mono-t" fill="#eef2f6">capability.json</text>
+
+          <line x1="570" y1="50" x2="588" y2="50" stroke="#38bdf8" stroke-width="2" marker-end="url(#ah-accent)"/>
+
+          <rect x="590" y="20" width="190" height="60" rx="10" fill="#161d27" stroke="#38bdf8" stroke-width="2"/>
+          <text x="685" y="55" text-anchor="middle" font-size="20" fill="#eef2f6">replay (no LLM)</text>
+
+          <line x1="780" y1="50" x2="798" y2="50" stroke="#38bdf8" stroke-width="2" marker-end="url(#ah-accent)"/>
+
+          <rect x="800" y="20" width="170" height="60" rx="10" fill="#161d27" stroke="#38bdf8" stroke-width="2"/>
+          <text x="885" y="55" text-anchor="middle" font-size="20" fill="#eef2f6">typed result</text>
+        </g>
+
+        <!-- down arrows into surface -->
+        <line x1="245" y1="80" x2="245" y2="173" stroke="#38bdf8" stroke-width="2" marker-end="url(#ah-accent)"/>
+        <line x1="685" y1="80" x2="685" y2="173" stroke="#38bdf8" stroke-width="2" marker-end="url(#ah-accent)"/>
+
+        <!-- policy guard band -->
+        <rect x="10" y="160" width="780" height="110" rx="16" fill="none" stroke="#f5a623" stroke-width="2" stroke-dasharray="7,6"/>
+        <text x="24" y="152" font-size="20" fill="#f5a623" font-weight="600">policy guard wraps every act()</text>
+
+        <!-- surface box -->
+        <rect x="20" y="175" width="760" height="80" rx="12" fill="#1b2430" stroke="#38bdf8" stroke-width="2.5"/>
+        <text x="400" y="207" text-anchor="middle" font-size="26" font-weight="700" fill="#eef2f6">Surface</text>
+        <text x="400" y="236" text-anchor="middle" font-size="19" class="mono-t" fill="#9fb2c2">observe · resolve · act · readText · waitFor</text>
+
+        <!-- implementations -->
+        <line x1="138" y1="290" x2="138" y2="257" stroke="#5c6b79" stroke-width="2" marker-end="url(#ah-border)"/>
+        <line x1="394" y1="290" x2="394" y2="257" stroke="#5c6b79" stroke-width="2" marker-end="url(#ah-border)"/>
+        <line x1="650" y1="290" x2="650" y2="257" stroke="#5c6b79" stroke-width="2" marker-end="url(#ah-border)"/>
+
+        <rect x="20" y="290" width="236" height="55" rx="10" fill="#161d27" stroke="#2a3542" stroke-width="2"/>
+        <text x="138" y="323" text-anchor="middle" font-size="20" fill="#eef2f6">Playwright</text>
+
+        <rect x="276" y="290" width="236" height="55" rx="10" fill="#161d27" stroke="#2a3542" stroke-width="2"/>
+        <text x="394" y="323" text-anchor="middle" font-size="20" fill="#eef2f6">Fake (tests)</text>
+
+        <rect x="532" y="290" width="236" height="55" rx="10" fill="#161d27" stroke="#2a3542" stroke-width="2"/>
+        <text x="650" y="323" text-anchor="middle" font-size="20" fill="#eef2f6">desktop (stub)</text>
+
+        <!-- broker / console -->
+        <line x1="780" y1="215" x2="828" y2="215" stroke="#38bdf8" stroke-width="2" marker-start="url(#ah-accent)" marker-end="url(#ah-accent)"/>
+
+        <rect x="830" y="175" width="190" height="80" rx="12" fill="#161d27" stroke="#2a3542" stroke-width="2"/>
+        <text x="925" y="208" text-anchor="middle" font-size="19" font-weight="700" fill="#eef2f6">session broker</text>
+        <text x="925" y="231" text-anchor="middle" font-size="17" fill="#9fb2c2">(control token)</text>
+
+        <line x1="925" y1="257" x2="925" y2="273" stroke="#38bdf8" stroke-width="2" marker-start="url(#ah-accent)" marker-end="url(#ah-accent)"/>
+
+        <rect x="830" y="275" width="190" height="55" rx="10" fill="#161d27" stroke="#2a3542" stroke-width="2"/>
+        <text x="925" y="308" text-anchor="middle" font-size="19" fill="#eef2f6">Relay (console)</text>
+      </svg>
+    </div>
+    <footer class="foot"><span>The problem</span><span>3 / 10</span></footer>
+  </section>
+
+  <!-- Slide 4: locator fallback chain -->
+  <section class="slide" id="slide-4">
+    <h1 class="title">A locator is a fallback chain</h1>
+    <div class="body">
+      <svg viewBox="0 0 900 480" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="flex:1;min-height:0;">
+        <defs>
+          <marker id="ah4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/>
+          </marker>
+        </defs>
+
+        <!-- row 0 -->
+        <circle cx="55" cy="40" r="22" fill="#161d27" stroke="#f5a623" stroke-width="2"/>
+        <text x="55" y="47" text-anchor="middle" font-size="21" font-weight="700" fill="#f5a623">0</text>
+        <rect x="110" y="15" width="520" height="50" rx="10" fill="#161d27" stroke="#38bdf8" stroke-width="2"/>
+        <text x="370" y="47" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2f6">role + name</text>
+        <line x1="370" y1="65" x2="370" y2="93" stroke="#38bdf8" stroke-width="2" marker-end="url(#ah4)"/>
+        <text x="650" y="83" font-size="19" fill="#7d8a97">if no match</text>
+
+        <!-- row 1 -->
+        <circle cx="55" cy="120" r="22" fill="#161d27" stroke="#f5a623" stroke-width="2"/>
+        <text x="55" y="127" text-anchor="middle" font-size="21" font-weight="700" fill="#f5a623">1</text>
+        <rect x="110" y="95" width="520" height="50" rx="10" fill="#161d27" stroke="#38bdf8" stroke-width="2"/>
+        <text x="370" y="127" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2f6">label (adjacent cell)</text>
+        <line x1="370" y1="145" x2="370" y2="173" stroke="#38bdf8" stroke-width="2" marker-end="url(#ah4)"/>
+        <text x="650" y="163" font-size="19" fill="#7d8a97">if no match</text>
+
+        <!-- row 2 -->
+        <circle cx="55" cy="200" r="22" fill="#161d27" stroke="#f5a623" stroke-width="2"/>
+        <text x="55" y="207" text-anchor="middle" font-size="21" font-weight="700" fill="#f5a623">2</text>
+        <rect x="110" y="175" width="520" height="50" rx="10" fill="#161d27" stroke="#38bdf8" stroke-width="2"/>
+        <text x="370" y="207" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2f6">visible text</text>
+        <line x1="370" y1="225" x2="370" y2="253" stroke="#38bdf8" stroke-width="2" marker-end="url(#ah4)"/>
+        <text x="650" y="243" font-size="19" fill="#7d8a97">if no match</text>
+
+        <!-- row 3 -->
+        <circle cx="55" cy="280" r="22" fill="#161d27" stroke="#f5a623" stroke-width="2"/>
+        <text x="55" y="287" text-anchor="middle" font-size="21" font-weight="700" fill="#f5a623">3</text>
+        <rect x="110" y="255" width="520" height="50" rx="10" fill="#161d27" stroke="#38bdf8" stroke-width="2"/>
+        <text x="370" y="287" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2f6">relative to anchor</text>
+        <line x1="370" y1="305" x2="370" y2="333" stroke="#38bdf8" stroke-width="2" marker-end="url(#ah4)"/>
+        <text x="650" y="323" font-size="19" fill="#7d8a97">if no match</text>
+
+        <!-- row 4 -->
+        <circle cx="55" cy="360" r="22" fill="#161d27" stroke="#f5a623" stroke-width="2"/>
+        <text x="55" y="367" text-anchor="middle" font-size="21" font-weight="700" fill="#f5a623">4</text>
+        <rect x="110" y="335" width="520" height="50" rx="10" fill="#161d27" stroke="#38bdf8" stroke-width="2"/>
+        <text x="370" y="367" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2f6">CSS</text>
+        <line x1="370" y1="385" x2="370" y2="413" stroke="#38bdf8" stroke-width="2" marker-end="url(#ah4)"/>
+        <text x="650" y="403" font-size="19" fill="#7d8a97">if no match</text>
+
+        <!-- row 5 -->
+        <circle cx="55" cy="440" r="22" fill="#161d27" stroke="#f5a623" stroke-width="2"/>
+        <text x="55" y="447" text-anchor="middle" font-size="21" font-weight="700" fill="#f5a623">5</text>
+        <rect x="110" y="415" width="520" height="50" rx="10" fill="#161d27" stroke="#38bdf8" stroke-width="2"/>
+        <text x="370" y="447" text-anchor="middle" font-size="22" font-weight="600" fill="#eef2f6">bounding box</text>
+      </svg>
+      <div class="callout">Replay logs which one matched. <b>Depth &gt; 0 is the drift signal.</b></div>
+    </div>
+    <footer class="foot"><span>Discovery</span><span>4 / 10</span></footer>
+  </section>
+
+  <!-- Slide 5: checkpoints and placeholders -->
+  <section class="slide" id="slide-5">
+    <h1 class="title">Checkpoints and placeholders</h1>
+    <div class="body">
+      <div class="cols">
+        <div class="panel left">
+          <div class="panel-h">What the model did</div>
+          <div class="line">click row "12345&nbsp;&nbsp;Jane Q. Sample"</div>
+          <div class="line">expects: profile page for 12345</div>
+        </div>
+        <div class="mid-arrow">
+          <div class="arrow-glyph">&#8594;</div>
+          <div class="arrow-label">recorded as</div>
+        </div>
+        <div class="panel right">
+          <div class="panel-h">What the recorder stores</div>
+          <div class="line">target: { kind: "text", text: "{input.memberId}", tag: "tr" }</div>
+          <div class="line">postcondition: url_matches "/members/{input.memberId}"</div>
+        </div>
+      </div>
+    </div>
+    <footer class="foot"><span>Discovery</span><span>5 / 10</span></footer>
+  </section>
+
+  <!-- Slide 6: four result kinds -->
+  <section class="slide" id="slide-6">
+    <h1 class="title">Four result kinds</h1>
+    <div class="body">
+      <div class="rtable">
+        <div class="rrow success">
+          <div class="rkind">success</div>
+          <div class="rdetail">outputs returned</div>
+          <div class="rexit">exit 0</div>
+        </div>
+        <div class="rrow outcome">
+          <div class="rkind">business_outcome</div>
+          <div class="rdetail">declared result, e.g. member_not_found</div>
+          <div class="rexit">exit 3</div>
+        </div>
+        <div class="rrow hard">
+          <div class="rkind">hard_failure</div>
+          <div class="rdetail">step, expected, observed, screenshot, DOM</div>
+          <div class="rexit">exit 4</div>
+        </div>
+        <div class="rrow escalated">
+          <div class="rkind">escalated</div>
+          <div class="rdetail">a human stepped in; carries the resolution</div>
+          <div class="rexit">exit 5</div>
+        </div>
+      </div>
+    </div>
+    <footer class="foot"><span>Replay</span><span>6 / 10</span></footer>
+  </section>
+
+  <!-- Slide 7: handoff state machine -->
+  <section class="slide" id="slide-7">
+    <h1 class="title">One browser, one control token</h1>
+    <div class="body">
+      <svg viewBox="0 0 900 480" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="flex:1;min-height:0;">
+        <defs>
+          <marker id="ah7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/>
+          </marker>
+          <marker id="ah7r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#f87171"/>
+          </marker>
+        </defs>
+
+        <!-- states -->
+        <rect x="60" y="60" width="220" height="70" rx="14" fill="#161d27" stroke="#38bdf8" stroke-width="2.5"/>
+        <text x="170" y="102" text-anchor="middle" font-size="24" font-weight="700" fill="#eef2f6">paused</text>
+
+        <rect x="620" y="60" width="220" height="70" rx="14" fill="#161d27" stroke="#38bdf8" stroke-width="2.5"/>
+        <text x="730" y="102" text-anchor="middle" font-size="24" font-weight="700" fill="#eef2f6">human</text>
+
+        <rect x="60" y="380" width="220" height="70" rx="14" fill="#161d27" stroke="#38bdf8" stroke-width="2.5"/>
+        <text x="170" y="422" text-anchor="middle" font-size="24" font-weight="700" fill="#eef2f6">automation</text>
+
+        <rect x="620" y="380" width="220" height="70" rx="14" fill="#161d27" stroke="#38bdf8" stroke-width="2.5"/>
+        <text x="730" y="422" text-anchor="middle" font-size="24" font-weight="700" fill="#eef2f6">resuming</text>
+
+        <!-- automation -> paused (escalate) -->
+        <line x1="170" y1="378" x2="170" y2="133" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#ah7)"/>
+        <text x="185" y="260" font-size="20" fill="#9fb2c2">escalate()</text>
+
+        <!-- paused -> human (takeControl) -->
+        <line x1="283" y1="95" x2="617" y2="95" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#ah7)"/>
+        <text x="450" y="82" text-anchor="middle" font-size="20" fill="#9fb2c2">takeControl()</text>
+
+        <!-- human -> resuming (handBack) -->
+        <line x1="730" y1="133" x2="730" y2="378" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#ah7)"/>
+        <text x="745" y="260" font-size="20" fill="#9fb2c2">handBack()</text>
+
+        <!-- resuming -> automation (resumed) -->
+        <line x1="617" y1="415" x2="283" y2="415" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#ah7)"/>
+        <text x="450" y="450" text-anchor="middle" font-size="20" fill="#9fb2c2">resumed()</text>
+
+        <!-- resuming -> paused (reverifyFailed), dashed -->
+        <line x1="650" y1="390" x2="262" y2="135" stroke="#f87171" stroke-width="2.5" stroke-dasharray="8,6" marker-end="url(#ah7r)"/>
+        <rect x="330" y="252" width="204" height="30" fill="#0f1419"/>
+        <text x="432" y="273" text-anchor="middle" font-size="19" fill="#f87171">reverifyFailed()</text>
+      </svg>
+      <div class="callout red"><b>abort()</b> from paused | human | resuming &#8594; terminal</div>
+      <div class="caption">Only the token holder may act. The gate is on act() itself.</div>
+    </div>
+    <footer class="foot"><span>Handoff</span><span>7 / 10</span></footer>
+  </section>
+
+  <!-- Slide 8: architecture -->
+  <section class="slide" id="slide-8">
+    <h1 class="title">Hexagonal: core, ports, adapters, apps</h1>
+    <div class="body">
+      <svg viewBox="0 0 1200 560" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <marker id="ah8a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/>
+          </marker>
+          <marker id="ah8g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#5c6b79"/>
+          </marker>
+        </defs>
+
+        <!-- top row: apps (they compose) -->
+        <rect x="50" y="18" width="280" height="88" rx="14" fill="#161d27" stroke="#38bdf8" stroke-width="2.5"/>
+        <text x="190" y="56" text-anchor="middle" font-size="25" font-weight="700" class="mono-t" fill="#eef2f6">apps/cu</text>
+        <text x="190" y="90" text-anchor="middle" font-size="20" fill="#9fb2c2">CLI + composition root</text>
+
+        <rect x="460" y="18" width="280" height="88" rx="14" fill="#161d27" stroke="#38bdf8" stroke-width="2.5"/>
+        <text x="600" y="56" text-anchor="middle" font-size="25" font-weight="700" class="mono-t" fill="#eef2f6">apps/relay</text>
+        <text x="600" y="90" text-anchor="middle" font-size="20" fill="#9fb2c2">Relay: human console</text>
+
+        <rect x="870" y="18" width="280" height="88" rx="14" fill="#161d27" stroke="#38bdf8" stroke-width="2.5"/>
+        <text x="1010" y="56" text-anchor="middle" font-size="25" font-weight="700" class="mono-t" fill="#eef2f6">apps/mock-app</text>
+        <text x="1010" y="90" text-anchor="middle" font-size="20" fill="#9fb2c2">the legacy target</text>
+
+        <!-- apps/cu, apps/relay -> core -->
+        <line x1="190" y1="106" x2="190" y2="153" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#ah8a)"/>
+        <line x1="600" y1="106" x2="600" y2="153" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#ah8a)"/>
+        <text x="615" y="133" font-size="20" fill="#9fb2c2">session port</text>
+
+        <!-- core (largest box) -->
+        <rect x="50" y="155" width="1000" height="185" rx="18" fill="#1b2430" stroke="#38bdf8" stroke-width="3"/>
+        <text x="550" y="195" text-anchor="middle" font-size="30" font-weight="700" class="mono-t" fill="#eef2f6">packages/core</text>
+        <text x="550" y="227" text-anchor="middle" font-size="21" class="mono-t" fill="#9fb2c2">schema &#183; discovery &#183; replay &#183; policy &#183; session broker &#183; evidence</text>
+
+        <text x="80" y="285" font-size="20" font-weight="700" letter-spacing="2" fill="#7d8a97">PORTS</text>
+        <rect x="80" y="295" width="150" height="34" rx="8" fill="#161d27" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="155" y="318" text-anchor="middle" font-size="20" font-weight="600" class="mono-t" fill="#eef2f6">Surface</text>
+        <rect x="255" y="295" width="185" height="34" rx="8" fill="#161d27" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="347" y="318" text-anchor="middle" font-size="20" font-weight="600" class="mono-t" fill="#eef2f6">LlmClient</text>
+        <rect x="465" y="295" width="280" height="34" rx="8" fill="#161d27" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="605" y="318" text-anchor="middle" font-size="20" font-weight="600" class="mono-t" fill="#eef2f6">EscalationHandler</text>
+        <rect x="770" y="295" width="250" height="34" rx="8" fill="#161d27" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="895" y="318" text-anchor="middle" font-size="20" font-weight="600" class="mono-t" fill="#eef2f6">InterventionStore</text>
+
+        <!-- adapters -> core (implements ports) -->
+        <line x1="210" y1="390" x2="210" y2="342" stroke="#5c6b79" stroke-width="2.5" marker-end="url(#ah8g)"/>
+        <line x1="560" y1="390" x2="560" y2="342" stroke="#5c6b79" stroke-width="2.5" marker-end="url(#ah8g)"/>
+        <text x="385" y="370" text-anchor="middle" font-size="20" fill="#9fb2c2">implements ports</text>
+
+        <!-- bottom row: adapters (anthropic left, playwright next to browser-agent so its edge is a short hop) -->
+        <rect x="50" y="390" width="320" height="100" rx="14" fill="#161d27" stroke="#2a3542" stroke-width="2"/>
+        <text x="210" y="428" text-anchor="middle" font-size="24" font-weight="700" class="mono-t" fill="#eef2f6">adapter-anthropic</text>
+        <text x="210" y="468" text-anchor="middle" font-size="19" fill="#9fb2c2">Claude &#183; implements LlmClient</text>
+
+        <rect x="400" y="390" width="320" height="100" rx="14" fill="#161d27" stroke="#2a3542" stroke-width="2"/>
+        <text x="560" y="428" text-anchor="middle" font-size="24" font-weight="700" class="mono-t" fill="#eef2f6">adapter-playwright</text>
+        <text x="560" y="468" text-anchor="middle" font-size="19" fill="#9fb2c2">Chromium &#183; implements Surface</text>
+
+        <!-- browser-agent (right side) -->
+        <rect x="850" y="390" width="300" height="100" rx="14" fill="#161d27" stroke="#2a3542" stroke-width="2"/>
+        <text x="1000" y="428" text-anchor="middle" font-size="24" font-weight="700" class="mono-t" fill="#eef2f6">browser-agent</text>
+        <text x="1000" y="458" text-anchor="middle" font-size="18" fill="#9fb2c2">in-page plugin:</text>
+        <text x="1000" y="480" text-anchor="middle" font-size="18" fill="#9fb2c2">naming, enumeration, capture</text>
+
+        <!-- adapter-playwright injects (or reuses) browser-agent -->
+        <line x1="722" y1="440" x2="847" y2="440" stroke="#5c6b79" stroke-width="2.5" marker-end="url(#ah8g)"/>
+        <text x="785" y="428" text-anchor="middle" font-size="19" fill="#9fb2c2">injects</text>
+        <text x="785" y="466" text-anchor="middle" font-size="17" fill="#7d8a97">or reuses</text>
+
+        <!-- apps/cu composes both adapters (routed outside core, left + bottom margins) -->
+        <path d="M50,62 L25,62 L25,545 L560,545" fill="none" stroke="#38bdf8" stroke-width="2.5"/>
+        <line x1="210" y1="545" x2="210" y2="492" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#ah8a)"/>
+        <line x1="560" y1="545" x2="560" y2="492" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#ah8a)"/>
+        <text x="385" y="533" text-anchor="middle" font-size="20" fill="#38bdf8">composes</text>
+
+        <!-- apps/mock-app ships browser-agent as a script tag, routed outside core, no edge to core -->
+        <path d="M1150,62 L1175,62 L1175,440 L1152,440" fill="none" stroke="#5c6b79" stroke-width="2.5" stroke-dasharray="7,6" marker-end="url(#ah8g)"/>
+        <text x="1112" y="247" text-anchor="middle" font-size="20" fill="#9fb2c2">script tag</text>
+      </svg>
+    </div>
+    <footer class="foot"><span>Architecture</span><span>8 / 10</span></footer>
+  </section>
+
+  <!-- Slide 9: what was cut -->
+  <section class="slide" id="slide-9">
+    <h1 class="title">Left out on purpose</h1>
+    <div class="body">
+      <ul class="points cuts">
+        <li>A real co-browsing console — remote access, operator login.</li>
+        <li>A desktop surface beyond a documented stub.</li>
+        <li>Queues, workers, a database.</li>
+        <li>Redaction of screenshots.</li>
+        <li>An LLM recovery step during replay.</li>
+      </ul>
+    </div>
+    <footer class="foot"><span>What was cut</span><span>9 / 10</span></footer>
+  </section>
+
+  <!-- Slide 10: where to look -->
+  <section class="slide" id="slide-10">
+    <h1 class="title">Where to look</h1>
+    <div class="body">
+      <div class="pathlist">
+        <div class="prow"><span class="p">README.md</span><span class="dash">—</span><span class="d">setup and demo</span></div>
+        <div class="prow"><span class="p">REPORT.md</span><span class="dash">—</span><span class="d">design write-up</span></div>
+        <div class="prow"><span class="p">docs/design/</span><span class="dash">—</span><span class="d">per-module notes</span></div>
+        <div class="prow"><span class="p">evidence/</span><span class="dash">—</span><span class="d">real run directories</span></div>
+        <div class="prow"><span class="p">npm run video:build</span><span class="dash">—</span><span class="d">rebuilds this video</span></div>
+      </div>
+    </div>
+    <footer class="foot"><span>End</span><span>10 / 10</span></footer>
+  </section>
+
+<script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var n = parseInt(params.get('slide'), 10);
+  if (!n || n < 1 || n > 10) n = 1;
+  var el = document.getElementById('slide-' + n);
+  if (el) el.classList.add('active');
+  document.body.dataset.ready = '1';
+})();
+</script>
+<!-- keeps the page repainting so Playwright's screencast emits frames for the whole segment -->
+<div id="hb"></div>
+</body>
+</html>

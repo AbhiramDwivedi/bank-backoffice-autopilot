@@ -1,0 +1,67 @@
+{
+  "runId": "run_20260926_wa8rdwog",
+  "capabilityId": "lookup-member-savings-balance",
+  "capabilityVersion": "1.2.2",
+  "stepsExecuted": 10,
+  "durationMs": 3943,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s07",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s08",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s09",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s10",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [
+    "dismiss_system_maintenance_notice"
+  ],
+  "kind": "success",
+  "outputs": {
+    "savingsBalance": 1234.56,
+    "memberName": "Jane Q. Sample"
+  }
+}

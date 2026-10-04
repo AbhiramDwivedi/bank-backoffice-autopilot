@@ -1,0 +1,85 @@
+note: --read-only asserts, for this run only, that replaying this capability changes nothing in the target app; nothing verifies it, and replay may restart the steps on its own after an app error
+fault injected at http://localhost:4173/__faults: {"chaos":{"seed":42,"failSearch":0.2,"interstitial":0.5,"expireSession":0.15}}
+operator console: http://127.0.0.1:65047
+[operator] scripted relogin operator took int_20261003_u1zbk275 (unrecoverable_condition: session expired (page shows "Your session has expired") while step s06: target not found: textbox "Member ID" (<input>))
+[operator] scripted relogin re-ran derived sign-in steps s01, s02, s03, s04, s05
+[operator] scripted relogin done for int_20261003_u1zbk275; handing back (current_step: resuming at s06, the first step after the sign-in: the expiry hit s06; what the steps after the sign-in built went with the session)
+[operator] scripted relogin operator took int_20261003_90urk1rh (unrecoverable_condition: session expired (page shows "Your session has expired") while step s06: target not found: textbox "Member ID" (<input>))
+[operator] scripted relogin re-ran derived sign-in steps s01, s02, s03, s04, s05
+[operator] scripted relogin done for int_20261003_90urk1rh; handing back (current_step: resuming at s06, the first step after the sign-in: the expiry hit s06; what the steps after the sign-in built went with the session)
+run dir: runs-live/ev/retry/run_20261003_105fonxy
+run 1/6: escalated (control: automation)
+operator console: http://127.0.0.1:51519
+run dir: runs-live/ev/retry/run_20261003_8fp7135v
+run 2/6: success (control: automation)
+operator console: http://127.0.0.1:51246
+[operator] scripted relogin operator took int_20261003_31jczu6z (unrecoverable_condition: session expired (page shows "Your session has expired") while step s08 postcondition not met)
+[operator] scripted relogin re-ran derived sign-in steps s01, s02, s03, s04, s05
+[operator] scripted relogin done for int_20261003_31jczu6z; handing back (current_step: resuming at s06, the first step after the sign-in: the expiry hit s08; what the steps after the sign-in built went with the session)
+[operator] scripted relogin operator took int_20261003_mtj8itks (unrecoverable_condition: session expired (page shows "Your session has expired") while step s06: target not found: textbox "Member ID" (<input>))
+[operator] scripted relogin re-ran derived sign-in steps s01, s02, s03, s04, s05
+[operator] scripted relogin done for int_20261003_mtj8itks; handing back (current_step: resuming at s06, the first step after the sign-in: the expiry hit s06; what the steps after the sign-in built went with the session)
+run dir: runs-live/ev/retry/run_20261003_876825xh
+run 3/6: escalated (control: automation)
+operator console: http://127.0.0.1:53361
+run dir: runs-live/ev/retry/run_20261003_629548hw
+run 4/6: success (control: automation)
+operator console: http://127.0.0.1:56893
+run dir: runs-live/ev/retry/run_20261003_jx5jmmr2
+run 5/6: success (control: automation)
+operator console: http://127.0.0.1:55577
+[operator] scripted relogin operator took int_20261003_7juutj8u (unrecoverable_condition: session expired (page shows "Your session has expired") while step s06: target not found: textbox "Member ID" (<input>))
+[operator] scripted relogin re-ran derived sign-in steps s01, s02, s03, s04, s05
+[operator] scripted relogin done for int_20261003_7juutj8u; handing back (current_step: resuming at s06, the first step after the sign-in: the expiry hit s06; what the steps after the sign-in built went with the session)
+[operator] scripted relogin operator took int_20261003_agftf6tg (unrecoverable_condition: session expired (page shows "Your session has expired") while step s07 postcondition not met)
+[operator] scripted relogin re-ran derived sign-in steps s01, s02, s03, s04, s05
+[operator] scripted relogin done for int_20261003_agftf6tg; handing back (current_step: resuming at s06, the first step after the sign-in: the expiry hit s07; what the steps after the sign-in built went with the session)
+[operator] scripted relogin operator took int_20261003_ywz3fhc5 (unrecoverable_condition: session expired (page shows "Your session has expired") while step s08 postcondition not met)
+[operator] scripted relogin re-ran derived sign-in steps s01, s02, s03, s04, s05
+[operator] scripted relogin done for int_20261003_ywz3fhc5; handing back (current_step: resuming at s06, the first step after the sign-in: the expiry hit s08; what the steps after the sign-in built went with the session)
+run dir: runs-live/ev/retry/run_20261003_07apd3cj
+run 6/6: escalated (control: automation)
+6 run(s); duration mean 23.4s, min 2.5s, max 64.9s
+result kind
+  success                                                                               3
+  business_outcome                                                                      0
+  hard_failure                                                                          0
+  escalated                                                                             3
+    reason session expired (page shows "Your session has expired") while step s0...     2
+    reason session expired (page shows "Your session has expired") while step s0...     1
+    resolution resumed_success                                                          2
+    resolution resumed_failed                                                           1
+    then success                                                                        2
+    then hard_failure:app_error                                                         1
+recoveries fired (times, in how many runs)
+  dismiss_system_maintenance_notice    16  in 6 run(s)
+  retry_app_error                       2  in 1 run(s)
+locator fallback depth: 0=87 (0 = first locator)
+locator drift (union across all runs): 0/87 target(s) resolved by a fallback (max fallback depth 0; steps: none)
+chaos seed: 42
+  kind           fired  draws
+  failSearch         3     21
+  interstitial       8     12
+  expireSession      7     33
+  injected, in order:
+    #1 expireSession (draw 1) GET /members/search
+    #2 expireSession (draw 2) GET /members/search
+    #3 interstitial (draw 1) GET /members/search
+    #4 interstitial (draw 2) GET /members/12345
+    #5 interstitial (draw 3) GET /members/search
+    #6 expireSession (draw 11) GET /members/12345
+    #7 failSearch (draw 8) GET /members/search
+    #8 failSearch (draw 10) GET /members/search
+    #9 expireSession (draw 16) GET /members/search
+    #10 failSearch (draw 12) GET /members/search
+    #11 interstitial (draw 7) GET /members/12345
+    #12 interstitial (draw 8) GET /members/search
+    #13 interstitial (draw 9) GET /members/12345
+    #14 expireSession (draw 25) GET /members/search
+    #15 expireSession (draw 27) GET /members/search
+    #16 expireSession (draw 30) GET /members/12345
+    #17 interstitial (draw 11) GET /members/search
+    #18 interstitial (draw 12) GET /members/12345
+re-run this exact series: the same replay command (artifact, --input and other flags unchanged) with --times 6 --fault '{"chaos":{"seed":42,"failSearch":0.2,"interstitial":0.5,"expireSession":0.15}}'
+faults restored to their pre-run snapshot
+exit code: 5

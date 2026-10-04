@@ -1,0 +1,85 @@
+/* CU Core Workstation - legacy.css
+   2005-era styles for the member search page and other div/table pages of that vintage. */
+
+body, table, td, th, div, a, input {
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+}
+
+body {
+  margin: 0;
+  padding: 8px;
+  background-color: #FFFFFF;
+}
+
+table.results {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table.results td,
+table.results th {
+  border: 1px solid #999999;
+  padding: 2px 5px;
+}
+
+/* No <thead> is used on purpose (legacy tables didn't bother); this class marks the
+   header row instead, applied directly to <tr>/<td>. */
+.hdr {
+  background-color: #C0C0C0;
+  font-weight: bold;
+  text-align: left;
+}
+
+td.msg {
+  color: red;
+  font-weight: bold;
+  padding: 6px;
+}
+
+/* Div-styled "button" look, used where the page has no real <button>/<input type=submit>. */
+.btn {
+  display: inline-block;
+  padding: 3px 12px;
+  background-color: #E8E8E8;
+  background-image: linear-gradient(to bottom, #F6F6F6, #D2D2D2);
+  border: 1px solid #999999;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  text-align: center;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.btn:hover {
+  background-color: #D8D8D8;
+  background-image: linear-gradient(to bottom, #E8E8E8, #C0C0C0);
+}
+
+.btn:active {
+  background-image: linear-gradient(to bottom, #C0C0C0, #E8E8E8);
+}
+
+.pager {
+  font-size: 11px;
+  padding: 4px 0;
+}
+
+.pager a {
+  color: #0000CC;
+  text-decoration: underline;
+  margin: 0 4px;
+}
+
+.pager a:visited {
+  color: #551A8B;
+}
+
+/* Zebra striping fallback for browsers/tools that don't honour the inline bgcolor
+   attribute rows are rendered with; the row markup sets both. */
+tr.even { background-color: #FFFFFF; }
+tr.odd { background-color: #F0F0F0; }

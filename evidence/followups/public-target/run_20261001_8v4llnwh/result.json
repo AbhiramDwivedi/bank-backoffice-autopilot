@@ -1,0 +1,37 @@
+{
+  "runId": "run_20261001_8v4llnwh",
+  "capabilityId": "read-product-price",
+  "capabilityVersion": "1.0.0",
+  "capabilityDigest": "sha256:b019e761bdfc40fbc399e844948868abea31c6233da28ab49d22aae6b903b4fd",
+  "stepsExecuted": 4,
+  "durationMs": 11329,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "role",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "role",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [],
+  "kind": "hard_failure",
+  "stepId": "s05",
+  "stepName": "Open the product's detail page",
+  "code": "element_not_found",
+  "expected": "target \"button \"Sauce Labs Unicorn Saddle\" (<a>)\" resolvable by one of 2 locators",
+  "observed": "role: no match; text: no match",
+  "message": "step s05: target not found: button \"Sauce Labs Unicorn Saddle\" (<a>)",
+  "evidence": {
+    "screenshot": "shots/25.png",
+    "dom": "dom/25.html"
+  }
+}

@@ -1,0 +1,16 @@
+note: --read-only asserts, for this run only, that replaying this capability changes nothing in the target app; nothing verifies it, and replay may restart the steps on its own after an app error
+fault injected at http://localhost:4173/__faults: {"chaos":{"seed":5,"failSearch":0.2}}
+relay: built UI into apps\relay\dist
+operator console: http://127.0.0.1:59338
+run dir: runs-live/ev/retry/run_20261003_matp59qy
+Capability lookup-member-savings-balance@1.2.2 succeeded in 17 steps (15.6s): savingsBalance=1234.56, memberName="Jane Q. Sample". Recoveries: dismiss_system_maintenance_notice, retry_app_error, dismiss_system_maintenance_notice. Locator drift: none.
+result: runs-live/ev/retry/run_20261003_matp59qy/result.json
+chaos seed: 5
+  kind        fired  draws
+  failSearch      1      4
+  injected, in order:
+    #1 failSearch (draw 2) GET /members/search
+re-run this exact series: the same replay command (artifact, --input and other flags unchanged) with --times 1 --fault '{"chaos":{"seed":5,"failSearch":0.2}}'
+control: automation
+faults restored to their pre-run snapshot
+exit code: 0

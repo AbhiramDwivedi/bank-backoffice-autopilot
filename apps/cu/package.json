@@ -1,0 +1,33 @@
+{
+  "name": "@cu/cli",
+  "version": "0.1.0",
+  "description": "Command-line entry point for discovery, replay, operator handoff and approval",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "cu": "src/index.ts"
+  },
+  "exports": {
+    "./runtime": "./src/runtime/index.ts",
+    "./catalog": "./src/catalog/index.ts",
+    "./commands/discover": "./src/commands/discover.ts",
+    "./env": "./src/env.ts",
+    "./print-result": "./src/print-result.ts"
+  },
+  "dependencies": {
+    "@cu/core": "*",
+    "@cu/relay": "*",
+    "@cu/adapter-playwright": "*",
+    "@cu/adapter-desktop": "*",
+    "@cu/adapter-anthropic": "*",
+    "@cu/adapter-jev": "*",
+    "@cu/adapter-credentials": "*",
+    "commander": "^15.0.0",
+    "playwright": "^1.63.0"
+  },
+  "scripts": {
+    "test": "vitest run --root ../.. --project cli",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "start": "tsx src/index.ts"
+  }
+}

@@ -1,0 +1,2 @@
+valid: read-product-price@1.0.0 (draft, 6 steps, risk reversible)
+exit code: 0

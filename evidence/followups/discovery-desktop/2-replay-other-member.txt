@@ -1,0 +1,6 @@
+operator console: http://127.0.0.1:61568
+run dir: runs-live/ev/discovery-desktop/run_20261001_3p81cpq4
+Capability teller-lookup-savings-balance@1.0.0 succeeded in 7 steps (2.9s): savingsBalance="<sensitive>". Recoveries: none. Locator drift: none.
+result: runs-live/ev/discovery-desktop/run_20261001_3p81cpq4/result.json
+control: automation
+exit code: 0

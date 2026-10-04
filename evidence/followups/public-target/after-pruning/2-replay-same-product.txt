@@ -1,0 +1,6 @@
+operator console: http://127.0.0.1:65406
+run dir: runs-live/ev/public-target-after/run_20261003_h5rb5bfn
+Capability read-product-price@1.0.0 succeeded in 6 steps (1.2s): price=29.99. Recoveries: none. Locator drift: none.
+result: runs-live/ev/public-target-after/run_20261003_h5rb5bfn/result.json
+control: automation
+exit code: 0

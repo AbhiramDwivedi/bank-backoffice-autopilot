@@ -1,0 +1,23 @@
+{
+  "name": "@cu/relay",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Relay: the human-in-the-loop console. A delivery adapter for the session broker's human port.",
+  "exports": {
+    ".": "./src/server/index.ts",
+    "./build": "./scripts/build.ts"
+  },
+  "dependencies": {
+    "@cu/core": "*",
+    "esbuild": "^0.28.2",
+    "express": "^5.2.1",
+    "zod": "^4.6.5"
+  },
+  "scripts": {
+    "build": "tsx scripts/build.ts",
+    "dev": "tsx scripts/dev.ts",
+    "test": "vitest run --config vitest.config.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

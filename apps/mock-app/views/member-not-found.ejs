@@ -1,0 +1,19 @@
+<html>
+<head>
+<%- include('partials/cu-agent') %>
+<title>Member Not Found</title>
+<style type="text/css">
+body { font-family: Verdana, Arial, sans-serif; font-size: 12px; color: #000000; background-color: #FFFFFF; margin: 20px; }
+h1 { color: #003366; font-size: 20px; }
+</style>
+</head>
+<body>
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+<tr><td bgcolor="<%= tenant.bannerBg %>"><font color="<%= tenant.bannerFg %>" face="Verdana, Arial, sans-serif"><b>&nbsp;<%= tenant.institution %> - <%= PRODUCT %></b></font></td></tr>
+</table>
+<h1>Member Not Found</h1>
+<p>Member <%= memberId %> was not found.</p>
+<p><a href="/members/search">Back to Search</a></p>
+<%- include('partials/interstitial') %>
+</body>
+</html>

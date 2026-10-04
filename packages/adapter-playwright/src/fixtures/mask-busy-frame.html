@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Ticker</title>
+<style>body { margin: 0; font: bold 22px Arial, sans-serif; } .pii { color: #ff00aa; } td { padding: 2px 8px; }</style>
+</head>
+<body>
+  <table><tr><td>Phone</td><td class="pii">413-555-0177</td></tr></table>
+  <script>
+    // Reloads itself every 40 ms: a new document each time, so a plan made for the last one is stale.
+    setTimeout(function () { location.reload(); }, 40);
+  </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+# Guardrail policy for a public proxy target: https://www.saucedemo.com, a demo storefront
+# published for practising test automation. It shows its own demo logins on the sign-in page.
+#
+# This file exists so that running `cu` against a site other than the mock app never means
+# widening policies/default.yaml. Pass it with `--policy policies/saucedemo.yaml`.
+#
+# Rules for a public target (see docs/design/public-target.md):
+#   - only the demo logins the site itself publishes; never a real credential or real PII
+#   - a polite pace: this policy's limits are deliberately small
+#   - read-only goals; the checkout flow is marked irreversible below so it needs a human
+#
+# Regex convention as in policies/default.yaml: sources are compiled with the 'i' flag only.
+
+name: saucedemo-public-demo
+
+# Exact origin match, no wildcards. Nothing else on the internet is reachable under this policy.
+allowedOrigins:
+  - 'https://www.saucedemo.com'
+
+# Empty = every path on the allowed origin is in scope.
+allowedPathPatterns: []
+deniedPathPatterns: []
+
+allowedActions:
+  - navigate
+  - click
+  - type
+  - select
+  - press
+  - extract
+  - wait
+  - dismiss_dialog
+  - switch_frame
+
+risk:
+  # The storefront's order flow ends at "Finish". It is a demo and places no real order, but a
+  # runtime that treats "place the order" as reversible on a demo will do the same on a real shop,
+  # so the committing controls are irreversible here too.
+  irreversibleTextPatterns:
+    - '^(finish|place order|submit|confirm|pay|buy now|delete)\b'
+  irreversibleUrlPatterns:
+    - '/checkout-complete'
+  discoveryMode: escalate
+  replayRequiresApproved: true
+
+redaction:
+  patterns:
+    - name: ssn
+      regex: '\b\d{3}-\d{2}-\d{4}\b'
+      replacement: '[REDACTED:ssn]'
+    - name: card
+      regex: '\b(?:\d[ -]?){12,18}\d\b'
+      replacement: '[REDACTED:card]'
+  # Screen masking: the schema defaults, written out. Every form field is painted (login and
+  # checkout), the redaction patterns and the run's values are hidden on screen; the demo shop
+  # renders no label/value personal data, so no label rules.
+  screen:
+    maskInputs: all
+    maskSelectors: []
+    maskLabels: []
+    maskTextPatterns: true
+    omitScreenshotUrlPatterns: []
+
+# Small on purpose: a discovery against someone else's site should finish quickly or stop.
+limits:
+  maxSteps: 20
+  maxDurationMs: 300000
+  maxLlmCalls: 30

@@ -1,0 +1,337 @@
+{
+  "kind": "discovery",
+  "status": "success",
+  "capability": {
+    "schemaVersion": "1.0",
+    "id": "read-product-price",
+    "version": "1.0.0",
+    "name": "Read Product Price",
+    "description": "Sign in and read the price of the product named {productName} on the inventory page.",
+    "app": {
+      "vendor": "Demo storefront",
+      "product": "Demo storefront",
+      "surface": "web",
+      "entryUrl": "{baseUrl}/"
+    },
+    "status": "draft",
+    "riskLevel": "reversible",
+    "readOnly": true,
+    "inputs": {
+      "productName": {
+        "type": "string",
+        "description": "\"productName\" (supplied on the command line)",
+        "required": true,
+        "sensitive": false
+      }
+    },
+    "outputs": {
+      "price": {
+        "type": "number",
+        "description": "\"price\" (declared on the command line)"
+      }
+    },
+    "steps": [
+      {
+        "id": "s01",
+        "name": "Open the entry page",
+        "action": {
+          "type": "navigate",
+          "url": "{baseUrl}/"
+        },
+        "risk": "read"
+      },
+      {
+        "id": "s02",
+        "name": "Enter the username",
+        "action": {
+          "type": "type",
+          "target": {
+            "description": "textbox \"Username\" (<input>)",
+            "frame": [],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "role",
+                  "role": "textbox",
+                  "name": "Username",
+                  "exact": true
+                },
+                "confidence": 0.9,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "css",
+                  "selector": "input[type=\"text\"][name=\"user-name\"]"
+                },
+                "confidence": 0.3,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "bbox",
+                  "x": 0.3859375,
+                  "y": 0.1925,
+                  "w": 0.228125,
+                  "h": 0.04625
+                },
+                "confidence": 0.1,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "input",
+              "role": "textbox",
+              "name": "Username",
+              "text": ""
+            }
+          },
+          "value": {
+            "kind": "secret",
+            "env": "SAUCE_USER"
+          },
+          "clear": true
+        },
+        "risk": "reversible"
+      },
+      {
+        "id": "s03",
+        "name": "Enter the password",
+        "action": {
+          "type": "type",
+          "target": {
+            "description": "textbox matching selector \"input[type=\"password\"][name=\"password\"]\" (<input>)",
+            "frame": [],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "css",
+                  "selector": "input[type=\"password\"][name=\"password\"]"
+                },
+                "confidence": 0.3,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "bbox",
+                  "x": 0.3859375,
+                  "y": 0.26,
+                  "w": 0.228125,
+                  "h": 0.04875
+                },
+                "confidence": 0.1,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "input",
+              "role": "textbox",
+              "name": "Password",
+              "text": ""
+            }
+          },
+          "value": {
+            "kind": "secret",
+            "env": "SAUCE_PASSWORD"
+          },
+          "clear": true
+        },
+        "risk": "reversible"
+      },
+      {
+        "id": "s04",
+        "name": "Submit the login form",
+        "action": {
+          "type": "click",
+          "target": {
+            "description": "button \"Login\" (<input>)",
+            "frame": [],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "role",
+                  "role": "button",
+                  "name": "Login",
+                  "exact": true
+                },
+                "confidence": 0.9,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "text",
+                  "text": "Login",
+                  "exact": true,
+                  "tag": "input"
+                },
+                "confidence": 0.7,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "css",
+                  "selector": "input[type=\"submit\"][name=\"login-button\"]"
+                },
+                "confidence": 0.3,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "bbox",
+                  "x": 0.3859375,
+                  "y": 0.3775,
+                  "w": 0.228125,
+                  "h": 0.06125
+                },
+                "confidence": 0.1,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "input",
+              "role": "button",
+              "name": "Login",
+              "text": "Login"
+            }
+          }
+        },
+        "postcondition": {
+          "kind": "text_visible",
+          "text": "Products",
+          "frame": []
+        },
+        "risk": "reversible"
+      },
+      {
+        "id": "s05",
+        "name": "Open the product's detail page",
+        "action": {
+          "type": "click",
+          "target": {
+            "description": "button \"{input.productName}\" (<a>)",
+            "frame": [],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "role",
+                  "role": "button",
+                  "name": "{input.productName}",
+                  "exact": false
+                },
+                "confidence": 0.8,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "text",
+                  "text": "{input.productName}",
+                  "exact": true,
+                  "tag": "a"
+                },
+                "confidence": 0.7,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "a",
+              "role": "button",
+              "name": "{input.productName}",
+              "text": "{input.productName}"
+            }
+          }
+        },
+        "postcondition": {
+          "kind": "text_visible",
+          "text": "Back to products",
+          "frame": []
+        },
+        "risk": "reversible"
+      },
+      {
+        "id": "s06",
+        "name": "Read the product's price",
+        "action": {
+          "type": "extract",
+          "target": {
+            "description": "generic below \"{input.productName}\" (<div>)",
+            "frame": [],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "relative",
+                  "anchor": {
+                    "text": "{input.productName}",
+                    "exact": true
+                  },
+                  "relation": "below",
+                  "tag": "div",
+                  "selector": "div.inventory_details_price",
+                  "within": "div.inventory_details_desc_container"
+                },
+                "confidence": 0.55,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "div",
+              "role": "generic"
+            }
+          },
+          "output": "price",
+          "parse": "currency"
+        },
+        "risk": "read"
+      }
+    ],
+    "success": {
+      "condition": {
+        "kind": "text_visible",
+        "text": "Back to products",
+        "frame": []
+      },
+      "description": "Signed in to Swag Labs, opened the detail page for \"{input.productName}\", and read its price ({output.price}) into the declared output `price`."
+    },
+    "businessOutcomes": [],
+    "recoveryRules": [],
+    "auth": {
+      "steps": [
+        "s01",
+        "s02",
+        "s03",
+        "s04"
+      ],
+      "signedIn": {
+        "kind": "text_visible",
+        "text": "Products",
+        "frame": []
+      }
+    },
+    "provenance": {
+      "discoveredAt": "2026-10-01T19:47:06.166Z",
+      "discoveryRunId": "run_20261001_gwan5mgb",
+      "recordedBy": "llm",
+      "model": "claude-opus-5"
+    }
+  },
+  "outputs": {
+    "price": 29.99
+  },
+  "runId": "run_20261001_gwan5mgb",
+  "stepsRecorded": 6,
+  "llmCalls": 7,
+  "transcriptPath": "transcript.jsonl",
+  "riskJudge": {
+    "id": "anthropic:claude-haiku-4-5-20251001",
+    "mode": "enforce",
+    "calls": 2,
+    "cacheHits": 0,
+    "unavailable": 0,
+    "raised": 0
+  },
+  "llmUsage": {
+    "input": 18331,
+    "output": 1027,
+    "cacheRead": 27702,
+    "cacheWrite": 4617
+  }
+}

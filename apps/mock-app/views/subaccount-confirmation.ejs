@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<%- include('partials/cu-agent') %>
+<meta charset="utf-8">
+<title>Sub-Account Confirmation</title>
+<link rel="stylesheet" href="/static/css/bs2.css">
+<style>
+  /* bs2.css defines .alert / .alert-error; the success variant is this page's own. */
+  .alert-success { background-color: #dff0d8; color: #3c763d; border: 1px solid #d6e9c6; }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="/workstation"><%= PRODUCT %></a>
+  </div>
+</div>
+
+<div class="container">
+  <div class="alert alert-success">Sub-account opened successfully.</div>
+
+  <table class="table table-bordered">
+    <tr><td>Reference Number</td><td><b><%= account.reference %></b></td></tr>
+    <tr><td>Member</td><td><%= fullName(member) %> (#<%= member.id %>)</td></tr>
+    <tr><td>Account Type</td><td><%= account.type %></td></tr>
+    <tr><td>Nickname</td><td><%= account.nickname %></td></tr>
+    <tr><td>Initial Deposit</td><td><%= formatCents(account.balanceCents) %></td></tr>
+    <% if (account.branchCode) { %>
+    <tr><td>Branch</td><td><%= account.branchCode %></td></tr>
+    <% } %>
+  </table>
+
+  <p><a href="/members/<%= member.id %>?tab=accounts">Return to member</a></p>
+</div>
+
+<%- include('partials/interstitial') %>
+</body>
+</html>

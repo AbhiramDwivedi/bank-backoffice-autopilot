@@ -1,0 +1,482 @@
+{
+  "kind": "discovery",
+  "status": "success",
+  "capability": {
+    "schemaVersion": "1.0",
+    "id": "teller-lookup-savings-balance",
+    "version": "1.0.0",
+    "name": "Teller Lookup Savings Balance",
+    "description": "Sign on to the Teller Workstation, look up member {memberId} and read their savings balance.",
+    "app": {
+      "vendor": "Acme Core Systems",
+      "product": "CU Core Workstation",
+      "surface": "desktop",
+      "entryUrl": "{baseUrl}"
+    },
+    "status": "draft",
+    "riskLevel": "reversible",
+    "readOnly": true,
+    "inputs": {
+      "memberId": {
+        "type": "string",
+        "description": "\"memberId\" (supplied on the command line)",
+        "required": true,
+        "sensitive": false,
+        "pattern": "^\\d+$"
+      }
+    },
+    "outputs": {
+      "savingsBalance": {
+        "type": "number",
+        "description": "\"savingsBalance\" (declared on the command line)",
+        "sensitive": true
+      }
+    },
+    "steps": [
+      {
+        "id": "s01",
+        "name": "Open the entry page",
+        "action": {
+          "type": "navigate",
+          "url": "{baseUrl}"
+        },
+        "risk": "read"
+      },
+      {
+        "id": "s02",
+        "name": "Enter the teller user ID",
+        "action": {
+          "type": "type",
+          "target": {
+            "description": "textbox \"User ID\" (edit)",
+            "frame": [],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "automation_id",
+                  "id": "txtUserId"
+                },
+                "confidence": 0.95,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "role",
+                  "role": "textbox",
+                  "name": "User ID:",
+                  "exact": true
+                },
+                "confidence": 0.9,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "label",
+                  "label": "User ID",
+                  "exact": true
+                },
+                "confidence": 0.8,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "relative",
+                  "anchor": {
+                    "text": "User ID:"
+                  },
+                  "relation": "right-of",
+                  "role": "textbox"
+                },
+                "confidence": 0.5,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "bbox",
+                  "x": 0.25,
+                  "y": "0.[REDACTED:card]",
+                  "w": "0.[REDACTED:card]",
+                  "h": "0.[REDACTED:card]"
+                },
+                "confidence": 0.1,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "edit",
+              "role": "textbox",
+              "name": "User ID"
+            }
+          },
+          "value": {
+            "kind": "secret",
+            "env": "MOCK_USER"
+          },
+          "clear": true
+        },
+        "risk": "reversible"
+      },
+      {
+        "id": "s03",
+        "name": "Enter the teller password",
+        "action": {
+          "type": "type",
+          "target": {
+            "description": "textbox \"Password\" (edit)",
+            "frame": [],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "label",
+                  "label": "Password",
+                  "exact": true
+                },
+                "confidence": 0.8,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "relative",
+                  "anchor": {
+                    "text": "Password:"
+                  },
+                  "relation": "right-of",
+                  "role": "textbox"
+                },
+                "confidence": 0.5,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "bbox",
+                  "x": 0.25,
+                  "y": "0.[REDACTED:card]",
+                  "w": "0.[REDACTED:card]",
+                  "h": "0.[REDACTED:card]"
+                },
+                "confidence": 0.1,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "edit",
+              "role": "textbox",
+              "name": "Password"
+            }
+          },
+          "value": {
+            "kind": "secret",
+            "env": "MOCK_PASSWORD"
+          },
+          "clear": true
+        },
+        "risk": "reversible"
+      },
+      {
+        "id": "s04",
+        "name": "Sign on to the Teller Workstation",
+        "action": {
+          "type": "click",
+          "target": {
+            "description": "button \"Sign On\" (button)",
+            "frame": [],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "automation_id",
+                  "id": "btnSignOn"
+                },
+                "confidence": 0.95,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "role",
+                  "role": "button",
+                  "name": "Sign On",
+                  "exact": true
+                },
+                "confidence": 0.9,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "text",
+                  "text": "Sign On",
+                  "exact": true,
+                  "tag": "button"
+                },
+                "confidence": 0.7,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "bbox",
+                  "x": 0.25,
+                  "y": "0.[REDACTED:card]",
+                  "w": "0.[REDACTED:card]",
+                  "h": 0.08
+                },
+                "confidence": 0.1,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "button",
+              "role": "button",
+              "name": "Sign On",
+              "text": "Sign On"
+            }
+          }
+        },
+        "postcondition": {
+          "kind": "text_visible",
+          "text": "Member Lookup",
+          "frame": []
+        },
+        "risk": "reversible"
+      },
+      {
+        "id": "s05",
+        "name": "Enter the member ID to look up",
+        "action": {
+          "type": "type",
+          "target": {
+            "description": "textbox \"Member ID\" (edit)",
+            "frame": [],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "label",
+                  "label": "Member ID",
+                  "exact": true
+                },
+                "confidence": 0.8,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "relative",
+                  "anchor": {
+                    "text": "Member ID:"
+                  },
+                  "relation": "right-of",
+                  "role": "textbox"
+                },
+                "confidence": 0.5,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "bbox",
+                  "x": 0.25,
+                  "y": "0.[REDACTED:card]",
+                  "w": "0.[REDACTED:card]",
+                  "h": "0.[REDACTED:card]"
+                },
+                "confidence": 0.1,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "edit",
+              "role": "textbox",
+              "name": "Member ID"
+            }
+          },
+          "value": {
+            "kind": "input",
+            "name": "memberId"
+          },
+          "clear": true
+        },
+        "risk": "reversible"
+      },
+      {
+        "id": "s06",
+        "name": "Search for the member record",
+        "action": {
+          "type": "click",
+          "target": {
+            "description": "button \"Find\" (button)",
+            "frame": [],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "role",
+                  "role": "button",
+                  "name": "Find",
+                  "exact": true
+                },
+                "confidence": 0.9,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "text",
+                  "text": "Find",
+                  "exact": true,
+                  "tag": "button"
+                },
+                "confidence": 0.7,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "bbox",
+                  "x": "0.[REDACTED:card]",
+                  "y": 0.15,
+                  "w": "0.[REDACTED:card]",
+                  "h": 0.08
+                },
+                "confidence": 0.1,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "button",
+              "role": "button",
+              "name": "Find",
+              "text": "Find"
+            }
+          }
+        },
+        "postcondition": {
+          "kind": "text_visible",
+          "text": "Savings",
+          "frame": []
+        },
+        "risk": "reversible"
+      },
+      {
+        "id": "s07",
+        "name": "Read the member's savings balance",
+        "action": {
+          "type": "extract",
+          "target": {
+            "description": "textbox \"Savings Balance\" (edit)",
+            "frame": [
+              {
+                "name": "Balances"
+              }
+            ],
+            "locators": [
+              {
+                "strategy": {
+                  "kind": "automation_id",
+                  "id": "txtSavings"
+                },
+                "confidence": 0.95,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "role",
+                  "role": "textbox",
+                  "name": "Savings Balance:",
+                  "exact": true
+                },
+                "confidence": 0.9,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "label",
+                  "label": "Savings Balance",
+                  "exact": true
+                },
+                "confidence": 0.8,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "relative",
+                  "anchor": {
+                    "text": "Savings Balance:"
+                  },
+                  "relation": "right-of",
+                  "role": "textbox"
+                },
+                "confidence": 0.5,
+                "source": "inferred"
+              },
+              {
+                "strategy": {
+                  "kind": "bbox",
+                  "x": 0.3,
+                  "y": "0.[REDACTED:card]",
+                  "w": "0.[REDACTED:card]",
+                  "h": "0.[REDACTED:card]"
+                },
+                "confidence": 0.1,
+                "source": "inferred"
+              }
+            ],
+            "snapshot": {
+              "tag": "edit",
+              "role": "textbox",
+              "name": "Savings Balance"
+            }
+          },
+          "output": "savingsBalance",
+          "parse": "currency"
+        },
+        "risk": "read"
+      }
+    ],
+    "success": {
+      "condition": {
+        "kind": "text_visible",
+        "text": "Savings Balance:",
+        "frame": [
+          {
+            "name": "Balances"
+          }
+        ]
+      },
+      "description": "Signed on to the Teller Workstation with the provided credentials, looked up member {input.memberId}, and read the savings balance from the Member Detail screen's Balances group (value recorded as savingsBalance; displayed masked in my view)."
+    },
+    "businessOutcomes": [],
+    "recoveryRules": [],
+    "auth": {
+      "steps": [
+        "s01",
+        "s02",
+        "s03",
+        "s04"
+      ],
+      "signedIn": {
+        "kind": "text_visible",
+        "text": "Member Lookup",
+        "frame": []
+      }
+    },
+    "provenance": {
+      "discoveredAt": "2026-10-01T19:54:39.315Z",
+      "discoveryRunId": "run_20261001_jci5o1v6",
+      "recordedBy": "llm",
+      "model": "claude-opus-5"
+    }
+  },
+  "outputs": {
+    "savingsBalance": "<masked:savingsBalance>"
+  },
+  "runId": "run_20261001_jci5o1v6",
+  "stepsRecorded": 7,
+  "llmCalls": 7,
+  "transcriptPath": "transcript.jsonl",
+  "riskJudge": {
+    "id": "anthropic:claude-haiku-4-5-20251001",
+    "mode": "enforce",
+    "calls": 2,
+    "cacheHits": 0,
+    "unavailable": 0,
+    "raised": 0
+  },
+  "llmUsage": {
+    "input": 6705,
+    "output": 1320,
+    "cacheRead": 28224,
+    "cacheWrite": 4704
+  }
+}

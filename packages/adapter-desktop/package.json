@@ -1,0 +1,20 @@
+{
+  "name": "@cu/adapter-desktop",
+  "version": "0.1.0",
+  "description": "Windows UI Automation implementation of the @cu/core Surface port, for native desktop apps",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@cu/core": "*"
+  },
+  "devDependencies": {
+    "@cu/mock-desktop": "*"
+  },
+  "scripts": {
+    "test": "vitest run --root ../.. --project adapter-desktop",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

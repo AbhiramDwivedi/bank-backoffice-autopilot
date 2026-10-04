@@ -1,0 +1,42 @@
+{
+  "runId": "run_20261001_trlwo8w5",
+  "capabilityId": "teller-lookup-savings-balance",
+  "capabilityVersion": "1.0.0-optimize.2",
+  "capabilityDigest": "sha256:9be7116d27e968808a51aa83b78ed44d3d82b4d4a0d6d13a9cdde1cbdf0e89fe",
+  "stepsExecuted": 5,
+  "durationMs": 7495,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "automation_id",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "automation_id",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [],
+  "kind": "hard_failure",
+  "stepId": "s07",
+  "stepName": "Read the member's savings balance",
+  "code": "element_not_found",
+  "expected": "target \"textbox \"Savings Balance\" (edit)\" resolvable by one of 5 locators",
+  "observed": "*: frame [{\"name\":\"Balances\"}] has no visible elements (window not open?)",
+  "message": "step s07: target not found: textbox \"Savings Balance\" (edit)",
+  "evidence": {
+    "screenshot": "shots/29.png",
+    "dom": "dom/29.html"
+  }
+}

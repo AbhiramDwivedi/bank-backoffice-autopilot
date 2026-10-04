@@ -1,0 +1,9 @@
+note: --read-only asserts, for this run only, that replaying this capability changes nothing in the target app; nothing verifies it, and replay may restart the steps on its own after an app error
+fault injected at http://localhost:4173/__faults: {"failSearch":true}
+operator console: http://127.0.0.1:52500
+run dir: runs-live/ev/retry/run_20261003_1lq9n26a
+Capability lookup-member-savings-balance@1.2.2 FAILED at step s06 ("Enter the member ID to look up") with app_error: app error (page shows "Application Error") while step s06: target not found: textbox "Member ID" (<input>). Expected: target "textbox "Member ID" (<input>)" resolvable by one of 4 locators. Observed: Pioneer Valley Community CU CU Core Workstation 7.4.2 Operator: [MASKED:sensitive] Member Search Teller Journal Loan Queue Reports Log Off Application Error An error has occurred while processing your request. The error has been logged. ORA-01017: invalid username/password; logon denied java.sql.SQL. Evidence: shots/91.png, dom/91.html. Recoveries: retry_app_error, retry_app_error. Locator drift: none.
+result: runs-live/ev/retry/run_20261003_1lq9n26a/result.json
+control: automation
+faults restored to their pre-run snapshot
+exit code: 4

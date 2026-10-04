@@ -1,0 +1,6 @@
+operator console: http://127.0.0.1:53757
+run dir: runs-live/ev/public-target/run_20261001_8v4llnwh
+Capability read-product-price@1.0.0 FAILED at step s05 ("Open the product's detail page") with element_not_found: step s05: target not found: button "Sauce Labs Unicorn Saddle" (<a>). Expected: target "button "Sauce Labs Unicorn Saddle" (<a>)" resolvable by one of 2 locators. Observed: role: no match; text: no match. Evidence: shots/25.png, dom/25.html. Recoveries: none. Locator drift: none.
+result: runs-live/ev/public-target/run_20261001_8v4llnwh/result.json
+control: automation
+exit code: 4

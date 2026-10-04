@@ -1,0 +1,11 @@
+<% if (locals.interstitial) { %>
+<div id="maintOverlay" style="position:fixed; top:0; left:0; width:100%; height:100%; margin:0; padding:0; background-color:rgba(0,0,0,0.5); z-index:9999; text-align:center;">
+<div style="position:relative; top:150px; margin:0 auto; width:360px; background-color:#FFFFFF; border:2px solid #333333; text-align:left; font-family:Verdana,Arial,sans-serif;">
+<div style="background-color:#003366; color:#FFCC00; font-weight:bold; font-size:14px; padding:6px 10px;">System Maintenance Notice</div>
+<div style="padding:14px; font-size:12px; color:#000000; line-height:1.4;">Scheduled maintenance Sunday 02:00&ndash;04:00 ET. Some functions may be unavailable.</div>
+<div style="padding:0 14px 14px 14px; text-align:right;">
+<div class="maint-ok" onclick="document.getElementById('maintOverlay').style.display='none'" style="display:inline-block; padding:4px 18px; background-color:#DDDDDD; border:1px solid #888888; cursor:pointer; font-size:12px; font-family:Verdana,Arial,sans-serif; color:#000000;">OK</div>
+</div>
+</div>
+</div>
+<% } %>

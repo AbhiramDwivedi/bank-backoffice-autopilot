@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/Policy",
+  "$defs": {
+    "Policy": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allowedOrigins": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "allowedPathPatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "deniedPathPatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "allowedActions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "navigate",
+              "click",
+              "type",
+              "select",
+              "press",
+              "extract",
+              "wait",
+              "dismiss_dialog",
+              "switch_frame"
+            ]
+          }
+        },
+        "risk": {
+          "type": "object",
+          "properties": {
+            "irreversibleTextPatterns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "irreversibleUrlPatterns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "discoveryMode": {
+              "type": "string",
+              "enum": [
+                "block",
+                "escalate"
+              ]
+            },
+            "replayRequiresApproved": {
+              "type": "boolean"
+            },
+            "judge": {
+              "type": "object",
+              "properties": {
+                "mode": {
+                  "default": "enforce",
+                  "type": "string",
+                  "enum": [
+                    "off",
+                    "advise",
+                    "enforce"
+                  ]
+                },
+                "irreversibleThreshold": {
+                  "default": 0.5,
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "onError": {
+                  "default": "fail_closed",
+                  "type": "string",
+                  "enum": [
+                    "fail_closed",
+                    "fail_open"
+                  ]
+                },
+                "timeoutMs": {
+                  "default": 5000,
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "irreversibleTextPatterns",
+            "irreversibleUrlPatterns",
+            "discoveryMode",
+            "replayRequiresApproved"
+          ],
+          "additionalProperties": false
+        },
+        "redaction": {
+          "type": "object",
+          "properties": {
+            "patterns": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "regex": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "replacement": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "regex"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "screen": {
+              "$ref": "#/$defs/ScreenMaskPolicy"
+            }
+          },
+          "required": [
+            "patterns"
+          ],
+          "additionalProperties": false
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "maxSteps": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "maxDurationMs": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "maxLlmCalls": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "maxAppErrorRetries": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "maxSteps",
+            "maxDurationMs",
+            "maxLlmCalls"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "name",
+        "allowedOrigins",
+        "allowedPathPatterns",
+        "deniedPathPatterns",
+        "allowedActions",
+        "risk",
+        "redaction",
+        "limits"
+      ],
+      "additionalProperties": false
+    },
+    "ScreenMaskPolicy": {
+      "type": "object",
+      "properties": {
+        "maskInputs": {
+          "default": "all",
+          "type": "string",
+          "enum": [
+            "all",
+            "typed"
+          ]
+        },
+        "maskSelectors": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "maskLabels": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "maskTextPatterns": {
+          "default": true,
+          "type": "boolean"
+        },
+        "omitScreenshotUrlPatterns": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://github.com/AbhiramDwivedi/understudy/schema/policy.json",
+  "title": "Policy"
+}

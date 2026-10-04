@@ -1,0 +1,63 @@
+{
+  "runId": "run_20261001_gqbnn9jo",
+  "capabilityId": "lookup-member-savings-balance",
+  "capabilityVersion": "1.0.0-optimize.1",
+  "capabilityDigest": "sha256:bd9d3406e083afcea33ba0efa43691d0fa8834d85cd7efb0ff2b18ae7b5e1d83",
+  "stepsExecuted": 9,
+  "durationMs": 2140,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s07",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s08",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s09",
+      "strategyKind": "relative",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [
+    "dismiss_system_maintenance_notice"
+  ],
+  "kind": "success",
+  "outputs": {
+    "savingsBalance": 1234.56,
+    "memberName": "Jane Q. Sample"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@cu/mock-desktop",
+  "version": "0.1.0",
+  "description": "Teller Workstation: a deliberately dated Windows Forms back-office app, the desktop target for discovery and replay",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./launch": "./launch.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "start": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File teller.ps1"
+  }
+}

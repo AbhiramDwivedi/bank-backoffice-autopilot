@@ -1,0 +1,326 @@
+/* CU Core Workstation - bs2.css
+   Hand-written, Bootstrap-2-era lookalike used by the 2012-vintage sub-account form and
+   confirmation pages. Not copied from any framework; a small, self-contained subset. */
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.428571429;
+  color: #333333;
+  background-color: #FFFFFF;
+  margin: 0;
+}
+
+a {
+  color: #08C;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #005580;
+  text-decoration: underline;
+}
+
+.container {
+  width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px;
+}
+
+/* ---- navbar ---- */
+.navbar {
+  margin-bottom: 18px;
+}
+
+.navbar-inner {
+  min-height: 40px;
+  padding: 0 20px;
+  background-color: #FAFAFA;
+  background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
+  border: 1px solid #D4D4D4;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+}
+
+.navbar .brand {
+  display: inline-block;
+  float: left;
+  padding: 8px 20px 12px;
+  margin-left: -20px;
+  font-size: 18px;
+  font-weight: 200;
+  color: #333333;
+}
+
+.navbar .nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+
+.navbar .nav > li {
+  display: inline-block;
+  float: left;
+}
+
+.navbar .nav > li > a {
+  display: block;
+  float: none;
+  padding: 10px 12px;
+  color: #333333;
+}
+
+.navbar .nav > li > a:hover {
+  background-color: #E5E5E5;
+  text-decoration: none;
+}
+
+/* ---- well ---- */
+.well {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #F5F5F5;
+  border: 1px solid #E3E3E3;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+/* ---- forms ---- */
+.form-horizontal .control-group {
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+
+.form-horizontal .control-label {
+  float: left;
+  width: 160px;
+  padding-top: 5px;
+  text-align: right;
+  font-weight: bold;
+}
+
+.form-horizontal .controls {
+  margin-left: 180px;
+}
+
+.input-prepend .add-on {
+  display: inline-block;
+  width: auto;
+  min-width: 16px;
+  padding: 4px 5px;
+  font-weight: normal;
+  line-height: 18px;
+  text-align: center;
+  text-shadow: 0 1px 0 #FFFFFF;
+  background-color: #EEEEEE;
+  border: 1px solid #CCCCCC;
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+  vertical-align: middle;
+}
+
+.input-prepend input {
+  border-radius: 0 4px 4px 0;
+  border: 1px solid #CCCCCC;
+  padding: 4px 6px;
+  vertical-align: middle;
+}
+
+/* ---- buttons ---- */
+.btn {
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: 0;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  color: #333333;
+  background-color: #F5F5F5;
+  background-image: linear-gradient(to bottom, #FFFFFF, #E6E6E6);
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  background-color: #E6E6E6;
+  background-image: linear-gradient(to bottom, #F2F2F2, #D9D9D9);
+}
+
+.btn-primary {
+  color: #FFFFFF;
+  background-color: #0074CC;
+  background-image: linear-gradient(to bottom, #08C, #0044CC);
+  border-color: #0044CC;
+}
+
+.btn-primary:hover {
+  background-color: #0044CC;
+  background-image: linear-gradient(to bottom, #0077CC, #003399);
+  color: #FFFFFF;
+}
+
+.btn-danger {
+  color: #FFFFFF;
+  background-color: #DA4F49;
+  background-image: linear-gradient(to bottom, #EE5F5B, #BD362F);
+  border-color: #BD362F;
+}
+
+.btn-danger:hover {
+  background-color: #BD362F;
+  background-image: linear-gradient(to bottom, #D9433D, #98261F);
+  color: #FFFFFF;
+}
+
+/* ---- alerts ---- */
+.alert {
+  padding: 8px 35px 8px 14px;
+  margin-bottom: 18px;
+  color: #C09853;
+  background-color: #FCF8E3;
+  border: 1px solid #FBEED5;
+  border-radius: 4px;
+}
+
+.alert-error {
+  color: #B94A48;
+  background-color: #F2DEDE;
+  border-color: #EED3D7;
+}
+
+ul.errors {
+  color: #B94A48;
+  background-color: #F2DEDE;
+  border: 1px solid #EED3D7;
+  padding: 8px 8px 8px 28px;
+  margin: 0 0 18px 0;
+  border-radius: 4px;
+}
+
+/* ---- modal ---- */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1040;
+  background-color: #000000;
+  opacity: 0.8;
+}
+
+.modal {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  z-index: 1050;
+  width: 380px;
+  margin-left: -190px;
+  background-color: #FFFFFF;
+  border: 1px solid #999999;
+  border-radius: 6px;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  padding: 9px 15px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.modal-body {
+  padding: 15px;
+  max-height: 400px;
+}
+
+.modal-footer {
+  padding: 14px 15px 15px;
+  margin-bottom: 0;
+  text-align: right;
+  background-color: #F5F5F5;
+  border-top: 1px solid #DDDDDD;
+  border-radius: 0 0 6px 6px;
+}
+
+/* ---- dropdown ---- */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  min-width: 160px;
+  padding: 4px 0;
+  margin: 2px 0 0;
+  background-color: #FFFFFF;
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  list-style: none;
+}
+
+.dropdown-menu li > a {
+  display: block;
+  padding: 3px 15px;
+  color: #333333;
+}
+
+.dropdown-menu li > a:hover {
+  background-color: #0081C2;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: top;
+  border-top: 4px solid #000000;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  opacity: 0.3;
+}
+
+/* ---- table ---- */
+.table {
+  width: 100%;
+  margin-bottom: 18px;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  line-height: 18px;
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid #DDDDDD;
+}
+
+.table-bordered {
+  border: 1px solid #DDDDDD;
+  border-collapse: separate;
+  border-radius: 4px;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border-left: 1px solid #DDDDDD;
+}
+
+/* ---- label ---- */
+.label {
+  display: inline-block;
+  padding: 2px 4px;
+  font-size: 11.844px;
+  font-weight: bold;
+  line-height: 14px;
+  color: #FFFFFF;
+  background-color: #999999;
+  border-radius: 3px;
+}

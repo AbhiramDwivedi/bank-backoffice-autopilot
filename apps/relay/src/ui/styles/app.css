@@ -1,0 +1,8 @@
+/* Relay's CSS bundle entry. Order matters: tokens first, then the reset/defaults, then layout,
+ * then the generic component primitives, then the panes engineer's own styles last so they can
+ * override a primitive when a pane needs something more specific. */
+@import './tokens.css';
+@import './base.css';
+@import './layout.css';
+@import './components.css';
+@import './panes.css';

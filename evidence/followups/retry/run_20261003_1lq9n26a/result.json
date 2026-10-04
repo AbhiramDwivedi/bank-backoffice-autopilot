@@ -1,0 +1,85 @@
+{
+  "runId": "run_20261003_1lq9n26a",
+  "capabilityId": "lookup-member-savings-balance",
+  "capabilityVersion": "1.2.2",
+  "capabilityDigest": "sha256:82dacd3bbda1f3b4b1379a7550aff54e5816854f2c8fa94d314a6b7c7871ea69",
+  "stepsExecuted": 15,
+  "durationMs": 37774,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [
+    "retry_app_error",
+    "retry_app_error"
+  ],
+  "kind": "hard_failure",
+  "stepId": "s06",
+  "stepName": "Enter the member ID to look up",
+  "code": "app_error",
+  "expected": "target \"textbox \"Member ID\" (<input>)\" resolvable by one of 4 locators",
+  "observed": "Pioneer Valley Community CU CU Core Workstation 7.4.2 Operator: [MASKED:sensitive] Member Search Teller Journal Loan Queue Reports Log Off Application Error An error has occurred while processing your request. The error has been logged. ORA-01017: invalid username/password; logon denied java.sql.SQL",
+  "message": "app error (page shows \"Application Error\") while step s06: target not found: textbox \"Member ID\" (<input>)",
+  "evidence": {
+    "screenshot": "shots/91.png",
+    "dom": "dom/91.html"
+  }
+}

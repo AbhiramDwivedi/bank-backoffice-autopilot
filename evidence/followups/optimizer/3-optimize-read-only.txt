@@ -1,0 +1,22 @@
+  warning steps.3: [redundant_repeated_step] step "s04" repeats step "s03" exactly (the same idempotent write to the same target with the same value); it is redundant -- `cu optimize` collapses it
+  warning businessOutcomes.0.detector: [unbound_outcome_detector] business outcome "member_not_found" is detected after step "s07", which submits what step "s06" filled from input "memberId", but its detector binds no input: a page that lost that state (an expired session, an emptied form) matches it too, and the run would report "member_not_found" for an input it never submitted. Bind the detector to the input (for example a url_matches on {input.memberId}), or add an input-bound checkpoint between "s06" and "s07".
+cu optimize: treating the capability as read-only (--read-only): replaying it, whole or with steps removed, is asserted to change nothing in the target app
+optimize: s04 repeats s03 exactly; collapse candidate
+optimize: baseline succeeded (outputs: savingsBalance, memberName)
+optimize: s02 postcondition (text "Password:" visible) already held before the step acted; drop candidate
+optimize: s03 postcondition (text "Password:" visible) already held before the step acted; drop candidate
+optimize: kept s01 "Open the entry page": without it, hard_failure: element_not_found at s02: step s02: target not found: textbox "User ID" (<input>)
+optimize: kept s02 "Enter the operator user ID": without it, hard_failure: element_not_found at s06: step s06: target not found: textbox "Member ID" (<input>)
+optimize: kept s03 "Enter the operator password": without it, hard_failure: element_not_found at s06: step s06: target not found: textbox "Member ID" (<input>)
+optimize: kept s05 "Sign on to the workstation": without it, hard_failure: element_not_found at s06: step s06: target not found: textbox "Member ID" (<input>)
+optimize: verified start result: 3/3 replays succeeded with the baseline outputs
+optimize: steps 10 -> 9; trials used 9 (removal 4/25)
+  - s04 "Enter the operator password": collapsed into s03 (exact repeat of an idempotent field write)
+  - s02: dropped vacuous postcondition (text "Password:" visible; it held before the step acted)
+  - s03: dropped vacuous postcondition (text "Password:" visible; it held before the step acted)
+optimize: verify start: 3/3 passed
+optimize: note: tenant overrides (riverbend-fcu) were not trialled: trials and the vacuity probe observed the base capability only; every step an override references was kept, with its checkpoint, but replay each tenant before approving
+optimize: note: verified against one input set (memberId) on http://localhost:4173: a step that only matters for other inputs or another tenant can be removed wrongly -- review the draft and replay it more widely before approving
+optimized draft: evidence/followups/optimizer/lookup-member-savings-balance.optimized.json (version 1.2.3, status draft: review it, replay it, then cu approve)
+report: runs-live/ev/optimizer/optimize-run_20261001_ezfb3nmc/optimize.json
+exit code: 0

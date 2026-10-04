@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 682" width="1000" height="682" role="img" aria-labelledby="ar-t ar-d">
+  <title id="ar-t">One core. Everything else plugs in.</title>
+  <desc id="ar-d">The cu runtime is one Node process. At its centre is the core: the rules, meaning the capability format, the agent and recorder, the replay engine, the policy guard, screen masking, and session and handoff. The core has no browser, Windows or AI vendor code. Everything else plugs into a port around it. AI model: Claude, used only to learn. Risk judge: Claude or Jev, used at record and audit time, never at replay. Credentials: from the environment, a file or a helper process. Escalation: the Relay console, where a person takes over the same live session. Surface: a web surface that drives Chromium and a desktop surface that uses Windows UI Automation. On the left, an operator at the command line and another AI assistant, through the catalog's tool definitions, run capabilities. Capabilities are versioned JSON files: learning saves them and replay loads them. Each kind of app gets its own small companion. A web app has an in-page agent inside the page, injected by the runtime or shipped by the app like a monitoring tag. A Windows app has a bridge beside it, in its own process, which talks to the runtime in JSON lines and to the app through UI Automation and window messages. Nothing is injected into the app, and the bridge never takes the mouse, keyboard or focus.</desc>
+  <style>
+    text { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2328; }
+    .h1 { font-size: 27px; font-weight: 700; }
+    .lead { font-size: 16px; fill: #59636e; }
+    .port { font-size: 15px; font-weight: 700; letter-spacing: 1px; }
+    .pill { font-size: 15px; font-weight: 700; fill: #ffffff; }
+    .bt { font-size: 17px; font-weight: 700; }
+    .bs { font-size: 15px; fill: #4b535c; }
+    .li { font-size: 16px; }
+    .wt { fill: #ffffff; }
+    .learn { fill: #6639ba; }
+    .do { fill: #0550ae; }
+    .warm { fill: #953800; }
+    .grey { fill: #59636e; }
+  </style>
+  <defs>
+    <marker id="b-learn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8250df"/></marker>
+    <marker id="b-do" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0969da"/></marker>
+    <marker id="b-ink" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#59636e"/></marker>
+  </defs>
+
+  <rect x="1" y="1" width="998" height="680" rx="18" fill="#ffffff" stroke="#d1d9e0" stroke-width="2"/>
+
+  <text class="h1" x="500" y="42" text-anchor="middle">One core. Everything else plugs in.</text>
+  <text class="lead" x="500" y="68" text-anchor="middle">Each kind of app gets its own small companion, placed next to it</text>
+
+  <!-- RUNTIME (one process) -->
+  <rect x="220" y="88" width="756" height="376" rx="16" fill="#ffffff" stroke="#8c959f" stroke-width="1.5" stroke-dasharray="7 5"/>
+  <text x="236" y="114"><tspan class="bt">cu runtime</tspan><tspan class="bs"> · one Node process</tspan></text>
+
+  <!-- CORE hexagon -->
+  <path d="M418,265 L470,170 H726 L778,265 L726,360 H470 Z" fill="#d8dee4" transform="translate(5,6)"/>
+  <path d="M418,265 L470,170 H726 L778,265 L726,360 H470 Z" fill="#ffffff" stroke="#1f2328" stroke-width="2.5" stroke-linejoin="round"/>
+  <text x="598" y="210" text-anchor="middle" font-size="25" font-weight="700" letter-spacing="1.5">CORE<tspan class="bs" font-size="16" font-weight="400" letter-spacing="0"> · the rules</tspan></text>
+  <g class="li" text-anchor="middle">
+    <text x="598" y="240">Capability format · Replay engine</text>
+    <text x="598" y="264">Agent and recorder · Policy guard</text>
+    <text x="598" y="288">Masking · Session and handoff</text>
+  </g>
+  <text class="bs" x="598" y="320" text-anchor="middle">no browser, Windows or AI vendor code</text>
+
+  <!-- ports: adapter connectors (sockets on the core's edge) -->
+  <g stroke-width="2.5" fill="#ffffff">
+    <line x1="402" y1="185" x2="462" y2="185" stroke="#8250df"/>
+    <circle cx="462" cy="185" r="5" stroke="#8250df"/>
+    <line x1="794" y1="185" x2="734" y2="185" stroke="#8250df"/>
+    <circle cx="734" cy="185" r="5" stroke="#8250df"/>
+    <line x1="794" y1="322" x2="747" y2="322" stroke="#bc4c00"/>
+    <circle cx="747" cy="322" r="5" stroke="#bc4c00"/>
+    <line x1="598" y1="152" x2="598" y2="170" stroke="#8c959f"/>
+    <circle cx="598" cy="170" r="5" stroke="#8c959f"/>
+    <path d="M598,360 V394 M598,382 H348 V394" fill="none" stroke="#0969da"/>
+    <circle cx="598" cy="360" r="5" stroke="#0969da"/>
+  </g>
+
+  <!-- AI model -->
+  <g>
+    <rect x="236" y="140" width="166" height="92" rx="12" fill="#fbefff" stroke="#c297ff" stroke-width="1.5"/>
+    <text class="port learn" x="250" y="163">AI MODEL</text>
+    <text class="bt" x="250" y="188">Claude</text>
+    <rect x="250" y="199" width="92" height="23" rx="11.5" fill="#8250df"/>
+    <text class="pill" x="296" y="216" text-anchor="middle">learn only</text>
+  </g>
+
+  <!-- Risk judge -->
+  <g>
+    <rect x="794" y="140" width="166" height="92" rx="12" fill="#fbefff" stroke="#c297ff" stroke-width="1.5"/>
+    <text class="port learn" x="808" y="163">RISK JUDGE</text>
+    <text class="bt" x="808" y="188">Claude, Jev</text>
+    <text class="bs" x="808" y="210">record + audit only</text>
+  </g>
+
+  <!-- Escalation -->
+  <g>
+    <rect x="794" y="282" width="166" height="112" rx="12" fill="#fff1e5" stroke="#ffb77c" stroke-width="1.5"/>
+    <text class="port warm" x="808" y="305">ESCALATION</text>
+    <text class="bt" x="808" y="330">Relay console</text>
+    <text class="bs" x="808" y="352">a person takes over</text>
+    <text class="bs" x="808" y="372">the same live session</text>
+  </g>
+
+  <!-- Credentials -->
+  <g>
+    <rect x="513" y="100" width="170" height="52" rx="10" fill="#f6f8fa" stroke="#d1d9e0" stroke-width="1.5"/>
+    <text class="port grey" x="598" y="121" text-anchor="middle">CREDENTIALS</text>
+    <text class="bs" x="598" y="142" text-anchor="middle">env · file · helper</text>
+  </g>
+
+  <!-- Surface -->
+  <text class="port do" x="610" y="377">SURFACE</text>
+  <g>
+    <rect x="250" y="394" width="196" height="56" rx="10" fill="#ddf4ff" stroke="#80ccff" stroke-width="1.5"/>
+    <text class="bt" x="264" y="418">Web surface</text>
+    <text class="bs" x="264" y="440">Chromium</text>
+  </g>
+  <g>
+    <rect x="500" y="394" width="196" height="56" rx="10" fill="#ddf4ff" stroke="#80ccff" stroke-width="1.5"/>
+    <text class="bt" x="514" y="418">Desktop surface</text>
+    <text class="bs" x="514" y="440">Windows UI Automation</text>
+  </g>
+
+  <!-- CALLERS -->
+  <g>
+    <rect x="24" y="108" width="180" height="62" rx="10" fill="#ffffff" stroke="#d1d9e0" stroke-width="1.5"/>
+    <text class="bt" x="38" y="134">Operator / CLI</text>
+    <text class="bs" x="38" y="156">runs and approves</text>
+  </g>
+  <g>
+    <rect x="24" y="180" width="180" height="102" rx="10" fill="#ffffff" stroke="#d1d9e0" stroke-width="1.5"/>
+    <text class="bt" x="38" y="205">Another AI</text>
+    <text class="bt" x="38" y="225">assistant</text>
+    <text class="bs" x="38" y="249">via catalog tool</text>
+    <text class="bs" x="38" y="269">definitions</text>
+  </g>
+  <path d="M204,139 H212 V265 M204,231 H212" fill="none" stroke="#59636e" stroke-width="2.5"/>
+  <line x1="211" y1="265" x2="410" y2="265" stroke="#59636e" stroke-width="2.5" marker-end="url(#b-ink)"/>
+
+  <!-- CAPABILITY FILES -->
+  <g>
+    <path d="M40,306 H176 L196,326 V392 Q196,398 190,398 H40 Q34,398 34,392 V312 Q34,306 40,306 Z" fill="#d8dee4"/>
+    <path d="M32,298 H166 L188,320 V384 Q188,390 182,390 H32 Q26,390 26,384 V304 Q26,298 32,298 Z" fill="#ffffff" stroke="#1f2328" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M166,298 V314 Q166,320 172,320 H188 Z" fill="#d8dee4" stroke="#1f2328" stroke-width="2" stroke-linejoin="round"/>
+    <text class="bt" x="40" y="342">Capabilities</text>
+    <text class="bs" x="40" y="364">versioned JSON</text>
+  </g>
+  <line x1="449" y1="322" x2="196" y2="322" stroke="#8250df" stroke-width="2.5" marker-end="url(#b-learn)"/>
+  <text class="port learn" x="320" y="313" text-anchor="middle" letter-spacing="0">learn saves</text>
+  <line x1="200" y1="352" x2="460" y2="352" stroke="#0969da" stroke-width="2.5" marker-end="url(#b-do)"/>
+  <text class="port do" x="320" y="344" text-anchor="middle" letter-spacing="0">replay loads</text>
+
+  <!-- WEB APP: agent INSIDE the page -->
+  <line x1="348" y1="452" x2="348" y2="489" stroke="#0969da" stroke-width="2.5" marker-end="url(#b-do)"/>
+  <g>
+    <rect x="24" y="494" width="464" height="172" rx="10" fill="#ffffff" stroke="#1f2328" stroke-width="2"/>
+    <path d="M25,524 V504 Q25,495 34,495 H478 Q487,495 487,504 V524 Z" fill="#eaeef2"/>
+    <line x1="24" y1="524" x2="488" y2="524" stroke="#1f2328" stroke-width="2"/>
+    <g fill="#8c959f"><circle cx="42" cy="509" r="4"/><circle cx="56" cy="509" r="4"/><circle cx="70" cy="509" r="4"/></g>
+    <rect x="86" y="498" width="160" height="22" rx="11" fill="#ffffff" stroke="#d1d9e0" stroke-width="1.5"/>
+    <text x="100" y="514" font-size="15" font-weight="700">Target web app</text>
+    <g fill="#d8dee4">
+      <rect x="42" y="542" width="70" height="10" rx="3"/><rect x="122" y="540" width="116" height="14" rx="3" fill="none" stroke="#d1d9e0" stroke-width="1.5"/>
+      <rect x="42" y="566" width="70" height="10" rx="3"/><rect x="122" y="564" width="116" height="14" rx="3" fill="none" stroke="#d1d9e0" stroke-width="1.5"/>
+      <rect x="42" y="590" width="56" height="16" rx="3" fill="#eaeef2" stroke="#d1d9e0" stroke-width="1.5"/>
+    </g>
+    <rect x="258" y="538" width="212" height="68" rx="10" fill="#0969da"/>
+    <text class="bt wt" x="272" y="565">in-page agent</text>
+    <text class="bs wt" x="272" y="588">names and lists controls</text>
+    <text class="bs" x="42" y="634"><tspan font-weight="700" fill="#0550ae">Inside the page:</tspan> injected by the runtime,</text>
+    <text class="bs" x="42" y="654">or shipped by the app like a monitoring tag</text>
+  </g>
+
+  <!-- WINDOWS APP: bridge BESIDE the app -->
+  <line x1="598" y1="452" x2="598" y2="519" stroke="#0969da" stroke-width="2.5" marker-end="url(#b-do)"/>
+  <text class="bs" x="610" y="494">JSON lines</text>
+  <g>
+    <rect x="526" y="524" width="144" height="72" rx="12" fill="#0969da"/>
+    <text class="bt wt" x="598" y="554" text-anchor="middle">bridge</text>
+    <text class="bs wt" x="598" y="577" text-anchor="middle">its own process</text>
+  </g>
+  <line x1="672" y1="574" x2="795" y2="574" stroke="#0969da" stroke-width="2.5" marker-end="url(#b-do)"/>
+  <text class="bs" x="735" y="544" text-anchor="middle">UI Automation +</text>
+  <text class="bs" x="735" y="562" text-anchor="middle">window messages</text>
+  <g>
+    <rect x="800" y="494" width="176" height="112" rx="6" fill="#ffffff" stroke="#1f2328" stroke-width="2"/>
+    <path d="M801,524 V501 Q801,495 807,495 H969 Q975,495 975,501 V524 Z" fill="#1f2328"/>
+    <text class="wt" x="812" y="515" font-size="15" font-weight="700">Target Windows app</text>
+    <g fill="none" stroke="#d1d9e0" stroke-width="1.5">
+      <rect x="878" y="538" width="82" height="14" rx="2"/>
+      <rect x="878" y="562" width="82" height="14" rx="2"/>
+      <rect x="902" y="584" width="58" height="14" rx="2" fill="#eaeef2"/>
+    </g>
+    <g fill="#d8dee4"><rect x="816" y="540" width="50" height="10" rx="3"/><rect x="816" y="564" width="50" height="10" rx="3"/></g>
+  </g>
+  <text class="bs" x="518" y="634"><tspan font-weight="700" fill="#0550ae">Beside the app:</tspan> nothing injected into it;</text>
+  <text class="bs" x="518" y="654">never takes the mouse, keyboard or focus</text>
+</svg>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Snapshot redteam main</title></head>
+<body>
+  <h1>Redteam snapshot fixture</h1>
+
+  <!-- Top-frame password input, server-rendered value attribute. -->
+  <input type="password" name="topPw" value="toppw-attr-SEED">
+
+  <!-- A text-type field marked as a password via autocomplete only (not type=password). -->
+  <input type="text" name="autoCompletePw" autocomplete="current-password" value="autocpw-attr-SEED">
+
+  <!-- A field whose value is set via the JS `.value` PROPERTY, never the `value` ATTRIBUTE
+       (see snapshot.redteam.test.ts: outerHTML only ever serializes content attributes, so a
+       property-only assignment should never appear no matter what typed/attribute blanking does -
+       this fixture exists to prove that empirically rather than by reading spec text). -->
+  <input type="text" id="jsPropField" name="jsPropField">
+
+  <!-- Same-origin src iframe, nested two levels deep (child -> grandchild). -->
+  <iframe name="child" src="snapshot-redteam-child.html" style="width:200px;height:100px;"></iframe>
+
+  <!-- srcdoc iframe, nested two levels deep (srcdocLevel1 -> srcdocLevel2), built at runtime via
+       the `.srcdoc` DOM PROPERTY (not an HTML attribute) so no HTML-entity-escaping gymnastics
+       are needed for the nested markup. -->
+  <iframe name="srcdocLevel1" id="srcdocLevel1" style="width:200px;height:100px;"></iframe>
+
+  <script>
+    // The secret is FETCHED as plain text, never embedded as a JS string literal in this page's
+    // own <script> source -- a literal here would itself be captured verbatim by domSnapshot()
+    // (ordinary script TEXT, not a `value` attribute), a false positive in the redteam test, not
+    // a real "set via the .value property" leak path.
+    fetch('snapshot-redteam-jsprop-secret.txt')
+      .then(function (r) { return r.text(); })
+      .then(function (secret) {
+        document.getElementById('jsPropField').value = secret.trim();
+      });
+
+    // Ditto for the nested srcdoc markup.
+    Promise.all([
+      fetch('snapshot-redteam-srcdoc1.html').then(function (r) { return r.text(); }),
+      fetch('snapshot-redteam-srcdoc2.html').then(function (r) { return r.text(); }),
+    ]).then(function (htmls) {
+      var outerHtml = htmls[0];
+      var innerHtml = htmls[1];
+      var outer = document.getElementById('srcdocLevel1');
+      outer.addEventListener('load', function onOuterLoad() {
+        outer.removeEventListener('load', onOuterLoad);
+        var inner = outer.contentDocument.getElementById('srcdocLevel2');
+        inner.srcdoc = innerHtml;
+      });
+      outer.srcdoc = outerHtml;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "runId": "run_20261001_w8zql316",
+  "capabilityId": "lookup-member-savings-balance",
+  "capabilityVersion": "1.0.0-optimize.2",
+  "capabilityDigest": "sha256:f3c80c09cab7f362e5c6acfce11f2e963ae68b14295db077a787f95ecffb9abd",
+  "stepsExecuted": 4,
+  "durationMs": 6308,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "text",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [
+    "dismiss_system_maintenance_notice"
+  ],
+  "kind": "hard_failure",
+  "stepId": "s06",
+  "stepName": "Run the member search",
+  "code": "checkpoint_failed",
+  "expected": "url matches /[?&]memberId={input.memberId}(?![A-Za-z0-9])/ in frame main",
+  "observed": "Pioneer Valley Community CU CU Core Workstation 7.4.2 Operator: [MASKED:sensitive] Member Search Teller Journal Loan Queue Reports Log Off Pioneer Valley Community CU — Member Search Quick find: Member ID Last Name Search Clear 0 record(s) found No records found.",
+  "message": "step s06 postcondition not met",
+  "evidence": {
+    "screenshot": "shots/30.png",
+    "dom": "dom/30.html"
+  }
+}

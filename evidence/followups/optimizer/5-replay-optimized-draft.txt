@@ -1,0 +1,6 @@
+operator console: http://127.0.0.1:61148
+run dir: runs-live/ev/optimizer/run_20261001_13ohb98z
+Capability lookup-member-savings-balance@1.2.3 succeeded in 9 steps (2.1s): savingsBalance=12500, memberName="Denise M. Kowalczyk". Recoveries: dismiss_system_maintenance_notice. Locator drift: none.
+result: runs-live/ev/optimizer/run_20261001_13ohb98z/result.json
+control: automation
+exit code: 0

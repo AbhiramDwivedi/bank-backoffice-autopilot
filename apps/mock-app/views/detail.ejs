@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<%- include('partials/cu-agent') %>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Member Detail - <%= member.id %></title>
+<style type="text/css">
+body { font-family: Tahoma, Arial, sans-serif; font-size: 12px; color: #000000; }
+.tab { padding: 3px 10px; border: 1px solid #999999; background-color: #DDDDDD; cursor: pointer; }
+.tab-on { padding: 3px 10px; border: 1px solid #999999; background-color: #FFFFFF; font-weight: bold; cursor: pointer; }
+.lbl { font-weight: bold; width: 160px; vertical-align: top; }
+.val { vertical-align: top; }
+</style>
+<script type="text/javascript">
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function showTab(name) {
+  var tabs = ['profile', 'accounts', 'notes'];
+  for (var i = 0; i < tabs.length; i++) {
+    var t = tabs[i];
+    var span = document.getElementById('tab' + cap(t));
+    var panel = document.getElementById('pnl' + cap(t));
+    if (t === name) {
+      span.className = 'tab tab-on';
+      panel.style.display = '';
+    } else {
+      span.className = 'tab';
+      panel.style.display = 'none';
+    }
+  }
+}
+</script>
+</head>
+<body>
+
+<% if (warn) { %>
+<div style="background:#FFFF99;border:1px solid #CC9900;padding:4px">Your session will expire in 5 minutes</div>
+<% } %>
+
+<h2>Member: <%= fullName(member) %> (#<%= member.id %>)</h2>
+
+<p>
+<span class="<%= tab === 'profile' ? 'tab tab-on' : 'tab' %>" id="tabProfile" onclick="showTab('profile')">Profile</span>
+ |
+<span class="<%= tab === 'accounts' ? 'tab tab-on' : 'tab' %>" id="tabAccounts" onclick="showTab('accounts')">Accounts</span>
+ |
+<span class="<%= tab === 'notes' ? 'tab tab-on' : 'tab' %>" id="tabNotes" onclick="showTab('notes')">Notes</span>
+</p>
+
+<div id="pnlProfile" style="<%= tab === 'profile' ? '' : 'display:none' %>">
+<table border="0" cellpadding="3" cellspacing="0">
+<tr><td class="lbl">Member Name</td><td class="val"><%= fullName(member) %></td></tr>
+<tr><td class="lbl">Member ID</td><td class="val"><%= member.id %></td></tr>
+<tr><td class="lbl">Join Date</td><td class="val"><%= member.joinDate %></td></tr>
+<tr><td class="lbl">Address</td><td class="val"><%= member.address %></td></tr>
+<tr><td class="lbl">Phone</td><td class="val"><%= member.phone %></td></tr>
+<tr><td class="lbl">Savings Balance</td><td class="val"><%= formatCents(member.savingsCents) %></td></tr>
+<tr><td class="lbl">Checking Balance</td><td class="val"><%= formatCents(member.checkingCents) %></td></tr>
+</table>
+</div>
+
+<div id="pnlAccounts" style="<%= tab === 'accounts' ? '' : 'display:none' %>">
+<table border="1" cellpadding="3" cellspacing="0">
+<tr>
+<td><b>Suffix</b></td>
+<td><b>Type</b></td>
+<td><b>Nickname</b></td>
+<td><b>Balance</b></td>
+<td><b>Opened</b></td>
+</tr>
+<% member.accounts.forEach(function(a) { %>
+<tr>
+<td><%= a.suffix %></td>
+<td><%= a.type %></td>
+<td><%= a.nickname %></td>
+<td><%= formatCents(a.balanceCents) %></td>
+<td><%= a.opened %></td>
+</tr>
+<% }); %>
+</table>
+<p><a href="/members/<%= member.id %>/subaccounts/new">Open New Sub-Account</a></p>
+</div>
+
+<div id="pnlNotes" style="<%= tab === 'notes' ? '' : 'display:none' %>">
+<p>03/12/2011 - Member called re: statement address. -- jdoe</p>
+<p>11/02/2013 - Updated phone number on file. -- mchen</p>
+<textarea rows="4" cols="50" disabled="disabled">No additional notes on file.</textarea>
+</div>
+
+<p>
+<a href="/members/search">Back to Search</a>
+&nbsp;
+<a href="/members/search"><img src="/static/img/ico_search.png" style="cursor:pointer"></a>
+</p>
+
+<%- include('partials/interstitial') %>
+</body>
+</html>

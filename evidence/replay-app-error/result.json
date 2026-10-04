@@ -1,0 +1,41 @@
+{
+  "runId": "run_20260926_bz0n8qyj",
+  "capabilityId": "lookup-member-savings-balance",
+  "capabilityVersion": "1.2.2",
+  "stepsExecuted": 5,
+  "durationMs": 12796,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [],
+  "kind": "hard_failure",
+  "stepId": "s06",
+  "stepName": "Enter the member ID to look up",
+  "code": "app_error",
+  "expected": "target \"textbox \"Member ID\" (<input>)\" resolvable by one of 4 locators",
+  "observed": "Pioneer Valley Community CU CU Core Workstation 7.4.2 Operator: [REDACTED] Member Search Teller Journal Loan Queue Reports Log Off Application Error An error has occurred while processing your request. The error has been logged. ORA-01017: invalid username/password; logon denied java.sql.SQLException",
+  "message": "app error (page shows \"Application Error\") while step s06: target not found: textbox \"Member ID\" (<input>)",
+  "evidence": {
+    "screenshot": "shots/31.png",
+    "dom": "dom/31.html"
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "capabilityId": "lookup-member-savings-balance",
+  "versionBefore": "1.0.0",
+  "versionAfter": "1.0.0",
+  "readOnly": true,
+  "stop": "completed",
+  "vetoes": [],
+  "analysis": {
+    "redundantRepeats": [],
+    "checkpointsToProbe": [
+      "s06",
+      "s07"
+    ],
+    "removalCandidates": [
+      "s01",
+      "s02",
+      "s03",
+      "s04",
+      "s05",
+      "s06"
+    ]
+  },
+  "changed": false,
+  "stepsBefore": 9,
+  "stepsAfter": 9,
+  "changes": [],
+  "rejected": [
+    {
+      "stepId": "s05",
+      "reason": "hard_failure: checkpoint_failed at s06: step s06 postcondition not met"
+    },
+    {
+      "stepId": "s06",
+      "reason": "hard_failure: element_not_found at s07: step s07: target not found: clickable \"12345\" (<tr>)"
+    }
+  ],
+  "kept": [
+    {
+      "stepId": "s01",
+      "reason": "invalid_without",
+      "what": "step"
+    },
+    {
+      "stepId": "s02",
+      "reason": "invalid_without",
+      "what": "step"
+    },
+    {
+      "stepId": "s03",
+      "reason": "invalid_without",
+      "what": "step"
+    },
+    {
+      "stepId": "s04",
+      "reason": "invalid_without",
+      "what": "step"
+    },
+    {
+      "stepId": "s07",
+      "reason": "last_input_use",
+      "what": "step"
+    },
+    {
+      "stepId": "s08",
+      "reason": "last_extract",
+      "what": "step"
+    },
+    {
+      "stepId": "s09",
+      "reason": "last_extract",
+      "what": "step"
+    }
+  ],
+  "irreversibleSteps": [],
+  "trialsUsed": 3,
+  "removalTrialsUsed": 2,
+  "maxTrials": 25,
+  "budgetExhausted": false,
+  "trials": [
+    {
+      "n": 1,
+      "purpose": "baseline",
+      "label": "baseline (unmodified capability)",
+      "kind": "success",
+      "runId": "run_20261001_gqbnn9jo",
+      "locatorDepth": 0
+    },
+    {
+      "n": 2,
+      "purpose": "removal",
+      "label": "remove s05",
+      "kind": "hard_failure",
+      "runId": "run_20261001_w8zql316",
+      "detail": "checkpoint_failed at s06: step s06 postcondition not met",
+      "locatorDepth": 0,
+      "accepted": false
+    },
+    {
+      "n": 3,
+      "purpose": "removal",
+      "label": "remove s06",
+      "kind": "hard_failure",
+      "runId": "run_20261001_gugelo14",
+      "detail": "element_not_found at s07: step s07: target not found: clickable \"12345\" (<tr>)",
+      "locatorDepth": 0,
+      "accepted": false
+    }
+  ],
+  "notes": [
+    "verified against one input set (memberId) on http://localhost:4173: a step that only matters for other inputs or another tenant can be removed wrongly -- review the draft and replay it more widely before approving"
+  ],
+  "probedTenant": "base",
+  "baseline": {
+    "kind": "success",
+    "outputNames": [
+      "savingsBalance",
+      "memberName"
+    ],
+    "matchesReference": true,
+    "runId": "run_20261001_gqbnn9jo"
+  },
+  "verification": {
+    "kept": "unchanged",
+    "required": 3,
+    "attempts": []
+  }
+}

@@ -1,0 +1,9 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Capture XSS</title></head>
+<body>
+  <h1>Capture XSS</h1>
+  <button id="xss-btn" aria-label='"><img src=x onerror="window.__pwned=1">'>Click</button>
+  <input id="xss-input" type="text" aria-label='"><img src=x onerror="window.__pwned=2">'>
+</body>
+</html>

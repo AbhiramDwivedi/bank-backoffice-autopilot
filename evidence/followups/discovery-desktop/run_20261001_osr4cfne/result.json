@@ -1,0 +1,47 @@
+{
+  "runId": "run_20261001_osr4cfne",
+  "capabilityId": "teller-lookup-savings-balance",
+  "capabilityVersion": "1.0.0",
+  "capabilityDigest": "sha256:a53e72f0c77369089bc98b31dd8c2730c2f59e9e89273527673bd7c0dc17fc75",
+  "stepsExecuted": 5,
+  "durationMs": 12451,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "automation_id",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "automation_id",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s06",
+      "strategyKind": "role",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [],
+  "kind": "hard_failure",
+  "stepId": "s06",
+  "stepName": "Search for the member record",
+  "code": "checkpoint_failed",
+  "expected": "text \"Savings\" visible in frame top document",
+  "observed": "Teller Workstation - Member Lookup [MASKED] MEMBER LOOKUP Member ID: Find Sign Off No member found with ID 99999.",
+  "message": "step s06 postcondition not met",
+  "evidence": {
+    "screenshot": "shots/33.png",
+    "dom": "dom/33.html"
+  }
+}

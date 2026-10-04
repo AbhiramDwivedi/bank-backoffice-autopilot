@@ -1,0 +1,49 @@
+{
+  "runId": "run_20261001_gugelo14",
+  "capabilityId": "lookup-member-savings-balance",
+  "capabilityVersion": "1.0.0-optimize.3",
+  "capabilityDigest": "sha256:d1aff1a1cb2ce61343a83c8f64561a24f267d62d408303201be567f14e8e39a4",
+  "stepsExecuted": 5,
+  "durationMs": 7040,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s05",
+      "strategyKind": "label",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [
+    "dismiss_system_maintenance_notice"
+  ],
+  "kind": "hard_failure",
+  "stepId": "s07",
+  "stepName": "Open the member record from the search results",
+  "code": "element_not_found",
+  "expected": "target \"clickable \"12345\" (<tr>)\" resolvable by one of 1 locators",
+  "observed": "text: no match",
+  "message": "step s07: target not found: clickable \"12345\" (<tr>)",
+  "evidence": {
+    "screenshot": "shots/31.png",
+    "dom": "dom/31.html"
+  }
+}

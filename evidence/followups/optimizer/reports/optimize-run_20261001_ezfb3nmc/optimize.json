@@ -1,0 +1,209 @@
+{
+  "capabilityId": "lookup-member-savings-balance",
+  "versionBefore": "1.2.2",
+  "versionAfter": "1.2.3",
+  "readOnly": true,
+  "stop": "completed",
+  "vetoes": [],
+  "analysis": {
+    "redundantRepeats": [
+      {
+        "stepId": "s04",
+        "repeatOf": "s03"
+      }
+    ],
+    "checkpointsToProbe": [
+      "s02",
+      "s04",
+      "s07",
+      "s08"
+    ],
+    "removalCandidates": [
+      "s01",
+      "s02",
+      "s03",
+      "s04",
+      "s05"
+    ]
+  },
+  "changed": true,
+  "stepsBefore": 10,
+  "stepsAfter": 9,
+  "changes": [
+    {
+      "kind": "collapsed_repeat",
+      "stepId": "s04",
+      "into": "s03",
+      "name": "Enter the operator password"
+    },
+    {
+      "kind": "dropped_vacuous_postcondition",
+      "stepId": "s02",
+      "condition": "text \"Password:\" visible"
+    },
+    {
+      "kind": "dropped_vacuous_postcondition",
+      "stepId": "s03",
+      "condition": "text \"Password:\" visible"
+    }
+  ],
+  "rejected": [
+    {
+      "stepId": "s01",
+      "reason": "hard_failure: element_not_found at s02: step s02: target not found: textbox \"User ID\" (<input>)"
+    },
+    {
+      "stepId": "s02",
+      "reason": "hard_failure: element_not_found at s06: step s06: target not found: textbox \"Member ID\" (<input>)"
+    },
+    {
+      "stepId": "s03",
+      "reason": "hard_failure: element_not_found at s06: step s06: target not found: textbox \"Member ID\" (<input>)"
+    },
+    {
+      "stepId": "s05",
+      "reason": "hard_failure: element_not_found at s06: step s06: target not found: textbox \"Member ID\" (<input>)"
+    }
+  ],
+  "kept": [
+    {
+      "stepId": "s06",
+      "reason": "override_reference",
+      "what": "step"
+    },
+    {
+      "stepId": "s07",
+      "reason": "outcome_reference",
+      "what": "step"
+    },
+    {
+      "stepId": "s08",
+      "reason": "outcome_reference",
+      "what": "step"
+    },
+    {
+      "stepId": "s09",
+      "reason": "last_extract",
+      "what": "step"
+    },
+    {
+      "stepId": "s10",
+      "reason": "last_extract",
+      "what": "step"
+    }
+  ],
+  "irreversibleSteps": [],
+  "trialsUsed": 9,
+  "removalTrialsUsed": 4,
+  "maxTrials": 25,
+  "budgetExhausted": false,
+  "trials": [
+    {
+      "n": 1,
+      "purpose": "baseline",
+      "label": "baseline (unmodified capability)",
+      "kind": "success",
+      "runId": "run_20261001_5yuubcym",
+      "locatorDepth": 0
+    },
+    {
+      "n": 2,
+      "purpose": "start",
+      "label": "start: collapse+vacuity rewrite",
+      "kind": "success",
+      "outputsMatch": true,
+      "runId": "run_20261001_9x4q8nv3",
+      "locatorDepth": 0
+    },
+    {
+      "n": 3,
+      "purpose": "removal",
+      "label": "remove s01",
+      "kind": "hard_failure",
+      "runId": "run_20261001_lptt2yov",
+      "detail": "element_not_found at s02: step s02: target not found: textbox \"User ID\" (<input>)",
+      "locatorDepth": 0,
+      "accepted": false
+    },
+    {
+      "n": 4,
+      "purpose": "removal",
+      "label": "remove s02",
+      "kind": "hard_failure",
+      "runId": "run_20261001_p1h1d3r8",
+      "detail": "element_not_found at s06: step s06: target not found: textbox \"Member ID\" (<input>)",
+      "locatorDepth": 0,
+      "accepted": false
+    },
+    {
+      "n": 5,
+      "purpose": "removal",
+      "label": "remove s03",
+      "kind": "hard_failure",
+      "runId": "run_20261001_5blk2yt8",
+      "detail": "element_not_found at s06: step s06: target not found: textbox \"Member ID\" (<input>)",
+      "locatorDepth": 0,
+      "accepted": false
+    },
+    {
+      "n": 6,
+      "purpose": "removal",
+      "label": "remove s05",
+      "kind": "hard_failure",
+      "runId": "run_20261001_pk3gjkiu",
+      "detail": "element_not_found at s06: step s06: target not found: textbox \"Member ID\" (<input>)",
+      "locatorDepth": 0,
+      "accepted": false
+    },
+    {
+      "n": 7,
+      "purpose": "verify",
+      "label": "verify start 1/3",
+      "kind": "success",
+      "outputsMatch": true,
+      "runId": "run_20261001_rihudoyx",
+      "locatorDepth": 0
+    },
+    {
+      "n": 8,
+      "purpose": "verify",
+      "label": "verify start 2/3",
+      "kind": "success",
+      "outputsMatch": true,
+      "runId": "run_20261001_8atulyb2",
+      "locatorDepth": 0
+    },
+    {
+      "n": 9,
+      "purpose": "verify",
+      "label": "verify start 3/3",
+      "kind": "success",
+      "outputsMatch": true,
+      "runId": "run_20261001_in2p45ek",
+      "locatorDepth": 0
+    }
+  ],
+  "notes": [
+    "tenant overrides (riverbend-fcu) were not trialled: trials and the vacuity probe observed the base capability only; every step an override references was kept, with its checkpoint, but replay each tenant before approving",
+    "verified against one input set (memberId) on http://localhost:4173: a step that only matters for other inputs or another tenant can be removed wrongly -- review the draft and replay it more widely before approving"
+  ],
+  "probedTenant": "base",
+  "baseline": {
+    "kind": "success",
+    "outputNames": [
+      "savingsBalance",
+      "memberName"
+    ],
+    "runId": "run_20261001_5yuubcym"
+  },
+  "verification": {
+    "kept": "start",
+    "required": 3,
+    "attempts": [
+      {
+        "candidate": "start",
+        "passed": 3
+      }
+    ]
+  }
+}

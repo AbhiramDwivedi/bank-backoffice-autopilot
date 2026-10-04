@@ -1,0 +1,22 @@
+{
+  "name": "@cu/adapter-playwright",
+  "version": "0.1.0",
+  "description": "Playwright/Chromium implementation of the @cu/core Surface port",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@cu/browser-agent": "*",
+    "@cu/core": "*",
+    "playwright": "^1.63.0"
+  },
+  "devDependencies": {
+    "@cu/mock-app": "*"
+  },
+  "scripts": {
+    "test": "vitest run --root ../.. --project adapter-playwright",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

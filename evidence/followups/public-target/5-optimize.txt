@@ -1,0 +1,10 @@
+  warning steps.5: [unverified_input_binding] capability has input-bound steps but no input-bound checkpoint (postcondition or success) verifies the result belongs to that input; nothing at or after step "s06" binds an input
+optimize: baseline succeeded (outputs: price)
+optimize: kept s05 "Open the product's detail page": without it, hard_failure: element_not_found at s06: step s06: target not found: generic below "Sauce Labs Backpack" (<div>)
+optimize: nothing to change
+optimize: steps 6 -> 6; trials used 2 (removal 1/3)
+  (no changes)
+optimize: note: verified against one input set (productName) on https://www.saucedemo.com: a step that only matters for other inputs or another tenant can be removed wrongly -- review the draft and replay it more widely before approving
+no changes; nothing written
+report: runs-live/ev/public-target/optimize-run_20261001_ubboljjf/optimize.json
+exit code: 0

@@ -1,0 +1,37 @@
+{
+  "runId": "run_20261001_3nzbsxwe",
+  "capabilityId": "read-product-price",
+  "capabilityVersion": "1.0.0-optimize.2",
+  "capabilityDigest": "sha256:d0e17dce4289bbabe0cd21b437710e0415b88ca0ba61f2de41053475c856749d",
+  "stepsExecuted": 4,
+  "durationMs": 6301,
+  "locatorReport": [
+    {
+      "stepId": "s02",
+      "strategyKind": "role",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s03",
+      "strategyKind": "css",
+      "fallbackDepth": 0
+    },
+    {
+      "stepId": "s04",
+      "strategyKind": "role",
+      "fallbackDepth": 0
+    }
+  ],
+  "recoveries": [],
+  "kind": "hard_failure",
+  "stepId": "s06",
+  "stepName": "Read the product's price",
+  "code": "element_not_found",
+  "expected": "target \"generic below \"Sauce Labs Backpack\" (<div>)\" resolvable by one of 1 locators",
+  "observed": "relative: no match",
+  "message": "step s06: target not found: generic below \"Sauce Labs Backpack\" (<div>)",
+  "evidence": {
+    "screenshot": "shots/25.png",
+    "dom": "dom/25.html"
+  }
+}

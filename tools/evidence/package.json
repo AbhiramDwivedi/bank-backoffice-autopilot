@@ -1,0 +1,13 @@
+{
+  "name": "@cu/make-evidence",
+  "version": "0.1.0",
+  "description": "Builds a redacted evidence bundle from a replay run directory",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@cu/cli": "*"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head><title>Mask layouts</title></head>
+<body>
+<p id="split">Mail goes to <span>1 Main</span><span> St</span> today</p>
+<p id="splitssn">SSN <span>123-45</span><span>-6789</span> and <b>987</b>-<b>65</b>-4321 here</p>
+<p id="cards">Card <span>4111</span> <span>1111</span> <span>1111</span> <span>1111</span></p>
+
+<table id="samecell"><tr><td id="inline">Address: 1 Main St</td><td id="plaincell">Branch: North</td></tr></table>
+<p id="lines">Phone: 413-555-0100<br>Branch: South<br>Address: 9 Elm Rd</p>
+
+<table id="latehead" border="1">
+<tr><td colspan="2">Member roster</td></tr>
+<tr><th>Name</th><th>Address</th></tr>
+<tr><td id="r1name">Ann Lee</td><td id="r1addr">5 Oak Ave</td></tr>
+<tr><td id="r2name">Bo Kim</td><td id="r2addr">6 Pine Ct</td></tr>
+</table>
+
+<table id="rowspan" border="1">
+<tr><th>Group</th><th>Name</th><th>Phone</th></tr>
+<tr><td rowspan="2">A</td><td id="rsname1">Cy</td><td id="rsphone1">555-0111</td></tr>
+<tr><td id="rsname2">Di</td><td id="rsphone2">555-0122</td></tr>
+</table>
+
+<form>
+<label for="out">Address</label> <output id="out" for="x">3 Bay Rd</output>
+<input id="titled" type="text" title="Phone" value="555-0133">
+<input id="placeheld" type="text" placeholder="Email" value="a@b.example">
+<select id="statesel"><option>Ohio</option><option selected>Utah</option><option>Iowa</option></select>
+</form>
+
+<p><a id="delete" href="#">Delete Ann Lee</a></p>
+<div id="aria" aria-label="Member Ann Lee" class="secret">Member card</div>
+<p id="plain">Nothing to see here</p>
+</body>
+</html>

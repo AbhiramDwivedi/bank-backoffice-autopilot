@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Member summary</title>
+<style>body { margin: 0; font: 18px Arial, sans-serif; } td { padding: 2px 8px; }</style>
+</head>
+<body>
+  <h2>Member summary</h2>
+  <table>
+    <tr><td>Address</td><td id="addr">1 Main St</td></tr>
+    <tr><td>Balance</td><td id="bal">100.00</td></tr>
+  </table>
+  <button id="go" type="button" onclick="document.getElementById('st').textContent = 'Clicked'">Continue</button>
+  <p id="st">Ready</p>
+  <label for="q">Search</label> <input id="q" type="text">
+  <label for="state">State</label> <select id="state"><option>MA</option><option>NY</option></select>
+  <p><a id="top" href="#top">Top</a></p>
+</body>
+</html>

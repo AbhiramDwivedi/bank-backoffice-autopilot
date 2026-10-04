@@ -1,0 +1,124 @@
+{
+  "id": "int_20261003_sr6nylsy",
+  "runId": "run_20261003_c0hvg9q3",
+  "runKind": "replay",
+  "capabilityId": "lookup-member-savings-balance",
+  "stepId": "s06",
+  "reason": {
+    "code": "unrecoverable_condition",
+    "message": "session expired (page shows \"Your session has expired\") while step s06: target not found: textbox \"Member ID\" (<input>)"
+  },
+  "screenshotPath": "shots/33.png",
+  "currentUrl": "http://localhost:4173/workstation",
+  "createdAt": "2026-10-03T13:51:43.170Z",
+  "status": "resolved",
+  "resolution": {
+    "by": "scripted-operator",
+    "at": "2026-10-03T13:51:44.672Z",
+    "notes": "scripted operator re-authenticated in the same browser session by re-running the derived sign-in steps (s01, s02, s03, s04, s05); current_step (resuming at s06, the first step after the sign-in: the expiry hit s06; what the steps after the sign-in built went with the session)",
+    "humanActions": [
+      {
+        "ts": "2026-10-03T13:51:43.228Z",
+        "type": "navigate",
+        "frame": [],
+        "target": {},
+        "url": "http://localhost:4173/login"
+      },
+      {
+        "ts": "2026-10-03T13:51:43.271Z",
+        "type": "input",
+        "frame": [],
+        "target": {
+          "tag": "input",
+          "role": "textbox",
+          "name": "User ID",
+          "selector": "input[type=\"text\"][name=\"userId\"]"
+        },
+        "valueRedacted": true,
+        "url": "http://localhost:4173/login"
+      },
+      {
+        "ts": "2026-10-03T13:51:43.469Z",
+        "type": "input",
+        "frame": [],
+        "target": {
+          "tag": "input",
+          "role": "textbox",
+          "name": "Password",
+          "selector": "input[type=\"password\"][name=\"password\"]"
+        },
+        "valueRedacted": true,
+        "url": "http://localhost:4173/login"
+      },
+      {
+        "ts": "2026-10-03T13:51:43.918Z",
+        "type": "click",
+        "frame": [],
+        "target": {
+          "tag": "input",
+          "role": "button",
+          "name": "login",
+          "selector": "input[type=\"image\"][name=\"login\"]"
+        },
+        "valueRedacted": true,
+        "url": "http://localhost:4173/login"
+      },
+      {
+        "ts": "2026-10-03T13:51:43.921Z",
+        "type": "submit",
+        "frame": [],
+        "target": {
+          "tag": "form",
+          "role": "generic",
+          "name": "Operator Sign-On User ID: Password:",
+          "text": "Operator Sign-On User ID: Password:",
+          "selector": "form"
+        },
+        "valueRedacted": true,
+        "url": "http://localhost:4173/login"
+      },
+      {
+        "ts": "2026-10-03T13:51:43.949Z",
+        "type": "navigate",
+        "frame": [],
+        "target": {},
+        "url": "http://localhost:4173/workstation"
+      },
+      {
+        "ts": "2026-10-03T13:51:43.963Z",
+        "type": "navigate",
+        "frame": [
+          {
+            "name": "banner"
+          }
+        ],
+        "target": {},
+        "url": "http://localhost:4173/frames/banner"
+      },
+      {
+        "ts": "2026-10-03T13:51:43.966Z",
+        "type": "navigate",
+        "frame": [
+          {
+            "name": "nav"
+          }
+        ],
+        "target": {},
+        "url": "http://localhost:4173/frames/nav"
+      },
+      {
+        "ts": "2026-10-03T13:51:43.968Z",
+        "type": "navigate",
+        "frame": [
+          {
+            "name": "main"
+          }
+        ],
+        "target": {},
+        "url": "http://localhost:4173/session-expired"
+      }
+    ],
+    "resumeFrom": "current_step",
+    "resumeAtStepId": "s06"
+  }
+}

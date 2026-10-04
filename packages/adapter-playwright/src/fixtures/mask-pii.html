@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Member 4242 - Pat Example 123-45-6789</title>
+<style>
+  /* Every piece of PII is painted in one distinctive colour, so a test can count its pixels over a
+     whole screenshot instead of sampling one point. Everything else is black. */
+  body { margin: 0; font: bold 22px Arial, sans-serif; color: #000; background: #fff; }
+  .pii { color: #ff00aa; }
+  td { padding: 2px 10px; }
+  p { margin: 4px 8px; }
+  input, output, select { font: bold 22px Arial, sans-serif; }
+  input.pii { color: #ff00aa; border: 0; width: 260px; }
+  .narrow { width: 60px; white-space: nowrap; overflow: visible; }
+  .contents { display: contents; }
+  .gen::after { content: ' ' attr(data-x); }
+</style>
+</head>
+<body>
+  <table>
+    <tr><td>Member Name</td><td id="name" class="pii">Pat Example</td></tr>
+    <tr><td>Phone</td><td id="phone" class="pii">(413) 555-0199</td></tr>
+    <tr><td>Member ID</td><td id="mid">4242</td></tr>
+  </table>
+  <table><tr><td id="inline">Address: <span class="pii">1 Main St</span></td><td>Branch: North</td></tr></table>
+  <p id="split">Mail goes to <span class="pii">1 Main</span><span class="pii"> St</span> today</p>
+  <p id="ssn">SSN <span class="pii">123-45</span><span class="pii">-6789</span> and <b class="pii">987</b><span class="pii">-</span><b class="pii">65</b><span class="pii">-4321</span></p>
+  <p id="card">Card <span class="pii">4111</span> <span class="pii">1111</span> <span class="pii">1111</span> <span class="pii">1111</span></p>
+  <p id="caption"><b>Email:</b> <span class="pii">pat@example.org</span><br><b>Branch:</b> Main</p>
+  <table border="1">
+    <tr><td colspan="3">Household roster</td></tr>
+    <tr><th>Group</th><th>Name</th><th>Address</th></tr>
+    <tr><td rowspan="2">A</td><td class="pii">Ann Lee</td><td id="addr1" class="pii">5 Oak Ave</td></tr>
+    <tr><td class="pii">Bo Kim</td><td id="addr2" class="pii">6 Pine Ct</td></tr>
+  </table>
+  <table><tr><td>Address</td><td class="narrow pii" id="overflow">77 Very Long Overflowing Boulevard Apt 9</td></tr></table>
+  <table><tr><td>Address</td><td><span class="contents pii" id="contents">8 Hidden Box Rd</span></td></tr></table>
+  <form>
+    <label for="out">Address</label> <output id="out" class="pii" for="x">3 Bay Rd</output><br>
+    <input id="titled" class="pii" type="text" title="Phone" value="555-0133"><br>
+    <input id="placeheld" class="pii" type="text" placeholder="Email" value="ann@b.example">
+  </form>
+  <p><a id="delete" href="#" onclick="return false">Delete <span class="pii">Ann Lee</span></a></p>
+  <p><b id="aria" class="secret pii" aria-label="Member Ann Lee">Member card</b></p>
+  <img id="img" alt="SSN 222-33-4444" title="Card 4000 0000 0000 0002" data-ssn="555-66-7777" width="10" height="10">
+  <p id="plain">Nothing secret here</p>
+</body>
+</html>
