@@ -15,7 +15,7 @@ Validation, a risk audit, approval and a record of every run are built in, along
 
 **Watch it run (5 minutes, web only).** It shows what the model sees on each turn and the capability it wrote. Replay then returns a balance, a "not found" and an app error. Last, a session expires mid-run, and a person in Relay signs in again in the same browser and hands the run back.
 
-https://github.com/user-attachments/assets/2302ddd5-fb06-4bc3-a08a-f07282ed8fa2
+https://github.com/user-attachments/assets/8a1c78f6-4fae-42b2-ab68-58d037faf64f
 
 <details><summary><b>Terms used below</b></summary>
 
